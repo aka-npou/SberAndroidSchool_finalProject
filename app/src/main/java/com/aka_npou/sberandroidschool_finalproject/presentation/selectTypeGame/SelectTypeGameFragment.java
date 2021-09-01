@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.aka_npou.sberandroidschool_finalproject.R;
+import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionConverter;
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IQuestionInteractor;
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticInteractor;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragmentNavigation;
@@ -26,22 +27,26 @@ public class SelectTypeGameFragment extends Fragment {
 
     private final IQuestionInteractor mQuestionInteractor;
     private final IStatisticInteractor mStatisticInteractor;
+    private final QuestionConverter mQuestionConverter;
 
     public static Fragment newInstance(IFragmentNavigation fragmentNavigation,
                                        ISchedulersProvider schedulersProvider,
                                        IQuestionInteractor questionInteractor,
-                                       IStatisticInteractor statisticInteractor) {
-        return new SelectTypeGameFragment(fragmentNavigation, schedulersProvider, questionInteractor, statisticInteractor);
+                                       IStatisticInteractor statisticInteractor,
+                                       QuestionConverter questionConverter) {
+        return new SelectTypeGameFragment(fragmentNavigation, schedulersProvider, questionInteractor, statisticInteractor, questionConverter);
     }
 
     public SelectTypeGameFragment(IFragmentNavigation fragmentNavigation,
                                   ISchedulersProvider schedulersProvider,
                                   IQuestionInteractor questionInteractor,
-                                  IStatisticInteractor statisticInteractor) {
+                                  IStatisticInteractor statisticInteractor,
+                                  QuestionConverter questionConverter) {
         mFragmentNavigation = fragmentNavigation;
         mSchedulersProvider = schedulersProvider;
         mQuestionInteractor = questionInteractor;
         mStatisticInteractor = statisticInteractor;
+        mQuestionConverter = questionConverter;
     }
 
     @Nullable
@@ -58,7 +63,8 @@ public class SelectTypeGameFragment extends Fragment {
                         QuestionFragment.newInstance(mFragmentNavigation,
                                 mSchedulersProvider,
                                 mQuestionInteractor,
-                                mStatisticInteractor),
+                                mStatisticInteractor,
+                                mQuestionConverter),
                         QuestionFragment.TAG,
                         false));
 

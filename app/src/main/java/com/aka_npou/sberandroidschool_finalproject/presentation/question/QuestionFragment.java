@@ -15,9 +15,10 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.aka_npou.sberandroidschool_finalproject.R;
-import com.aka_npou.sberandroidschool_finalproject.data.dataSource.IQuestionDataBaseApi;
+import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionConverter;
+import com.aka_npou.sberandroidschool_finalproject.data.dataSource.IQuestionDao;
 import com.aka_npou.sberandroidschool_finalproject.data.dataSource.inClassDataBase.InClassDataBase;
-import com.aka_npou.sberandroidschool_finalproject.data.dataSource.inClassDataBase.InClassQuestionDataBaseApi;
+import com.aka_npou.sberandroidschool_finalproject.data.dataSource.inClassDataBase.InClassQuestionDao;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
 import com.aka_npou.sberandroidschool_finalproject.data.repository.QuestionRepository;
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IQuestionInteractor;
@@ -59,22 +60,26 @@ public class QuestionFragment extends Fragment {
 
     private final IQuestionInteractor mQuestionInteractor;
     private final IStatisticInteractor mStatisticInteractor;
+    private final QuestionConverter mQuestionConverter;
 
     public static Fragment newInstance(IFragmentNavigation fragmentNavigation,
                                        ISchedulersProvider schedulersProvider,
                                        IQuestionInteractor questionInteractor,
-                                       IStatisticInteractor statisticInteractor) {
-        return new QuestionFragment(fragmentNavigation, schedulersProvider, questionInteractor, statisticInteractor);
+                                       IStatisticInteractor statisticInteractor,
+                                       QuestionConverter questionConverter) {
+        return new QuestionFragment(fragmentNavigation, schedulersProvider, questionInteractor, statisticInteractor, questionConverter);
     }
 
     public QuestionFragment(IFragmentNavigation fragmentNavigation,
                             ISchedulersProvider schedulersProvider,
                             IQuestionInteractor questionInteractor,
-                            IStatisticInteractor statisticInteractor) {
+                            IStatisticInteractor statisticInteractor,
+                            QuestionConverter questionConverter) {
         mFragmentNavigation = fragmentNavigation;
         mSchedulersProvider = schedulersProvider;
         mQuestionInteractor = questionInteractor;
         mStatisticInteractor = statisticInteractor;
+        mQuestionConverter = questionConverter;
     }
 
     @Nullable
@@ -107,7 +112,8 @@ public class QuestionFragment extends Fragment {
                         SelectTypeGameFragment.newInstance(mFragmentNavigation,
                                 mSchedulersProvider,
                                 mQuestionInteractor,
-                                mStatisticInteractor),
+                                mStatisticInteractor,
+                                mQuestionConverter),
                         SelectTypeGameFragment.TAG,
                         false));
 
@@ -158,8 +164,8 @@ public class QuestionFragment extends Fragment {
     private void createViewModel() {
 
         InClassDataBase dataBase = new InClassDataBase();
-        IQuestionDataBaseApi dataBaseApi = new InClassQuestionDataBaseApi(dataBase);
-        IQuestionRepository repository = new QuestionRepository(dataBaseApi);
+        IQuestionDao dataBaseApi = new InClassQuestionDao(dataBase);
+        IQuestionRepository repository = new QuestionRepository(dataBaseApi, mQuestionConverter);
 
         mViewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
             @NonNull
