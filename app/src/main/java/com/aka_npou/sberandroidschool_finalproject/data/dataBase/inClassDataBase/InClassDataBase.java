@@ -1,9 +1,7 @@
-package com.aka_npou.sberandroidschool_finalproject.data.dataSource.inClassDataBase;
+package com.aka_npou.sberandroidschool_finalproject.data.dataBase.inClassDataBase;
 
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
-import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
-import com.aka_npou.sberandroidschool_finalproject.domain.model.Statistic;
 
 import java.util.ArrayList;
 import java.util.Arrays;

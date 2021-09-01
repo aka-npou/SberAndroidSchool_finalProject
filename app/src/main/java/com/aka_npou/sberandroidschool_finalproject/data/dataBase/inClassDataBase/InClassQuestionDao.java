@@ -1,6 +1,6 @@
-package com.aka_npou.sberandroidschool_finalproject.data.dataSource.inClassDataBase;
+package com.aka_npou.sberandroidschool_finalproject.data.dataBase.inClassDataBase;
 
-import com.aka_npou.sberandroidschool_finalproject.data.dataSource.IQuestionDao;
+import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IQuestionDao;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
 
 public class InClassQuestionDao implements IQuestionDao {

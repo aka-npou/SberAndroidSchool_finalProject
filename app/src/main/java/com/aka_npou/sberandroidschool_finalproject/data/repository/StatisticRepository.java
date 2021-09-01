@@ -1,7 +1,7 @@
 package com.aka_npou.sberandroidschool_finalproject.data.repository;
 
 import com.aka_npou.sberandroidschool_finalproject.data.converter.IConverter;
-import com.aka_npou.sberandroidschool_finalproject.data.dataSource.IStatisticDao;
+import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IStatisticDao;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Statistic;
 import com.aka_npou.sberandroidschool_finalproject.domain.repository.IStatisticRepository;

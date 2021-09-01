@@ -1,4 +1,4 @@
-package com.aka_npou.sberandroidschool_finalproject.data.dataSource;
+package com.aka_npou.sberandroidschool_finalproject.data.dataBase;
 
 import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
 

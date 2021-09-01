@@ -16,9 +16,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.aka_npou.sberandroidschool_finalproject.R;
 import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionConverter;
-import com.aka_npou.sberandroidschool_finalproject.data.dataSource.IQuestionDao;
-import com.aka_npou.sberandroidschool_finalproject.data.dataSource.inClassDataBase.InClassDataBase;
-import com.aka_npou.sberandroidschool_finalproject.data.dataSource.inClassDataBase.InClassQuestionDao;
+import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IQuestionDao;
+import com.aka_npou.sberandroidschool_finalproject.data.dataBase.inClassDataBase.InClassDataBase;
+import com.aka_npou.sberandroidschool_finalproject.data.dataBase.inClassDataBase.InClassQuestionDao;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
 import com.aka_npou.sberandroidschool_finalproject.data.repository.QuestionRepository;
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IQuestionInteractor;

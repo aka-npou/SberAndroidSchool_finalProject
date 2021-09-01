@@ -1,7 +1,7 @@
 package com.aka_npou.sberandroidschool_finalproject.data.repository;
 
 import com.aka_npou.sberandroidschool_finalproject.data.converter.IConverter;
-import com.aka_npou.sberandroidschool_finalproject.data.dataSource.IQuestionDao;
+import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IQuestionDao;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
 import com.aka_npou.sberandroidschool_finalproject.domain.repository.IQuestionRepository;

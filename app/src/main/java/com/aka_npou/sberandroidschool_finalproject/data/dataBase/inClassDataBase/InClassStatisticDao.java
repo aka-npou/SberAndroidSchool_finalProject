@@ -1,6 +1,6 @@
-package com.aka_npou.sberandroidschool_finalproject.data.dataSource.inClassDataBase;
+package com.aka_npou.sberandroidschool_finalproject.data.dataBase.inClassDataBase;
 
-import com.aka_npou.sberandroidschool_finalproject.data.dataSource.IStatisticDao;
+import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IStatisticDao;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
 
 import java.util.Date;
