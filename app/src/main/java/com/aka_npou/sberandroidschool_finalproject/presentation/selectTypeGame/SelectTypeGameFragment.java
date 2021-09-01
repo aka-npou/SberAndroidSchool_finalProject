@@ -11,23 +11,37 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.aka_npou.sberandroidschool_finalproject.R;
+import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IQuestionInteractor;
+import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticInteractor;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragmentNavigation;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
 import com.aka_npou.sberandroidschool_finalproject.presentation.question.QuestionFragment;
+import com.aka_npou.sberandroidschool_finalproject.presentation.statistic.StatisticFragment;
 
 public class SelectTypeGameFragment extends Fragment {
-    public final static String TAG = SelectTypeGameFragment.class.getName();
+    public final static String TAG = SelectTypeGameFragment.class.getSimpleName();
 
     private final IFragmentNavigation mFragmentNavigation;
     private final ISchedulersProvider mSchedulersProvider;
 
-    public static Fragment newInstance(IFragmentNavigation fragmentNavigation, ISchedulersProvider schedulersProvider) {
-        return new SelectTypeGameFragment(fragmentNavigation, schedulersProvider);
+    private final IQuestionInteractor mQuestionInteractor;
+    private final IStatisticInteractor mStatisticInteractor;
+
+    public static Fragment newInstance(IFragmentNavigation fragmentNavigation,
+                                       ISchedulersProvider schedulersProvider,
+                                       IQuestionInteractor questionInteractor,
+                                       IStatisticInteractor statisticInteractor) {
+        return new SelectTypeGameFragment(fragmentNavigation, schedulersProvider, questionInteractor, statisticInteractor);
     }
 
-    public SelectTypeGameFragment(IFragmentNavigation fragmentNavigation, ISchedulersProvider schedulersProvider) {
+    public SelectTypeGameFragment(IFragmentNavigation fragmentNavigation,
+                                  ISchedulersProvider schedulersProvider,
+                                  IQuestionInteractor questionInteractor,
+                                  IStatisticInteractor statisticInteractor) {
         mFragmentNavigation = fragmentNavigation;
         mSchedulersProvider = schedulersProvider;
+        mQuestionInteractor = questionInteractor;
+        mStatisticInteractor = statisticInteractor;
     }
 
     @Nullable
@@ -39,8 +53,22 @@ public class SelectTypeGameFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button buttonStartSimpleGame = view.findViewById(R.id.start_simple_game_button);
-
         buttonStartSimpleGame.setOnClickListener(viewButton ->
-                mFragmentNavigation.replace(QuestionFragment.newInstance(mFragmentNavigation, mSchedulersProvider), QuestionFragment.TAG));
+                mFragmentNavigation.replace(
+                        QuestionFragment.newInstance(mFragmentNavigation,
+                                mSchedulersProvider,
+                                mQuestionInteractor,
+                                mStatisticInteractor),
+                        QuestionFragment.TAG,
+                        false));
+
+        Button buttonOpenProfile = view.findViewById(R.id.open_profile_button);
+        buttonOpenProfile.setOnClickListener(viewButton ->
+                mFragmentNavigation.replace(
+                        StatisticFragment.newInstance(mFragmentNavigation,
+                                mSchedulersProvider,
+                                mStatisticInteractor),
+                        StatisticFragment.TAG,
+                        true));
     }
 }

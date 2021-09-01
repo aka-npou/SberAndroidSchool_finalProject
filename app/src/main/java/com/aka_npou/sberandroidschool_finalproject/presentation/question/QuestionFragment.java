@@ -15,25 +15,25 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.aka_npou.sberandroidschool_finalproject.R;
-import com.aka_npou.sberandroidschool_finalproject.data.dataSource.IDataBaseApi;
+import com.aka_npou.sberandroidschool_finalproject.data.dataSource.IQuestionDataBaseApi;
 import com.aka_npou.sberandroidschool_finalproject.data.dataSource.inClassDataBase.InClassDataBase;
-import com.aka_npou.sberandroidschool_finalproject.data.dataSource.inClassDataBase.InClassDataBaseApi;
-import com.aka_npou.sberandroidschool_finalproject.data.model.Question;
-import com.aka_npou.sberandroidschool_finalproject.data.repository.InClassQuestionRepository;
+import com.aka_npou.sberandroidschool_finalproject.data.dataSource.inClassDataBase.InClassQuestionDataBaseApi;
+import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
+import com.aka_npou.sberandroidschool_finalproject.data.repository.QuestionRepository;
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IQuestionInteractor;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.InClassQuestionInteractor;
+import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticInteractor;
 import com.aka_npou.sberandroidschool_finalproject.domain.repository.IQuestionRepository;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragmentNavigation;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
-import com.aka_npou.sberandroidschool_finalproject.presentation.common.SchedulersProvider;
 import com.aka_npou.sberandroidschool_finalproject.presentation.selectTypeGame.SelectTypeGameFragment;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Single;
 
 public class QuestionFragment extends Fragment {
-    public final static String TAG = QuestionFragment.class.getName();
+    public final static String TAG = QuestionFragment.class.getSimpleName();
 
     private QuestionViewModel mViewModel;
 
@@ -57,13 +57,24 @@ public class QuestionFragment extends Fragment {
 
     private boolean checkAnswer;
 
-    public static Fragment newInstance(IFragmentNavigation fragmentNavigation, ISchedulersProvider schedulersProvider) {
-        return new QuestionFragment(fragmentNavigation, schedulersProvider);
+    private final IQuestionInteractor mQuestionInteractor;
+    private final IStatisticInteractor mStatisticInteractor;
+
+    public static Fragment newInstance(IFragmentNavigation fragmentNavigation,
+                                       ISchedulersProvider schedulersProvider,
+                                       IQuestionInteractor questionInteractor,
+                                       IStatisticInteractor statisticInteractor) {
+        return new QuestionFragment(fragmentNavigation, schedulersProvider, questionInteractor, statisticInteractor);
     }
 
-    public QuestionFragment(IFragmentNavigation fragmentNavigation, ISchedulersProvider schedulersProvider) {
+    public QuestionFragment(IFragmentNavigation fragmentNavigation,
+                            ISchedulersProvider schedulersProvider,
+                            IQuestionInteractor questionInteractor,
+                            IStatisticInteractor statisticInteractor) {
         mFragmentNavigation = fragmentNavigation;
         mSchedulersProvider = schedulersProvider;
+        mQuestionInteractor = questionInteractor;
+        mStatisticInteractor = statisticInteractor;
     }
 
     @Nullable
@@ -92,7 +103,13 @@ public class QuestionFragment extends Fragment {
         buttonAnswer4.setOnClickListener(viewButton -> onClickAnswer(3));
 
         buttonEndGame.setOnClickListener(viewButton ->
-                mFragmentNavigation.replace(SelectTypeGameFragment.newInstance(mFragmentNavigation, mSchedulersProvider), SelectTypeGameFragment.TAG));
+                mFragmentNavigation.replace(
+                        SelectTypeGameFragment.newInstance(mFragmentNavigation,
+                                mSchedulersProvider,
+                                mQuestionInteractor,
+                                mStatisticInteractor),
+                        SelectTypeGameFragment.TAG,
+                        false));
 
         createViewModel();
         observeLiveData();
@@ -116,6 +133,11 @@ public class QuestionFragment extends Fragment {
             answerColor.setCardBackgroundColor(getResources().getColor(R.color.red));
         }
 
+        mViewModel.addAnswerResult(currentQuestion.getId(),
+                 indexAnswer,
+                currentQuestion.getCorrectAnswerIndex() == indexAnswer,
+                 new Date());
+
         Single.just("")
                 .subscribeOn(mSchedulersProvider.io())
                 .observeOn(mSchedulersProvider.ui())
@@ -136,22 +158,20 @@ public class QuestionFragment extends Fragment {
     private void createViewModel() {
 
         InClassDataBase dataBase = new InClassDataBase();
-        IDataBaseApi dataBaseApi = new InClassDataBaseApi(dataBase);
-        IQuestionRepository repository = new InClassQuestionRepository(dataBaseApi);
-        IQuestionInteractor interactor = new InClassQuestionInteractor(repository);
-        ISchedulersProvider schedulersProvider = new SchedulersProvider();
+        IQuestionDataBaseApi dataBaseApi = new InClassQuestionDataBaseApi(dataBase);
+        IQuestionRepository repository = new QuestionRepository(dataBaseApi);
 
         mViewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new QuestionViewModel(interactor, schedulersProvider);
+                return (T) new QuestionViewModel(mQuestionInteractor, mStatisticInteractor, mSchedulersProvider);
             }
         }).get(QuestionViewModel.class);
     }
 
     private void observeLiveData() {
-        mViewModel.getMyLiveData().observe(getViewLifecycleOwner(), this::showData);
+        mViewModel.getQuestionLiveData().observe(getViewLifecycleOwner(), this::showData);
     }
 
     private void showData(@NonNull Question question) {
