@@ -14,6 +14,6 @@ public class QuestionInteractor implements IQuestionInteractor{
 
     @Override
     public Single<Question> getQuestion() {
-        return Single.fromCallable(() -> mQuestionRepository.getQuestion());
+        return Single.fromCallable(mQuestionRepository::getQuestion);
     }
 }

@@ -19,7 +19,7 @@ public class QuestionViewModel extends ViewModel {
     private final ISchedulersProvider mSchedulersProvider;
 
     private final MutableLiveData<Question> mQuestionLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Long> mStatisticLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> mStatisticLiveData = new MutableLiveData<>();
 
     private Disposable mDisposable;
 
@@ -42,7 +42,7 @@ public class QuestionViewModel extends ViewModel {
         mDisposable = mStatisticInteractor.addAnswerResult(questionId, answerIndex, isCorrectAnswer, dateOfAnswer)
                 .subscribeOn(mSchedulersProvider.io())
                 .observeOn(mSchedulersProvider.ui())
-                .subscribe(mStatisticLiveData::setValue);
+                .subscribe(() -> mStatisticLiveData.setValue(true), t -> mStatisticLiveData.setValue(false));
     }
 
     @Override
@@ -59,7 +59,7 @@ public class QuestionViewModel extends ViewModel {
         return mQuestionLiveData;
     }
 
-    public LiveData<Long> getStatisticLiveData() {
+    public LiveData<Boolean> getStatisticLiveData() {
         return mStatisticLiveData;
     }
 }

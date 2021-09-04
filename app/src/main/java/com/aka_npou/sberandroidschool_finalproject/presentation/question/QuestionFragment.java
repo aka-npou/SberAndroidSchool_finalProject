@@ -1,6 +1,7 @@
 package com.aka_npou.sberandroidschool_finalproject.presentation.question;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,18 +17,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.aka_npou.sberandroidschool_finalproject.R;
 import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionConverter;
-import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IQuestionDao;
-import com.aka_npou.sberandroidschool_finalproject.data.dataBase.inClassDataBase.InClassDataBase;
-import com.aka_npou.sberandroidschool_finalproject.data.dataBase.inClassDataBase.InClassQuestionDao;
-import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
-import com.aka_npou.sberandroidschool_finalproject.data.repository.QuestionRepository;
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IQuestionInteractor;
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticInteractor;
-import com.aka_npou.sberandroidschool_finalproject.domain.repository.IQuestionRepository;
+import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragmentNavigation;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
 import com.aka_npou.sberandroidschool_finalproject.presentation.selectTypeGame.SelectTypeGameFragment;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -139,10 +136,12 @@ public class QuestionFragment extends Fragment {
             answerColor.setCardBackgroundColor(getResources().getColor(R.color.red));
         }
 
+        Date startCurrentDate = getStartCurrentDate();
+        Log.i(TAG, "onClickAnswer: " + startCurrentDate);
         mViewModel.addAnswerResult(currentQuestion.getId(),
                  indexAnswer,
                 currentQuestion.getCorrectAnswerIndex() == indexAnswer,
-                 new Date());
+                startCurrentDate);
 
         Single.just("")
                 .subscribeOn(mSchedulersProvider.io())
@@ -162,11 +161,6 @@ public class QuestionFragment extends Fragment {
     }
 
     private void createViewModel() {
-
-        InClassDataBase dataBase = new InClassDataBase();
-        IQuestionDao dataBaseApi = new InClassQuestionDao(dataBase);
-        IQuestionRepository repository = new QuestionRepository(dataBaseApi, mQuestionConverter);
-
         mViewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
             @NonNull
             @Override
@@ -191,5 +185,18 @@ public class QuestionFragment extends Fragment {
         buttonAnswer4.setText(question.getAnswers().get(3));
 
         currentQuestion = question;
+    }
+
+    private Date getStartCurrentDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DATE),
+                0,
+                0,
+                0);
+
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
     }
 }

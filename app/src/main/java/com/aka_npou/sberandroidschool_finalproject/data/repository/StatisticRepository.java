@@ -21,14 +21,14 @@ public class StatisticRepository implements IStatisticRepository {
 
 
     @Override
-    public long addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer) {
-        return mStatisticDao.addAnswerResult(new StatisticEntity(0, answerIndex, isCorrectAnswer, dateOfAnswer.getTime()));
+    public boolean addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer) {
+        return mStatisticDao.addAnswerResult(new StatisticEntity(0, questionId, answerIndex, isCorrectAnswer, dateOfAnswer.getTime()));
     }
 
     @Override
     public List<Statistic> getStatisticForPeriod(Date from, Date to) {
 
-        List<StatisticEntity> statisticEntityList = mStatisticDao.getStatisticForPeriod(from, to);
+        List<StatisticEntity> statisticEntityList = mStatisticDao.getStatisticForPeriod(from.getTime(), to.getTime());
 
         List<Statistic> statisticList = new ArrayList<>();
 

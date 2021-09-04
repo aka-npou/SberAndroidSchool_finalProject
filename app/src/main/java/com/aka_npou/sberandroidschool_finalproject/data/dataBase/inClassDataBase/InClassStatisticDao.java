@@ -3,7 +3,6 @@ package com.aka_npou.sberandroidschool_finalproject.data.dataBase.inClassDataBas
 import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IStatisticDao;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
 
-import java.util.Date;
 import java.util.List;
 
 public class InClassStatisticDao implements IStatisticDao {
@@ -15,12 +14,12 @@ public class InClassStatisticDao implements IStatisticDao {
     }
 
     @Override
-    public long addAnswerResult(StatisticEntity entity) {
+    public boolean addAnswerResult(StatisticEntity entity) {
         return inClassDataBase.addStatistic(entity);
     }
 
     @Override
-    public List<StatisticEntity> getStatisticForPeriod(Date from, Date to) {
+    public List<StatisticEntity> getStatisticForPeriod(long from, long to) {
         return inClassDataBase.getStatisticForPeriod(from, to);
     }
 }

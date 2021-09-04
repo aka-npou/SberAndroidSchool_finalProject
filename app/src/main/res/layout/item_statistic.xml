@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="36dp"
+    android:layout_height="100dp"
+    android:background="@color/black">
+
+    <ImageView
+        android:id="@+id/statistic_count_questions"
+        android:layout_width="14dp"
+        android:layout_height="80dp"
+        android:layout_gravity="start|bottom"
+        android:layout_marginStart="3dp"
+        android:background="@color/purple_700"
+        android:contentDescription="TODO" />
+
+    <ImageView
+        android:id="@+id/statistic_percentage_of_correct_answers"
+        android:layout_width="14dp"
+        android:layout_height="70dp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="3dp"
+        android:background="@color/teal_700"
+        android:contentDescription="TODO" />
+
+</FrameLayout>
