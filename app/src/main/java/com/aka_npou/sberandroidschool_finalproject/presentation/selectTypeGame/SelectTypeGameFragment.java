@@ -16,6 +16,7 @@ import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IQuestionIn
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticInteractor;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragmentNavigation;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
+import com.aka_npou.sberandroidschool_finalproject.presentation.profile.ProfileFragment;
 import com.aka_npou.sberandroidschool_finalproject.presentation.question.QuestionFragment;
 import com.aka_npou.sberandroidschool_finalproject.presentation.statistic.StatisticFragment;
 
@@ -71,7 +72,7 @@ public class SelectTypeGameFragment extends Fragment {
         Button buttonOpenProfile = view.findViewById(R.id.open_profile_button);
         buttonOpenProfile.setOnClickListener(viewButton ->
                 mFragmentNavigation.replace(
-                        StatisticFragment.newInstance(mFragmentNavigation,
+                        ProfileFragment.newInstance(mFragmentNavigation,
                                 mSchedulersProvider,
                                 mStatisticInteractor),
                         StatisticFragment.TAG,
