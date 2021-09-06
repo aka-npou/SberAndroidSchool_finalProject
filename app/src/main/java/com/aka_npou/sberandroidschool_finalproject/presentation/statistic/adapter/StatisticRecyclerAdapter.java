@@ -13,9 +13,13 @@ import com.aka_npou.sberandroidschool_finalproject.R;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.DailyStatistics;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Statistic;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecyclerAdapter.StatisticViewHolder> {
+
+    private static final String pattern = "dd";
+    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
     private final List<DailyStatistics> mStatisticList;
     private int mMaxCountQuestionPerDay = 0;
@@ -63,12 +67,14 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
 
         ImageView statisticCountQuestions;
         ImageView statisticPercentageOfCorrectAnswers;
+        TextView statisticDate;
 
         public StatisticViewHolder(@NonNull View itemView) {
             super(itemView);
 
             statisticCountQuestions = itemView.findViewById(R.id.statistic_count_questions);
             statisticPercentageOfCorrectAnswers = itemView.findViewById(R.id.statistic_percentage_of_correct_answers);
+            statisticDate = itemView.findViewById(R.id.statistic_date);
         }
 
         void bindView(@NonNull DailyStatistics dailyStatistics, int maxCountQuestionPerDay) {
@@ -79,6 +85,7 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
                 statisticCountQuestions.getLayoutParams().height = (int) (100 * dailyStatistics.getCountQuestions() / maxCountQuestionPerDay * itemView.getContext().getResources().getDisplayMetrics().density);
                 statisticPercentageOfCorrectAnswers.getLayoutParams().height = (int) (100 * dailyStatistics.getCountCorrectQuestions() / dailyStatistics.getCountQuestions() * itemView.getContext().getResources().getDisplayMetrics().density);
             }
+            statisticDate.setText(simpleDateFormat.format(dailyStatistics.getDateOfAnswer()));
         }
     }
 }
