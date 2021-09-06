@@ -1,5 +1,6 @@
 package com.aka_npou.sberandroidschool_finalproject.data.dataBase.inClassDataBase;
 
+import com.aka_npou.sberandroidschool_finalproject.data.entity.ProfileEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
 
@@ -13,6 +14,7 @@ import java.util.Random;
 public class InClassDataBase {
     private List<QuestionEntity> questionList;
     private List<StatisticEntity> statisticList;
+    private List<ProfileEntity> profileList;
 
     public InClassDataBase() {
         initDataBase();
@@ -96,6 +98,9 @@ public class InClassDataBase {
         statisticList.add(new StatisticEntity(3, 3, 1, true, calendar.getTimeInMillis()));
         statisticList.add(new StatisticEntity(3, 3, 1, true, calendar.getTimeInMillis()));
         statisticList.add(new StatisticEntity(3, 3, 1, true, calendar.getTimeInMillis()));
+
+        profileList = new ArrayList<>();
+        profileList.add(new ProfileEntity(1, "empty name", ""));
     }
 
     public QuestionEntity getQuestion() {
@@ -119,5 +124,15 @@ public class InClassDataBase {
         }
 
         return list;
+    }
+
+    public boolean editProfile(ProfileEntity entity) {
+        profileList.clear();
+        profileList.add(entity);
+        return true;
+    }
+
+    public ProfileEntity getProfile() {
+        return profileList.get(0);
     }
 }

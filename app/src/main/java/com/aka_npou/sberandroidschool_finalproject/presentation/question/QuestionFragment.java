@@ -57,26 +57,22 @@ public class QuestionFragment extends Fragment {
 
     private final IQuestionInteractor mQuestionInteractor;
     private final IStatisticInteractor mStatisticInteractor;
-    private final QuestionConverter mQuestionConverter;
 
     public static Fragment newInstance(IFragmentNavigation fragmentNavigation,
                                        ISchedulersProvider schedulersProvider,
                                        IQuestionInteractor questionInteractor,
-                                       IStatisticInteractor statisticInteractor,
-                                       QuestionConverter questionConverter) {
-        return new QuestionFragment(fragmentNavigation, schedulersProvider, questionInteractor, statisticInteractor, questionConverter);
+                                       IStatisticInteractor statisticInteractor) {
+        return new QuestionFragment(fragmentNavigation, schedulersProvider, questionInteractor, statisticInteractor);
     }
 
     public QuestionFragment(IFragmentNavigation fragmentNavigation,
                             ISchedulersProvider schedulersProvider,
                             IQuestionInteractor questionInteractor,
-                            IStatisticInteractor statisticInteractor,
-                            QuestionConverter questionConverter) {
+                            IStatisticInteractor statisticInteractor) {
         mFragmentNavigation = fragmentNavigation;
         mSchedulersProvider = schedulersProvider;
         mQuestionInteractor = questionInteractor;
         mStatisticInteractor = statisticInteractor;
-        mQuestionConverter = questionConverter;
     }
 
     @Nullable
@@ -105,14 +101,7 @@ public class QuestionFragment extends Fragment {
         buttonAnswer4.setOnClickListener(viewButton -> onClickAnswer(3));
 
         buttonEndGame.setOnClickListener(viewButton ->
-                mFragmentNavigation.replace(
-                        SelectTypeGameFragment.newInstance(mFragmentNavigation,
-                                mSchedulersProvider,
-                                mQuestionInteractor,
-                                mStatisticInteractor,
-                                mQuestionConverter),
-                        SelectTypeGameFragment.TAG,
-                        false));
+                mFragmentNavigation.replace(SelectTypeGameFragment.TAG, false));
 
         createViewModel();
         observeLiveData();

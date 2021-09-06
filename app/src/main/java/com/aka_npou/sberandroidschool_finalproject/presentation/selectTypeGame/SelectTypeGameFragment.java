@@ -24,30 +24,13 @@ public class SelectTypeGameFragment extends Fragment {
     public final static String TAG = SelectTypeGameFragment.class.getSimpleName();
 
     private final IFragmentNavigation mFragmentNavigation;
-    private final ISchedulersProvider mSchedulersProvider;
 
-    private final IQuestionInteractor mQuestionInteractor;
-    private final IStatisticInteractor mStatisticInteractor;
-    private final QuestionConverter mQuestionConverter;
-
-    public static Fragment newInstance(IFragmentNavigation fragmentNavigation,
-                                       ISchedulersProvider schedulersProvider,
-                                       IQuestionInteractor questionInteractor,
-                                       IStatisticInteractor statisticInteractor,
-                                       QuestionConverter questionConverter) {
-        return new SelectTypeGameFragment(fragmentNavigation, schedulersProvider, questionInteractor, statisticInteractor, questionConverter);
+    public static Fragment newInstance(IFragmentNavigation fragmentNavigation) {
+        return new SelectTypeGameFragment(fragmentNavigation);
     }
 
-    public SelectTypeGameFragment(IFragmentNavigation fragmentNavigation,
-                                  ISchedulersProvider schedulersProvider,
-                                  IQuestionInteractor questionInteractor,
-                                  IStatisticInteractor statisticInteractor,
-                                  QuestionConverter questionConverter) {
+    public SelectTypeGameFragment(IFragmentNavigation fragmentNavigation) {
         mFragmentNavigation = fragmentNavigation;
-        mSchedulersProvider = schedulersProvider;
-        mQuestionInteractor = questionInteractor;
-        mStatisticInteractor = statisticInteractor;
-        mQuestionConverter = questionConverter;
     }
 
     @Nullable
@@ -60,22 +43,10 @@ public class SelectTypeGameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button buttonStartSimpleGame = view.findViewById(R.id.start_simple_game_button);
         buttonStartSimpleGame.setOnClickListener(viewButton ->
-                mFragmentNavigation.replace(
-                        QuestionFragment.newInstance(mFragmentNavigation,
-                                mSchedulersProvider,
-                                mQuestionInteractor,
-                                mStatisticInteractor,
-                                mQuestionConverter),
-                        QuestionFragment.TAG,
-                        false));
+                mFragmentNavigation.replace(QuestionFragment.TAG, false));
 
         Button buttonOpenProfile = view.findViewById(R.id.open_profile_button);
         buttonOpenProfile.setOnClickListener(viewButton ->
-                mFragmentNavigation.replace(
-                        ProfileFragment.newInstance(mFragmentNavigation,
-                                mSchedulersProvider,
-                                mStatisticInteractor),
-                        StatisticFragment.TAG,
-                        true));
+                mFragmentNavigation.replace(ProfileFragment.TAG, true));
     }
 }
