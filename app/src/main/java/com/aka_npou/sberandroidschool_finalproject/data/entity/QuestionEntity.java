@@ -1,20 +1,26 @@
 package com.aka_npou.sberandroidschool_finalproject.data.entity;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.List;
 
+@Entity(tableName = "questions")
 public class QuestionEntity {
+    @PrimaryKey(autoGenerate = true)
     public long id;
     public String questionText;
-    public List<String> answers;
     public int correctAnswerIndex;
 
     public QuestionEntity() {
     }
 
-    public QuestionEntity(long id, String questionText, List<String> answers, int correctAnswerIndex) {
+    @Ignore
+    public QuestionEntity(long id, String questionText, int correctAnswerIndex) {
         this.id = id;
         this.questionText = questionText;
-        this.answers = answers;
         this.correctAnswerIndex = correctAnswerIndex;
     }
 }

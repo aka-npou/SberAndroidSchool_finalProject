@@ -21,8 +21,8 @@ public class StatisticRepository implements IStatisticRepository {
 
 
     @Override
-    public boolean addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer) {
-        return mStatisticDao.addAnswerResult(new StatisticEntity(0, questionId, answerIndex, isCorrectAnswer, dateOfAnswer.getTime()));
+    public void addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer) {
+        mStatisticDao.addAnswerResult(new StatisticEntity(0, questionId, answerIndex, isCorrectAnswer, dateOfAnswer.getTime()));
     }
 
     @Override

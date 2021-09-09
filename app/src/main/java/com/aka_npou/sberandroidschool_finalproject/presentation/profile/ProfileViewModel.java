@@ -1,5 +1,7 @@
 package com.aka_npou.sberandroidschool_finalproject.presentation.profile;
 
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -22,7 +24,7 @@ public class ProfileViewModel extends ViewModel {
     private Disposable mDisposable;
 
     public ProfileViewModel(IProfileInteractor profileInteractor,
-                              ISchedulersProvider schedulersProvider) {
+                            ISchedulersProvider schedulersProvider) {
         this.profileInteractor = profileInteractor;
         this.schedulersProvider = schedulersProvider;
     }
@@ -46,7 +48,14 @@ public class ProfileViewModel extends ViewModel {
                 .subscribe(profileLiveData::setValue, mErrorLiveData::setValue);
     }
 
-
+    public void saveProfile(Profile profile) {
+        mDisposable = profileInteractor.editProfile(profile)
+                .doOnSubscribe(disposable -> mProgressLiveData.postValue(true))
+                .doAfterTerminate(() -> mProgressLiveData.postValue(false))
+                .subscribeOn(schedulersProvider.io())
+                .observeOn(schedulersProvider.ui())
+                .subscribe(() -> profileEditLiveData.postValue(true), mErrorLiveData::setValue);
+    }
 
     public LiveData<Boolean> getProgressLiveData() {
         return mProgressLiveData;
@@ -62,14 +71,5 @@ public class ProfileViewModel extends ViewModel {
 
     public LiveData<Boolean> getProfileEditLiveData() {
         return profileEditLiveData;
-    }
-
-    public void saveProfile(Profile profile) {
-        mDisposable = profileInteractor.editProfile(profile)
-                .doOnSubscribe(disposable -> mProgressLiveData.postValue(true))
-                .doAfterTerminate(() -> mProgressLiveData.postValue(false))
-                .subscribeOn(schedulersProvider.io())
-                .observeOn(schedulersProvider.ui())
-                .subscribe(() -> profileEditLiveData.postValue(true), mErrorLiveData::setValue);
     }
 }

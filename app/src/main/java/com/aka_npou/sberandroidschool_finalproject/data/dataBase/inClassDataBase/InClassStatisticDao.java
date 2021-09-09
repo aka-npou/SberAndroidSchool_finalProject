@@ -14,8 +14,8 @@ public class InClassStatisticDao implements IStatisticDao {
     }
 
     @Override
-    public boolean addAnswerResult(StatisticEntity entity) {
-        return inClassDataBase.addStatistic(entity);
+    public void addAnswerResult(StatisticEntity entity) {
+        inClassDataBase.addStatistic(entity);
     }
 
     @Override

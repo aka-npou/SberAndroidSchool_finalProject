@@ -23,7 +23,10 @@ public class StatisticInteractor implements IStatisticInteractor {
 
     @Override
     public Completable addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer) {
-        return Completable.fromCallable(() -> mStatisticRepository.addAnswerResult(questionId, answerIndex, isCorrectAnswer, dateOfAnswer));
+        return Completable.fromCallable(() -> {
+            mStatisticRepository.addAnswerResult(questionId, answerIndex, isCorrectAnswer, dateOfAnswer);
+            return true;
+        });
     }
 
     @Override

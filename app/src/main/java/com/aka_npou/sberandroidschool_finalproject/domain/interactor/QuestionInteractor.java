@@ -3,6 +3,7 @@ package com.aka_npou.sberandroidschool_finalproject.domain.interactor;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
 import com.aka_npou.sberandroidschool_finalproject.domain.repository.IQuestionRepository;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public class QuestionInteractor implements IQuestionInteractor{
@@ -15,5 +16,10 @@ public class QuestionInteractor implements IQuestionInteractor{
     @Override
     public Single<Question> getQuestion() {
         return Single.fromCallable(mQuestionRepository::getQuestion);
+    }
+
+    @Override
+    public Completable initDB() {
+        return Completable.fromAction(mQuestionRepository::initDB);
     }
 }

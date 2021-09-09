@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface IStatisticRepository {
-    boolean addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer);
+    void addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer);
 
     List<Statistic> getStatisticForPeriod(Date from, Date to);
 }

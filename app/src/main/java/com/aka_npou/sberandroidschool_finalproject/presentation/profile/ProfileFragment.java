@@ -122,7 +122,8 @@ public class ProfileFragment extends Fragment {
                                 Uri uri = data.getData();
                                 setImageBitmap(uri.toString());
 
-                                mViewModel.saveProfile(new Profile(profile.getId(), profile.getName(), uri.toString()));
+                                profile = new Profile(profile.getName(), uri.toString());
+                                mViewModel.saveProfile(profile);
                             }
                         }
                     }
@@ -169,6 +170,10 @@ public class ProfileFragment extends Fragment {
     }
 
     private Bitmap getImage(String imageFilePath) {
+        if (imageFilePath.equals("")) {
+            return null;
+        }
+
         Uri uri = Uri.parse(imageFilePath);
         try {
             InputStream inputStream = getContext().getApplicationContext().getContentResolver().openInputStream(uri);
@@ -203,7 +208,8 @@ public class ProfileFragment extends Fragment {
     private void saveProfileName() {
         if (inputProfileName.getText() != null && !inputProfileName.getText().equals("")) {
             profileName.setText(inputProfileName.getText());
-            mViewModel.saveProfile(new Profile(profile.getId(), String.valueOf(profileName.getText()), profile.getImageFilePath()));
+            profile = new Profile(String.valueOf(profileName.getText()), profile.getImageFilePath());
+            mViewModel.saveProfile(profile);
         }
         editProfileName(false);
     }

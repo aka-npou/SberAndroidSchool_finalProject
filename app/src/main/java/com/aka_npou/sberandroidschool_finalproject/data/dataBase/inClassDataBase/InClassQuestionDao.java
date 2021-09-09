@@ -1,7 +1,9 @@
 package com.aka_npou.sberandroidschool_finalproject.data.dataBase.inClassDataBase;
 
 import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IQuestionDao;
+import com.aka_npou.sberandroidschool_finalproject.data.entity.AnswerEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
+import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionWithAnswers;
 
 public class InClassQuestionDao implements IQuestionDao {
 
@@ -12,7 +14,17 @@ public class InClassQuestionDao implements IQuestionDao {
     }
 
     @Override
-    public QuestionEntity getQuestion() {
-        return inClassDataBase.getQuestion();
+    public QuestionWithAnswers getQuestion() {
+        return null;
+    }
+
+    @Override
+    public void addQuestion(QuestionEntity entity) {
+
+    }
+
+    @Override
+    public void addAnswers(AnswerEntity entity) {
+
     }
 }

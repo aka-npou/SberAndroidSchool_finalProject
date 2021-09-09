@@ -1,11 +1,9 @@
 package com.aka_npou.sberandroidschool_finalproject.data.dataBase.inClassDataBase;
 
-import com.aka_npou.sberandroidschool_finalproject.data.entity.ProfileEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -14,7 +12,6 @@ import java.util.Random;
 public class InClassDataBase {
     private List<QuestionEntity> questionList;
     private List<StatisticEntity> statisticList;
-    private List<ProfileEntity> profileList;
 
     public InClassDataBase() {
         initDataBase();
@@ -23,14 +20,14 @@ public class InClassDataBase {
     private void initDataBase() {
         questionList = new ArrayList<>();
 
-        questionList.add(new QuestionEntity(1, "2+2", Arrays.asList("1", "2", "3", "4"), 3));
-        questionList.add(new QuestionEntity(2, "3+3", Arrays.asList("6", "2", "3", "4"), 0));
-        questionList.add(new QuestionEntity(3, "4+4", Arrays.asList("1", "8", "3", "4"), 1));
-        questionList.add(new QuestionEntity(4, "5+5", Arrays.asList("1", "2", "10", "4"), 2));
-        questionList.add(new QuestionEntity(5, "6+6", Arrays.asList("1", "12", "10", "4"), 1));
-        questionList.add(new QuestionEntity(6, "7+7", Arrays.asList("1", "2", "10", "14"), 3));
-        questionList.add(new QuestionEntity(7, "8+8", Arrays.asList("1", "2", "10", "16"), 3));
-        questionList.add(new QuestionEntity(8, "9+9", Arrays.asList("1", "18", "10", "4"), 1));
+        questionList.add(new QuestionEntity(1, "2+2", 3));
+        questionList.add(new QuestionEntity(2, "3+3", 0));
+        questionList.add(new QuestionEntity(3, "4+4", 1));
+        questionList.add(new QuestionEntity(4, "5+5", 2));
+        questionList.add(new QuestionEntity(5, "6+6", 1));
+        questionList.add(new QuestionEntity(6, "7+7", 3));
+        questionList.add(new QuestionEntity(7, "8+8", 3));
+        questionList.add(new QuestionEntity(8, "9+9", 1));
 
 
         statisticList = new ArrayList<>();
@@ -98,9 +95,6 @@ public class InClassDataBase {
         statisticList.add(new StatisticEntity(3, 3, 1, true, calendar.getTimeInMillis()));
         statisticList.add(new StatisticEntity(3, 3, 1, true, calendar.getTimeInMillis()));
         statisticList.add(new StatisticEntity(3, 3, 1, true, calendar.getTimeInMillis()));
-
-        profileList = new ArrayList<>();
-        profileList.add(new ProfileEntity(1, "empty name", ""));
     }
 
     public QuestionEntity getQuestion() {
@@ -109,9 +103,9 @@ public class InClassDataBase {
         return questionList.get(questionIndex);
     }
 
-    public boolean addStatistic(StatisticEntity statistic) {
+    public int addStatistic(StatisticEntity statistic) {
         statisticList.add(statistic);
-        return true;
+        return 1;
     }
 
     public List<StatisticEntity> getStatisticForPeriod(long from, long to) {
@@ -124,15 +118,5 @@ public class InClassDataBase {
         }
 
         return list;
-    }
-
-    public boolean editProfile(ProfileEntity entity) {
-        profileList.clear();
-        profileList.add(entity);
-        return true;
-    }
-
-    public ProfileEntity getProfile() {
-        return profileList.get(0);
     }
 }

@@ -1,25 +1,28 @@
 package com.aka_npou.sberandroidschool_finalproject.domain.interactor;
 
+import com.aka_npou.sberandroidschool_finalproject.data.store.IProfileStore;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Profile;
-import com.aka_npou.sberandroidschool_finalproject.domain.repository.IProfileRepository;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public class ProfileInteractor implements IProfileInteractor {
-    private final IProfileRepository profileRepository;
+    private final IProfileStore profileStore;
 
-    public ProfileInteractor(IProfileRepository profileRepository) {
-        this.profileRepository = profileRepository;
+    public ProfileInteractor(IProfileStore profileStore) {
+        this.profileStore = profileStore;
     }
 
     @Override
     public Completable editProfile(Profile profile) {
-        return Completable.fromCallable(() -> profileRepository.editProfile(profile));
+        return Completable.fromCallable(() -> {
+            profileStore.editProfile(profile);
+            return true;
+        });
     }
 
     @Override
     public Single<Profile> getProfile() {
-        return Single.fromCallable(profileRepository::getProfile);
+        return Single.fromCallable(profileStore::getProfile);
     }
 }
