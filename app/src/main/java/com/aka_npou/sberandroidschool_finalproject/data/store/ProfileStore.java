@@ -5,8 +5,6 @@ import android.util.Log;
 
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Profile;
 
-import java.util.List;
-
 public class ProfileStore implements IProfileStore{
     private final static String NAME_KEY = "NAME_KEY";
     private final static String IMAGE_FILE_PATH_KEY = "IMAGE_FILE_PATH_KEY";
@@ -23,7 +21,7 @@ public class ProfileStore implements IProfileStore{
                 .edit()
                 .putString(NAME_KEY, profile.getName())
                 .putString(IMAGE_FILE_PATH_KEY, profile.getImageFilePath())
-                .commit();
+                .apply();
         Log.i("TAG", "editProfile: " + profile.getName() + " " + profile.getImageFilePath());
     }
 

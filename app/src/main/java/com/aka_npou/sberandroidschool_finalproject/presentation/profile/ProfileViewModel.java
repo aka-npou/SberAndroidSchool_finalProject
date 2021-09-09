@@ -1,7 +1,5 @@
 package com.aka_npou.sberandroidschool_finalproject.presentation.profile;
 
-import android.content.SharedPreferences;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
