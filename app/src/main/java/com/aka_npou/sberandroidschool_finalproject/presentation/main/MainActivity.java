@@ -1,6 +1,5 @@
 package com.aka_npou.sberandroidschool_finalproject.presentation.main;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,32 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.room.Room;
 
+import com.aka_npou.sberandroidschool_finalproject.QuizApplication;
 import com.aka_npou.sberandroidschool_finalproject.R;
-import com.aka_npou.sberandroidschool_finalproject.data.converter.IConverter;
-import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionWithAnswersConverter;
-import com.aka_npou.sberandroidschool_finalproject.data.converter.StatisticConverter;
-import com.aka_npou.sberandroidschool_finalproject.data.dataBase.AppDataBase;
-import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IQuestionDao;
-import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IStatisticDao;
-import com.aka_npou.sberandroidschool_finalproject.data.repository.QuestionRepository;
-import com.aka_npou.sberandroidschool_finalproject.data.repository.StatisticRepository;
-import com.aka_npou.sberandroidschool_finalproject.data.store.IProfileStore;
-import com.aka_npou.sberandroidschool_finalproject.data.store.ProfileStore;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IProfileInteractor;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IQuestionInteractor;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticInteractor;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.ProfileInteractor;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.QuestionInteractor;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.StatisticInteractor;
-import com.aka_npou.sberandroidschool_finalproject.domain.repository.IQuestionRepository;
-import com.aka_npou.sberandroidschool_finalproject.domain.repository.IStatisticRepository;
+import com.aka_npou.sberandroidschool_finalproject.di.activity.ActivityComponent;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragmentNavigation;
-import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
-import com.aka_npou.sberandroidschool_finalproject.presentation.common.SchedulersProvider;
 import com.aka_npou.sberandroidschool_finalproject.presentation.profile.ProfileFragment;
 import com.aka_npou.sberandroidschool_finalproject.presentation.question.QuestionFragment;
 import com.aka_npou.sberandroidschool_finalproject.presentation.selectTypeGame.SelectTypeGameFragment;
@@ -45,13 +24,7 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private ISchedulersProvider schedulersProvider;
-
     private IFragmentNavigation mFragmentNavigation;
-
-    private IQuestionInteractor mQuestionInteractor;
-    private IStatisticInteractor mStatisticInteractor;
-    private IProfileInteractor mProfileInteractor;
 
     private MainActivityViewModel viewModel;
 
@@ -62,43 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-/*        RoomDatabase.Callback rdc = new RoomDatabase.Callback() {
-            public void onCreate (SupportSQLiteDatabase db) {
-                ContentValues contentValues = new ContentValues();
-                contentValues.put("text", "a1");
-                contentValues.put("question_id", "1");
-                db.insert("answers", OnConflictStrategy.IGNORE, contentValues);
-
-            }
-            public void onOpen (@NonNull SupportSQLiteDatabase db) {
-
-            }
-        };*/
-
-        AppDataBase appDataBase = Room.databaseBuilder(getApplicationContext(), AppDataBase.class, "appDB.db")
-                //.addCallback(rdc)
-                .build();
-
-        schedulersProvider = new SchedulersProvider();
-
         mFragmentNavigation = this::replaceFragment;
-
-        IQuestionDao questionDao = appDataBase.getQuestionDao();
-        IConverter mQuestionConverter = new QuestionWithAnswersConverter();
-        IQuestionRepository questionRepository = new QuestionRepository(questionDao, mQuestionConverter);
-        mQuestionInteractor = new QuestionInteractor(questionRepository);
-
-        IStatisticDao statisticDao = appDataBase.getStatisticDao();
-        StatisticConverter statisticConverter = new StatisticConverter();
-        IStatisticRepository statisticRepository = new StatisticRepository(statisticDao, statisticConverter);
-        mStatisticInteractor = new StatisticInteractor(statisticRepository);
-
-//        IProfileDao profileDao = appDataBase.getProfileDao();
-//        ProfileConverter profileConverter = new ProfileConverter();
-//        IProfileRepository profileRepository = new ProfileRepository(profileDao, profileConverter);
-        SharedPreferences sharedPreferences = getSharedPreferences("PROFILE", MODE_PRIVATE);
-        IProfileStore profileStore = new ProfileStore(sharedPreferences);
-        mProfileInteractor = new ProfileInteractor(profileStore);
 
         progressBar = findViewById(R.id.progress_main_activity);
 
@@ -123,24 +60,16 @@ public class MainActivity extends AppCompatActivity {
     private Fragment getFragment(String tagFragment) {
         switch (tagFragment) {
             case "QuestionFragment": {
-                return QuestionFragment.newInstance(mFragmentNavigation,
-                        schedulersProvider,
-                        mQuestionInteractor,
-                        mStatisticInteractor);
+                return QuestionFragment.newInstance(mFragmentNavigation);
             }
             case "SelectTypeGameFragment": {
                 return SelectTypeGameFragment.newInstance(mFragmentNavigation);
             }
             case "ProfileFragment": {
-                return ProfileFragment.newInstance(mFragmentNavigation,
-                        schedulersProvider,
-                        mProfileInteractor,
-                        mStatisticInteractor);
+                return ProfileFragment.newInstance();
             }
             case "StatisticFragment": {
-                return StatisticFragment.newInstance(mFragmentNavigation,
-                        schedulersProvider,
-                        mStatisticInteractor);
+                return StatisticFragment.newInstance();
             }
             default: {
                 throw new IllegalArgumentException("not support fragment " + tagFragment);
@@ -153,13 +82,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createViewModel() {
-        viewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
-            @NonNull
-            @Override
-            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new MainActivityViewModel(mQuestionInteractor, schedulersProvider);
-            }
-        }).get(MainActivityViewModel.class);
+        ActivityComponent activityComponent = QuizApplication.getAppComponent(this).getActivityComponent();
+        viewModel = new ViewModelProvider(this, activityComponent.getViewModelFactory()).get(MainActivityViewModel.class);
     }
 
     private void observeLiveData() {

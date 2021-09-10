@@ -21,15 +21,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.aka_npou.sberandroidschool_finalproject.QuizApplication;
 import com.aka_npou.sberandroidschool_finalproject.R;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IProfileInteractor;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticInteractor;
+import com.aka_npou.sberandroidschool_finalproject.di.activity.ActivityComponent;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Profile;
-import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragmentNavigation;
-import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
 import com.aka_npou.sberandroidschool_finalproject.presentation.selectTypeGame.SelectTypeGameFragment;
 import com.aka_npou.sberandroidschool_finalproject.presentation.statistic.StatisticFragment;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -42,12 +39,7 @@ import java.io.InputStream;
 public class ProfileFragment extends Fragment {
     public final static String TAG = ProfileFragment.class.getSimpleName();
 
-    private final IFragmentNavigation mFragmentNavigation;
-    private final ISchedulersProvider mSchedulersProvider;
-    private final IProfileInteractor profileInteractor;
-    private final IStatisticInteractor statisticInteractor;
-
-    private ProfileViewModel mViewModel;
+    private ProfileViewModel viewModel;
 
     ActivityResultLauncher<Intent> activityResultLauncher;
 
@@ -62,21 +54,11 @@ public class ProfileFragment extends Fragment {
 
     private Profile profile;
 
-    public static Fragment newInstance(IFragmentNavigation fragmentNavigation,
-                                       ISchedulersProvider schedulersProvider,
-                                       IProfileInteractor profileInteractor,
-                                       IStatisticInteractor statisticInteractor) {
-        return new ProfileFragment(fragmentNavigation, schedulersProvider, profileInteractor, statisticInteractor);
+    public static Fragment newInstance() {
+        return new ProfileFragment();
     }
 
-    public ProfileFragment(IFragmentNavigation fragmentNavigation,
-                           ISchedulersProvider schedulersProvider,
-                           IProfileInteractor profileInteractor,
-                           IStatisticInteractor statisticInteractor) {
-        mFragmentNavigation = fragmentNavigation;
-        mSchedulersProvider = schedulersProvider;
-        this.profileInteractor = profileInteractor;
-        this.statisticInteractor = statisticInteractor;
+    public ProfileFragment() {
     }
 
     @Nullable
@@ -105,9 +87,7 @@ public class ProfileFragment extends Fragment {
 
         getChildFragmentManager().beginTransaction()
                 .add(R.id.statistic_container,
-                        StatisticFragment.newInstance(mFragmentNavigation,
-                                mSchedulersProvider,
-                                statisticInteractor),
+                        StatisticFragment.newInstance(),
                         SelectTypeGameFragment.TAG)
                 .commit();
 
@@ -123,7 +103,7 @@ public class ProfileFragment extends Fragment {
                                 setImageBitmap(uri.toString());
 
                                 profile = new Profile(profile.getName(), uri.toString());
-                                mViewModel.saveProfile(profile);
+                                viewModel.saveProfile(profile);
                             }
                         }
                     }
@@ -133,24 +113,20 @@ public class ProfileFragment extends Fragment {
         observeLiveData();
 
         if (savedInstanceState == null) {
-            mViewModel.getProfileData();
+            viewModel.getProfileData();
         }
     }
 
     private void createViewModel() {
-        mViewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
-            @NonNull
-            @Override
-            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new ProfileViewModel(profileInteractor, mSchedulersProvider);
-            }
-        }).get(ProfileViewModel.class);
+        //null может быть если делать до onAttached, а мы делаем в onViewCreated, что после
+        ActivityComponent activityComponent = QuizApplication.getAppComponent(getActivity()).getActivityComponent();
+        viewModel = new ViewModelProvider(this, activityComponent.getViewModelFactory()).get(ProfileViewModel.class);
     }
 
     private void observeLiveData() {
-        mViewModel.getProfileLiveData().observe(getViewLifecycleOwner(), this::showData);
-        mViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), this::showError);
-        mViewModel.getProfileEditLiveData().observe(getViewLifecycleOwner(), this::editProfileResult);
+        viewModel.getProfileLiveData().observe(getViewLifecycleOwner(), this::showData);
+        viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), this::showError);
+        viewModel.getProfileEditLiveData().observe(getViewLifecycleOwner(), this::editProfileResult);
     }
 
     private void showData(@NonNull Profile profile) {
@@ -206,10 +182,10 @@ public class ProfileFragment extends Fragment {
     }
 
     private void saveProfileName() {
-        if (inputProfileName.getText() != null && !inputProfileName.getText().equals("")) {
+        if (inputProfileName.getText() != null && !inputProfileName.getText().toString().equals("")) {
             profileName.setText(inputProfileName.getText());
             profile = new Profile(String.valueOf(profileName.getText()), profile.getImageFilePath());
-            mViewModel.saveProfile(profile);
+            viewModel.saveProfile(profile);
         }
         editProfileName(false);
     }

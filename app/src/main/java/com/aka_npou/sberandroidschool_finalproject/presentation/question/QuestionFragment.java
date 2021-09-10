@@ -12,28 +12,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.aka_npou.sberandroidschool_finalproject.QuizApplication;
 import com.aka_npou.sberandroidschool_finalproject.R;
-import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionConverter;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IQuestionInteractor;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticInteractor;
+import com.aka_npou.sberandroidschool_finalproject.di.activity.ActivityComponent;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragmentNavigation;
-import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
 import com.aka_npou.sberandroidschool_finalproject.presentation.selectTypeGame.SelectTypeGameFragment;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Single;
 
 public class QuestionFragment extends Fragment {
     public final static String TAG = QuestionFragment.class.getSimpleName();
 
-    private QuestionViewModel mViewModel;
+    private QuestionViewModel viewModel;
 
     private TextView textQuestion;
     private TextView textQuestionNumber;
@@ -51,28 +45,15 @@ public class QuestionFragment extends Fragment {
     private int questionNumber;
 
     private final IFragmentNavigation mFragmentNavigation;
-    private final ISchedulersProvider mSchedulersProvider;
 
     private boolean checkAnswer;
 
-    private final IQuestionInteractor mQuestionInteractor;
-    private final IStatisticInteractor mStatisticInteractor;
-
-    public static Fragment newInstance(IFragmentNavigation fragmentNavigation,
-                                       ISchedulersProvider schedulersProvider,
-                                       IQuestionInteractor questionInteractor,
-                                       IStatisticInteractor statisticInteractor) {
-        return new QuestionFragment(fragmentNavigation, schedulersProvider, questionInteractor, statisticInteractor);
+    public static Fragment newInstance(IFragmentNavigation fragmentNavigation) {
+        return new QuestionFragment(fragmentNavigation);
     }
 
-    public QuestionFragment(IFragmentNavigation fragmentNavigation,
-                            ISchedulersProvider schedulersProvider,
-                            IQuestionInteractor questionInteractor,
-                            IStatisticInteractor statisticInteractor) {
+    public QuestionFragment(IFragmentNavigation fragmentNavigation) {
         mFragmentNavigation = fragmentNavigation;
-        mSchedulersProvider = schedulersProvider;
-        mQuestionInteractor = questionInteractor;
-        mStatisticInteractor = statisticInteractor;
     }
 
     @Nullable
@@ -109,7 +90,7 @@ public class QuestionFragment extends Fragment {
         questionNumber = 0;
         checkAnswer = false;
 
-        nextQuestion();
+        nextQuestion(0);
     }
 
     private void onClickAnswer(int indexAnswer) {
@@ -127,43 +108,32 @@ public class QuestionFragment extends Fragment {
 
         Date startCurrentDate = getStartCurrentDate();
         Log.i(TAG, "onClickAnswer: " + startCurrentDate);
-        mViewModel.addAnswerResult(currentQuestion.getId(),
+        viewModel.addAnswerResult(currentQuestion.getId(),
                  indexAnswer,
                 currentQuestion.getCorrectAnswerIndex() == indexAnswer,
                 startCurrentDate);
 
-        Single.just("")
-                .subscribeOn(mSchedulersProvider.io())
-                .observeOn(mSchedulersProvider.ui())
-                .delay(250, TimeUnit.MILLISECONDS)
-                .doOnSuccess(s -> {
-                    answerColor.setCardBackgroundColor(getResources().getColor(R.color.white));
-                    nextQuestion();
-
-                    checkAnswer = false;
-                })
-                .subscribe();
+        nextQuestion(250);
     }
 
-    private void nextQuestion() {
-        mViewModel.getQuestion();
+    private void nextQuestion(long time) {
+        viewModel.getQuestion(time);
     }
 
     private void createViewModel() {
-        mViewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
-            @NonNull
-            @Override
-            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new QuestionViewModel(mQuestionInteractor, mStatisticInteractor, mSchedulersProvider);
-            }
-        }).get(QuestionViewModel.class);
+        //null может быть если делать до onAttached, а мы делаем в onViewCreated, что после
+        ActivityComponent activityComponent = QuizApplication.getAppComponent(getActivity()).getActivityComponent();
+        viewModel = new ViewModelProvider(this, activityComponent.getViewModelFactory()).get(QuestionViewModel.class);
     }
 
     private void observeLiveData() {
-        mViewModel.getQuestionLiveData().observe(getViewLifecycleOwner(), this::showData);
+        viewModel.getQuestionLiveData().observe(getViewLifecycleOwner(), this::showData);
     }
 
     private void showData(@NonNull Question question) {
+        answerColor.setCardBackgroundColor(getResources().getColor(R.color.white));
+        checkAnswer = false;
+
         questionNumber++;
         textQuestionNumber.setText(String.valueOf(questionNumber));
         textQuestion.setText(question.getQuestionText());

@@ -11,14 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.aka_npou.sberandroidschool_finalproject.R;
-import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionConverter;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IQuestionInteractor;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticInteractor;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragmentNavigation;
-import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
 import com.aka_npou.sberandroidschool_finalproject.presentation.profile.ProfileFragment;
 import com.aka_npou.sberandroidschool_finalproject.presentation.question.QuestionFragment;
-import com.aka_npou.sberandroidschool_finalproject.presentation.statistic.StatisticFragment;
 
 public class SelectTypeGameFragment extends Fragment {
     public final static String TAG = SelectTypeGameFragment.class.getSimpleName();

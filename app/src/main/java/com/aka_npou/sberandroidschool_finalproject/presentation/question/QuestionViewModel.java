@@ -10,6 +10,7 @@ import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticI
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.disposables.Disposable;
 
@@ -31,11 +32,12 @@ public class QuestionViewModel extends ViewModel {
         mSchedulersProvider = schedulersProvider;
     }
 
-    public void getQuestion() {
+    public void getQuestion(long time) {
         mDisposable = mQuestionInteractor.getQuestion()
                 .subscribeOn(mSchedulersProvider.io())
                 .observeOn(mSchedulersProvider.ui())
-                .subscribe(mQuestionLiveData::setValue);
+                .delay(time, TimeUnit.MILLISECONDS)
+                .subscribe(mQuestionLiveData::postValue);
     }
 
     public void addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer) {

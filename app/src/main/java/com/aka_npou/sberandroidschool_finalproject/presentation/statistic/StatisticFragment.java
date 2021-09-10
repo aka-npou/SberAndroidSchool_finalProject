@@ -9,16 +9,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aka_npou.sberandroidschool_finalproject.QuizApplication;
 import com.aka_npou.sberandroidschool_finalproject.R;
-import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticInteractor;
+import com.aka_npou.sberandroidschool_finalproject.di.activity.ActivityComponent;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.DailyStatistics;
-import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragmentNavigation;
-import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
 import com.aka_npou.sberandroidschool_finalproject.presentation.statistic.adapter.StatisticRecyclerAdapter;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -31,30 +29,19 @@ import java.util.List;
 public class StatisticFragment extends Fragment {
     public final static String TAG = StatisticFragment.class.getSimpleName();
 
-    private final IFragmentNavigation mFragmentNavigation;
-    private final ISchedulersProvider mSchedulersProvider;
-
-    private final IStatisticInteractor mStatisticInteractor;
-
     private RecyclerView mStatisticRecyclerView;
     private View mRootView;
     private View mProgressBar;
 
-    private StatisticViewModel mViewModel;
+    private StatisticViewModel viewModel;
 
 
-    public static Fragment newInstance(IFragmentNavigation fragmentNavigation,
-                                       ISchedulersProvider schedulersProvider,
-                                       IStatisticInteractor statisticInteractor) {
-        return new StatisticFragment(fragmentNavigation, schedulersProvider, statisticInteractor);
+    public static Fragment newInstance() {
+        return new StatisticFragment();
     }
 
-    public StatisticFragment(IFragmentNavigation fragmentNavigation,
-                                  ISchedulersProvider schedulersProvider,
-                                  IStatisticInteractor statisticInteractor) {
-        mFragmentNavigation = fragmentNavigation;
-        mSchedulersProvider = schedulersProvider;
-        mStatisticInteractor = statisticInteractor;
+    public StatisticFragment() {
+
     }
 
     @Nullable
@@ -76,7 +63,7 @@ public class StatisticFragment extends Fragment {
 
         if (savedInstanceState == null) {
             List<Date> statisticPeriod = getStatisticPeriod();
-            mViewModel.getStatisticAsyncRx(statisticPeriod.get(0), statisticPeriod.get(1));
+            viewModel.getStatisticAsyncRx(statisticPeriod.get(0), statisticPeriod.get(1));
         }
 
     }
@@ -103,19 +90,15 @@ public class StatisticFragment extends Fragment {
     }
 
     private void createViewModel() {
-        mViewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
-            @NonNull
-            @Override
-            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new StatisticViewModel(mStatisticInteractor, mSchedulersProvider);
-            }
-        }).get(StatisticViewModel.class);
+        //null может быть если делать до onAttached, а мы делаем в onViewCreated, что после
+        ActivityComponent activityComponent = QuizApplication.getAppComponent(getActivity()).getActivityComponent();
+        viewModel = new ViewModelProvider(this, activityComponent.getViewModelFactory()).get(StatisticViewModel.class);
     }
 
     private void observeLiveData() {
-        mViewModel.getProgressLiveData().observe(getViewLifecycleOwner(), this::showProgress);
-        mViewModel.getStatisticLiveData().observe(getViewLifecycleOwner(), this::showData);
-        mViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), this::showError);
+        viewModel.getProgressLiveData().observe(getViewLifecycleOwner(), this::showProgress);
+        viewModel.getStatisticLiveData().observe(getViewLifecycleOwner(), this::showData);
+        viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), this::showError);
     }
 
     private void showProgress(boolean isVisible) {
