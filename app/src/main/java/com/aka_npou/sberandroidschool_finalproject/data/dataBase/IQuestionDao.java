@@ -11,7 +11,7 @@ import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionWithAnswe
 
 @Dao
 public interface IQuestionDao {
-    @Query("SELECT q.id, q.questionText, q.correctAnswerIndex FROM questions AS q LEFT JOIN answers AS a ON q.id = a.question_id LIMIT 1")
+    @Query("SELECT q.id, q.questionText, q.correctAnswerIndex FROM questions AS q LEFT JOIN answers AS a ON q.id = a.question_id ORDER BY RANDOM() LIMIT 1")
     QuestionWithAnswers getQuestion();
 
     @Transaction
