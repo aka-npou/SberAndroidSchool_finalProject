@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Statistic;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class StatisticConverter implements IConverter<Statistic, StatisticEntity> {
@@ -24,12 +25,25 @@ public class StatisticConverter implements IConverter<Statistic, StatisticEntity
     @NonNull
     @Override
     public Statistic reverse(@NonNull StatisticEntity item) {
-        Statistic statistic = new Statistic(item.id,
+
+        return new Statistic(item.id,
                 item.questionId,
                 item.answerIndex,
                 item.isCorrectAnswer,
-                new Date(item.dateOfAnswer));
+                getStartDate(item.dateOfAnswer));
+    }
 
-        return statistic;
+    private Date getStartDate(long dateOfAnswer) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(dateOfAnswer);
+        calendar.set(calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DATE),
+                0,
+                0,
+                0);
+
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
     }
 }

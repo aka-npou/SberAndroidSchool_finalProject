@@ -1,5 +1,7 @@
 package com.aka_npou.sberandroidschool_finalproject.data.repository;
 
+import androidx.room.Transaction;
+
 import com.aka_npou.sberandroidschool_finalproject.data.converter.IConverter;
 import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IStatisticDao;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
@@ -20,6 +22,7 @@ public class StatisticRepository implements IStatisticRepository {
     }
 
 
+    @Transaction
     @Override
     public void addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer) {
         mStatisticDao.addAnswerResult(new StatisticEntity(0, questionId, answerIndex, isCorrectAnswer, dateOfAnswer.getTime()));

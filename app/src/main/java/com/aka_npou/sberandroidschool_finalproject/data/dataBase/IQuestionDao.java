@@ -14,6 +14,25 @@ public interface IQuestionDao {
     @Query("SELECT q.id, q.questionText, q.correctAnswerIndex FROM questions AS q LEFT JOIN answers AS a ON q.id = a.question_id ORDER BY RANDOM() LIMIT 1")
     QuestionWithAnswers getQuestion();
 
+    @Query("SELECT " +
+                "q.id, " +
+                "q.questionText, " +
+                "q.correctAnswerIndex " +
+            "FROM questions AS q " +
+                "JOIN (SELECT q.id, " +
+                "COUNT(IFNULL(s.id, 0)) AS countQuestionShow " +
+                "FROM questions AS q " +
+                "LEFT JOIN statistics AS s " +
+                "ON q.id = s.questionId " +
+                "GROUP BY " +
+                "q.id " +
+                "ORDER BY " +
+                "countQuestionShow " +
+                "LIMIT 1) AS uncommonQuestion " +
+            "ON q.id = uncommonQuestion.id " +
+            "LEFT JOIN answers AS a ON q.id = a.question_id")
+    QuestionWithAnswers getUncommonQuestion();
+
     @Transaction
     default void insert(QuestionWithAnswers entity) {
         addQuestion(entity.questionEntity);

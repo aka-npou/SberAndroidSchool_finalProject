@@ -106,14 +106,10 @@ public class QuestionFragment extends Fragment {
             answerColor.setCardBackgroundColor(getResources().getColor(R.color.red));
         }
 
-        Date startCurrentDate = getStartCurrentDate();
-        Log.i(TAG, "onClickAnswer: " + startCurrentDate);
         viewModel.addAnswerResult(currentQuestion.getId(),
                  indexAnswer,
                 currentQuestion.getCorrectAnswerIndex() == indexAnswer,
-                startCurrentDate);
-
-        nextQuestion(250);
+                Calendar.getInstance().getTime());
     }
 
     private void nextQuestion(long time) {
@@ -128,6 +124,7 @@ public class QuestionFragment extends Fragment {
 
     private void observeLiveData() {
         viewModel.getQuestionLiveData().observe(getViewLifecycleOwner(), this::showData);
+        viewModel.getStatisticLiveData().observe(getViewLifecycleOwner(), b -> nextQuestion(250));
     }
 
     private void showData(@NonNull Question question) {
@@ -144,18 +141,5 @@ public class QuestionFragment extends Fragment {
         buttonAnswer4.setText(question.getAnswers().get(3));
 
         currentQuestion = question;
-    }
-
-    private Date getStartCurrentDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DATE),
-                0,
-                0,
-                0);
-
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTime();
     }
 }

@@ -22,7 +22,7 @@ public class QuestionRepository implements IQuestionRepository {
 
     @Override
     public Question getQuestion() {
-        return mConverter.reverse(mQuestionDao.getQuestion());
+        return mConverter.reverse(mQuestionDao.getUncommonQuestion());
     }
 
     @Override
