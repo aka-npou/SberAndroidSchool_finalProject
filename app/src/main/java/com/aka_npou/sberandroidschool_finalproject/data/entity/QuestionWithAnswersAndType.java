@@ -5,9 +5,11 @@ import androidx.room.Relation;
 
 import java.util.List;
 
-public class QuestionWithAnswers {
+public class QuestionWithAnswersAndType {
     @Embedded
     public QuestionEntity questionEntity;
     @Relation(parentColumn = "id", entityColumn = "question_id")
     public List<AnswerEntity> answers;
+    @Relation(parentColumn = "question_type", entityColumn = "id")
+    public QuestionTypeEntity type;
 }

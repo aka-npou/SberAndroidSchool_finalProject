@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import androidx.room.Room;
 
-import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionWithAnswersConverter;
+import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionWithAnswersAndTypeConverter;
 import com.aka_npou.sberandroidschool_finalproject.data.converter.StatisticConverter;
 import com.aka_npou.sberandroidschool_finalproject.data.dataBase.AppDataBase;
 import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IQuestionDao;
@@ -36,7 +36,7 @@ public interface AppModule {
     static IQuestionInteractor provideIQuestionInteractor(AppDataBase appDataBase) {
 
         IQuestionDao questionDao = appDataBase.getQuestionDao();
-        QuestionWithAnswersConverter mQuestionConverter = new QuestionWithAnswersConverter();
+        QuestionWithAnswersAndTypeConverter mQuestionConverter = new QuestionWithAnswersAndTypeConverter();
         IQuestionRepository questionRepository = new QuestionRepository(questionDao, mQuestionConverter);
 
         return new QuestionInteractor(questionRepository);
@@ -76,6 +76,7 @@ public interface AppModule {
 
         return Room.databaseBuilder(context.getApplicationContext(), AppDataBase.class, "appDB.db")
                 //.addCallback(rdc)
+                .addMigrations(AppDataBase.MIGRATION_1_2, AppDataBase.MIGRATION_2_3)
                 .build();
     }
 

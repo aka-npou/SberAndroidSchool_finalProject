@@ -4,17 +4,18 @@ import androidx.annotation.NonNull;
 
 import com.aka_npou.sberandroidschool_finalproject.data.entity.AnswerEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
-import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionWithAnswers;
+import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionTypeEntity;
+import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionWithAnswersAndType;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionWithAnswersConverter implements IConverter<Question, QuestionWithAnswers> {
+public class QuestionWithAnswersAndTypeConverter implements IConverter<Question, QuestionWithAnswersAndType> {
     @NonNull
     @Override
-    public QuestionWithAnswers convert(@NonNull Question item) {
-        QuestionWithAnswers entity = new QuestionWithAnswers();
+    public QuestionWithAnswersAndType convert(@NonNull Question item) {
+        QuestionWithAnswersAndType entity = new QuestionWithAnswersAndType();
         entity.questionEntity = new QuestionEntity(item.getId(), item.getQuestionText(), item.getCorrectAnswerIndex());
         entity.answers = new ArrayList<>();
 
@@ -26,19 +27,23 @@ public class QuestionWithAnswersConverter implements IConverter<Question, Questi
             entity.answers.add(answerEntity);
         }
 
+        QuestionTypeEntity questionTypeEntity = new QuestionTypeEntity();
+        questionTypeEntity.type = item.getType();
+        entity.type = questionTypeEntity;
+
         return entity;
     }
 
     @NonNull
     @Override
-    public Question reverse(@NonNull QuestionWithAnswers item) {
+    public Question reverse(@NonNull QuestionWithAnswersAndType item) {
         List<String> answers = new ArrayList<>();
 
         for (AnswerEntity answerEntity : item.answers) {
             answers.add(answerEntity.text);
         }
 
-        return new Question(item.questionEntity.id, item.questionEntity.questionText, answers, item.questionEntity.correctAnswerIndex);
+        return new Question(item.questionEntity.id, item.questionEntity.questionText, answers, item.questionEntity.correctAnswerIndex, item.type.type);
     }
 }
 
