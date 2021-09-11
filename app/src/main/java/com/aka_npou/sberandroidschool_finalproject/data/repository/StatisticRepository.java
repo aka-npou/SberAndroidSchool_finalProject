@@ -6,21 +6,32 @@ import com.aka_npou.sberandroidschool_finalproject.data.converter.IConverter;
 import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IStatisticDao;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Statistic;
+import com.aka_npou.sberandroidschool_finalproject.domain.repository.IQuestionRepository;
 import com.aka_npou.sberandroidschool_finalproject.domain.repository.IStatisticRepository;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ *  Имплементация интерфейса {@link IStatisticRepository} репозитория для получения информации
+ *  о статистики ответов из базы данных
+ *
+ *  @author Мулярчук Александр
+ */
 public class StatisticRepository implements IStatisticRepository {
     private final IStatisticDao mStatisticDao;
     private final IConverter<Statistic, StatisticEntity> mConverter;
 
-    public StatisticRepository(IStatisticDao mDataBaseApi, IConverter<Statistic, StatisticEntity> converter) {
-        this.mStatisticDao = mDataBaseApi;
+    /**
+     * Конструктор
+     * @param statisticDao Dao для работы с базой данных
+     * @param converter конвертер модели дата слоя в модель домейн слоя и обратно
+     */
+    public StatisticRepository(IStatisticDao statisticDao, IConverter<Statistic, StatisticEntity> converter) {
+        this.mStatisticDao = statisticDao;
         mConverter = converter;
     }
-
 
     @Transaction
     @Override

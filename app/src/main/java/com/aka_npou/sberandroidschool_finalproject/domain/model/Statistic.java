@@ -2,6 +2,11 @@ package com.aka_npou.sberandroidschool_finalproject.domain.model;
 
 import java.util.Date;
 
+/**
+ * Модель для отображения пользователю статистики ответов
+ *
+ * @author Мулярчук Александр
+ */
 public class Statistic {
     private final long id;
     private final long questionId;
@@ -9,6 +14,14 @@ public class Statistic {
     private final boolean isCorrectAnswer;
     private final Date dateOfAnswer;
 
+    /**
+     * Конструктор
+     * @param id идентификатор в базе данных
+     * @param questionId идентификатор вопроса
+     * @param answerIndex индекс выбранного ответа
+     * @param isCorrectAnswer признак правильности ответа
+     * @param dateOfAnswer дата ответа
+     */
     public Statistic(long id, long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer) {
         this.id = id;
         this.questionId = questionId;

@@ -10,13 +10,24 @@ import com.aka_npou.sberandroidschool_finalproject.domain.repository.IQuestionRe
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ *  Имплементация интерфейса {@link IQuestionRepository} репозитория для получения информации
+ *  о вопросах и вариантах ответов из базы данных
+ *
+ *  @author Мулярчук Александр
+ */
 public class QuestionRepository implements IQuestionRepository {
     private final IQuestionDao mQuestionDao;
     private final IConverter<Question, QuestionWithAnswers> mConverter;
 
-
-    public QuestionRepository(IQuestionDao mDataBaseApi, IConverter<Question, QuestionWithAnswers> converter) {
-        this.mQuestionDao = mDataBaseApi;
+    /**
+     * Конструктор
+     *
+     * @param questionDao Dao для работы с базой данных
+     * @param converter конвертер модели дата слоя в модель домейн слоя и обратно
+     */
+    public QuestionRepository(IQuestionDao questionDao, IConverter<Question, QuestionWithAnswers> converter) {
+        this.mQuestionDao = questionDao;
         mConverter = converter;
     }
 

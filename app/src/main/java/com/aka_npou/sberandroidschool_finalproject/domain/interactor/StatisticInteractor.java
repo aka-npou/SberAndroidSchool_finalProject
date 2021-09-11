@@ -14,9 +14,18 @@ import java.util.Map;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 
+/**
+ *  Имплементация интерфейса {@link IStatisticInteractor}
+ *
+ *  @author Мулярчук Александр
+ */
 public class StatisticInteractor implements IStatisticInteractor {
     private final IStatisticRepository mStatisticRepository;
 
+    /**
+     * Конструктор
+     * @param statisticRepository {@link IStatisticRepository} репозиторий для работы со статистикой ответов
+     */
     public StatisticInteractor(IStatisticRepository statisticRepository) {
         mStatisticRepository = statisticRepository;
     }
