@@ -5,6 +5,11 @@ import androidx.room.Relation;
 
 import java.util.List;
 
+/**
+ * Модель для получения вопроса с вариантами ответов
+ *
+ * @author Мулярчук Александр
+ */
 public class QuestionWithAnswers {
     @Embedded
     public QuestionEntity questionEntity;

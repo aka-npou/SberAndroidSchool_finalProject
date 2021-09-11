@@ -2,12 +2,19 @@ package com.aka_npou.sberandroidschool_finalproject.data.converter;
 
 import androidx.annotation.NonNull;
 
+import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
+import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Statistic;
 
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Имплементация интерфейса {@link IConverter} для конвертации {@link Statistic} в {@link StatisticEntity}
+ *
+ * @author Мулярчук Александр
+ */
 public class StatisticConverter implements IConverter<Statistic, StatisticEntity> {
     @NonNull
     @Override

@@ -8,6 +8,11 @@ import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Имплементация интерфейса {@link IConverter} для конвертации {@link Question} в {@link QuestionEntity}
+ *
+ * @author Мулярчук Александр
+ */
 public class QuestionConverter implements IConverter<Question, QuestionEntity> {
     @NonNull
     @Override

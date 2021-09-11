@@ -4,6 +4,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Модель для хранения в базе данных ответа
+ *
+ * @author Мулярчук Александр
+ */
 @Entity(tableName = "answers")
 public class AnswerEntity {
     @PrimaryKey(autoGenerate = true)

@@ -9,11 +9,24 @@ import com.aka_npou.sberandroidschool_finalproject.data.entity.AnswerEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionWithAnswers;
 
+/**
+ * Интерфейс для работы с базой данных с таблицей вопросов и вариантов ответов
+ *
+ * @author Мулярчук Александр
+ */
 @Dao
 public interface IQuestionDao {
+    /**
+     * Получение рандомного вопроса с вариантами ответов
+     * @return {@link QuestionWithAnswers}
+     */
     @Query("SELECT q.id, q.questionText, q.correctAnswerIndex FROM questions AS q LEFT JOIN answers AS a ON q.id = a.question_id ORDER BY RANDOM() LIMIT 1")
     QuestionWithAnswers getQuestion();
 
+    /**
+     * Получение самого редкого по показыванию вопроса с вариантами ответов
+     * @return {@link QuestionWithAnswers}
+     */
     @Query("SELECT " +
                 "q.id, " +
                 "q.questionText, " +
@@ -33,6 +46,10 @@ public interface IQuestionDao {
             "LEFT JOIN answers AS a ON q.id = a.question_id")
     QuestionWithAnswers getUncommonQuestion();
 
+    /**
+     * Добавление вопроса в базу данных. Добавление вариантов ответа в базу данных
+     * @param entity {@link QuestionWithAnswers} модель вопроса с вариантами ответов для базы данных
+     */
     @Transaction
     default void insert(QuestionWithAnswers entity) {
         addQuestion(entity.questionEntity);
@@ -41,9 +58,17 @@ public interface IQuestionDao {
         }
     }
 
+    /**
+     * Добавление вопроса в базу данных
+     * @param entity {@link QuestionEntity} модель вопроса для базы данных
+     */
     @Insert
     void addQuestion(QuestionEntity entity);
 
+    /**
+     * Добавление варианта ответа в базу данных
+     * @param entity {@link AnswerEntity} модель варианта ответа для базы данных
+     */
     @Insert
     void addAnswers(AnswerEntity entity);
 

@@ -1,12 +1,14 @@
 package com.aka_npou.sberandroidschool_finalproject.data.entity;
 
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.util.List;
-
+/**
+ * Модель для хранения в базе данных вопроса
+ *
+ * @author Мулярчук Александр
+ */
 @Entity(tableName = "questions")
 public class QuestionEntity {
     @PrimaryKey(autoGenerate = true)

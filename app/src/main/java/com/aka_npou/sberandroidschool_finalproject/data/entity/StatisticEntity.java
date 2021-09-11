@@ -4,6 +4,11 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+/**
+ * Модель для хранения в базе статистики по ответам
+ *
+ * @author Мулярчук Александр
+ */
 @Entity(tableName = "statistics")
 public class StatisticEntity {
     @PrimaryKey(autoGenerate = true)
