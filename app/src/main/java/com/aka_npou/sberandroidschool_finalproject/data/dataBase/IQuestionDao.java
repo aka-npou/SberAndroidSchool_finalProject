@@ -20,7 +20,7 @@ public interface IQuestionDao {
                 "q.correctAnswerIndex " +
             "FROM questions AS q " +
                 "JOIN (SELECT q.id, " +
-                "COUNT(IFNULL(s.id, 0)) AS countQuestionShow " +
+                "SUM(CASE WHEN s.id IS NULL THEN 0 ELSE 1 END) AS countQuestionShow " +
                 "FROM questions AS q " +
                 "LEFT JOIN statistics AS s " +
                 "ON q.id = s.questionId " +
