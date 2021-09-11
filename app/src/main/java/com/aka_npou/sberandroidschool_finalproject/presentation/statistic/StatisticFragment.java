@@ -75,12 +75,18 @@ public class StatisticFragment extends Fragment {
         calendar.set(calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DATE),
+                23,
+                59,
+                59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        statisticPeriod.add(calendar.getTime());
+
+        calendar.set(calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DATE),
                 0,
                 0,
                 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        statisticPeriod.add(calendar.getTime());
-
         calendar.add(Calendar.DATE, -14);
         statisticPeriod.add(0, calendar.getTime());
 
