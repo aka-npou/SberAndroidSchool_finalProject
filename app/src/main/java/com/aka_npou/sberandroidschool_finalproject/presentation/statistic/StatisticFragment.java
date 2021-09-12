@@ -26,6 +26,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Фрагмент отображающий статистику ответов
+ *
+ * @author Мулярчук Александр
+ */
 public class StatisticFragment extends Fragment {
     public final static String TAG = StatisticFragment.class.getSimpleName();
 
@@ -36,10 +41,17 @@ public class StatisticFragment extends Fragment {
     private StatisticViewModel viewModel;
 
 
+    /**
+     * Получение фрагмента статистики
+     * @return {@link StatisticFragment} фрагмент отображающий статистику
+     */
     public static Fragment newInstance() {
         return new StatisticFragment();
     }
 
+    /**
+     * Конструктор
+     */
     public StatisticFragment() {
 
     }

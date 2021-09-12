@@ -15,15 +15,29 @@ import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragment
 import com.aka_npou.sberandroidschool_finalproject.presentation.profile.ProfileFragment;
 import com.aka_npou.sberandroidschool_finalproject.presentation.question.QuestionFragment;
 
+/**
+ * Фрагмент отображающий выбор игры
+ *
+ * @author Мулярчук Александр
+ */
 public class SelectTypeGameFragment extends Fragment {
     public final static String TAG = SelectTypeGameFragment.class.getSimpleName();
 
     private final IFragmentNavigation mFragmentNavigation;
 
+    /**
+     * Получение фрагмента выбора игры
+     * @param fragmentNavigation обработчик для перехода между фрагментами
+     * @return {@link SelectTypeGameFragment} фрагмент отображающий выбор игры
+     */
     public static Fragment newInstance(IFragmentNavigation fragmentNavigation) {
         return new SelectTypeGameFragment(fragmentNavigation);
     }
 
+    /**
+     * Конструктор
+     * @param fragmentNavigation обработчик для перехода между фрагментами
+     */
     public SelectTypeGameFragment(IFragmentNavigation fragmentNavigation) {
         mFragmentNavigation = fragmentNavigation;
     }

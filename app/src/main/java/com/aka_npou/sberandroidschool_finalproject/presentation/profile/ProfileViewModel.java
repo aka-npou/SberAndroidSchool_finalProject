@@ -10,6 +10,11 @@ import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedule
 
 import io.reactivex.disposables.Disposable;
 
+/**
+ * ViewModel для отображения информации о профиле
+ *
+ * @author Мулярчук Александр
+ */
 public class ProfileViewModel extends ViewModel {
     private final IProfileInteractor profileInteractor;
     private final ISchedulersProvider schedulersProvider;
@@ -21,6 +26,11 @@ public class ProfileViewModel extends ViewModel {
 
     private Disposable mDisposable;
 
+    /**
+     * Конструктор
+     * @param profileInteractor интерактор для получения данных профиля
+     * @param schedulersProvider провайдер потоков выполнения
+     */
     public ProfileViewModel(IProfileInteractor profileInteractor,
                             ISchedulersProvider schedulersProvider) {
         this.profileInteractor = profileInteractor;
@@ -37,6 +47,9 @@ public class ProfileViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Получение профиля
+     */
     public void getProfileData() {
         mDisposable = profileInteractor.getProfile()
                 .doOnSubscribe(disposable -> mProgressLiveData.postValue(true))
@@ -46,6 +59,10 @@ public class ProfileViewModel extends ViewModel {
                 .subscribe(profileLiveData::setValue, mErrorLiveData::setValue);
     }
 
+    /**
+     * Сохранение профиля
+     * @param profile {@link Profile} модель профиля
+     */
     public void saveProfile(Profile profile) {
         mDisposable = profileInteractor.editProfile(profile)
                 .doOnSubscribe(disposable -> mProgressLiveData.postValue(true))

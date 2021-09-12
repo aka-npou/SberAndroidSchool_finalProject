@@ -11,11 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aka_npou.sberandroidschool_finalproject.R;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.DailyStatistics;
-import com.aka_npou.sberandroidschool_finalproject.domain.model.Statistic;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+/**
+ * Адаптер для отображения статистики ответов
+ *
+ * @author Мулярчук Александр
+ */
 public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecyclerAdapter.StatisticViewHolder> {
 
     private static final String pattern = "dd";
@@ -24,14 +28,12 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
     private final List<DailyStatistics> mStatisticList;
     private int mMaxCountQuestionPerDay = 0;
 
+    /**
+     * Конструктор
+     * @param statisticList {@link List} список статистики ответов по дням
+     */
     public StatisticRecyclerAdapter(List<DailyStatistics> statisticList) {
         this.mStatisticList = statisticList;
-        getMaxCountQuestionPerDay();
-    }
-
-    public void loadStatisticList(List<DailyStatistics> newList) {
-        mStatisticList.addAll(newList);
-
         getMaxCountQuestionPerDay();
     }
 
@@ -48,8 +50,6 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
         StatisticViewHolder vh = new StatisticViewHolder(
                 LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.item_statistic, parent, false));
-
-        //vh.itemView.setOnClickListener(v -> mListener.openCountryStatisticsLast30Days(mCountryList.get(vh.getAdapterPosition()).getSlug()));
         return vh;
     }
 
@@ -63,12 +63,19 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
         return mStatisticList.size();
     }
 
+    /**
+     * Holder для отображения статистики по дню
+     */
     static class StatisticViewHolder extends RecyclerView.ViewHolder {
 
         ImageView statisticCountQuestions;
         ImageView statisticPercentageOfCorrectAnswers;
         TextView statisticDate;
 
+        /**
+         * Конструктор
+         * @param itemView view отображаемого дня
+         */
         public StatisticViewHolder(@NonNull View itemView) {
             super(itemView);
 

@@ -13,6 +13,11 @@ import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 
+/**
+ * ViewModel для отображения статистики
+ *
+ * @author Мулярчук Александр
+ */
 public class StatisticViewModel extends ViewModel {
     private final IStatisticInteractor mStatisticInteractor;
     private final ISchedulersProvider mSchedulersProvider;
@@ -23,12 +28,22 @@ public class StatisticViewModel extends ViewModel {
 
     private Disposable mDisposable;
 
+    /**
+     * Конструктор
+     * @param statisticInteractor интерактор для получения данных по статистике
+     * @param schedulersProvider провайдер потоков выполнения
+     */
     public StatisticViewModel(IStatisticInteractor statisticInteractor,
                              ISchedulersProvider schedulersProvider) {
         mStatisticInteractor = statisticInteractor;
         mSchedulersProvider = schedulersProvider;
     }
 
+    /**
+     * Получение статистики по результатам ответов за период
+     * @param from дата с которой получать статистику
+     * @param to дата по которую получать статистику
+     */
     public void getStatisticAsyncRx(Date from, Date to) {
         mDisposable = mStatisticInteractor.getStatisticForPeriod(from, to)
                 .doOnSubscribe(disposable -> mProgressLiveData.postValue(true))

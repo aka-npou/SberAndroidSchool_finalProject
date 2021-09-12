@@ -36,6 +36,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+/**
+ * Фрагмент, отображающий информацию о профиле
+ *
+ * @author Мулярчук Александр
+ */
 public class ProfileFragment extends Fragment {
     public final static String TAG = ProfileFragment.class.getSimpleName();
 

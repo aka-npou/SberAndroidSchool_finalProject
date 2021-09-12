@@ -24,6 +24,11 @@ import com.aka_npou.sberandroidschool_finalproject.presentation.selectTypeGame.S
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Фрагмент отображающий вопрос
+ *
+ * @author Мулярчук Александр
+ */
 public class QuestionFragment extends Fragment {
     public final static String TAG = QuestionFragment.class.getSimpleName();
 
@@ -48,10 +53,19 @@ public class QuestionFragment extends Fragment {
 
     private boolean checkAnswer;
 
+    /**
+     * Получение фрагмента вопроса
+     * @param fragmentNavigation обработчик для перехода между фрагментами
+     * @return {@link QuestionFragment} фрагмент отображающий вопрос
+     */
     public static Fragment newInstance(IFragmentNavigation fragmentNavigation) {
         return new QuestionFragment(fragmentNavigation);
     }
 
+    /**
+     * Конструктор
+     * @param fragmentNavigation обработчик для перехода между фрагментами
+     */
     public QuestionFragment(IFragmentNavigation fragmentNavigation) {
         mFragmentNavigation = fragmentNavigation;
     }
