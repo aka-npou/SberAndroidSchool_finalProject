@@ -13,12 +13,24 @@ import com.aka_npou.sberandroidschool_finalproject.presentation.profile.ProfileV
 import com.aka_npou.sberandroidschool_finalproject.presentation.question.QuestionViewModel;
 import com.aka_npou.sberandroidschool_finalproject.presentation.statistic.StatisticViewModel;
 
+/**
+ * Фабрика создания ViewModel для фрагментов
+ *
+ * @author Мулярчук Александр
+ */
 public class ViewModelFactory implements ViewModelProvider.Factory {
     private final IQuestionInteractor questionInteractor;
     private final IStatisticInteractor statisticInteractor;
     private final IProfileInteractor profileInteractor;
     private final ISchedulersProvider schedulersProvider;
 
+    /**
+     * Конструктор
+     * @param questionInteractor интерактор для работы с данными по вопросам и ответам
+     * @param statisticInteractor интерактор для работы с данными по статистике
+     * @param profileInteractor интерактор для работы с данными профиля
+     * @param schedulersProvider провайдер потоков выполнения
+     */
     public ViewModelFactory(IQuestionInteractor questionInteractor,
                             IStatisticInteractor statisticInteractor,
                             IProfileInteractor profileInteractor,
@@ -29,6 +41,12 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         this.schedulersProvider = schedulersProvider;
     }
 
+    /**
+     * Получает {@link ViewModel} по переданному классу
+     * @param modelClass класс который нужно получить
+     * @param <T> тип расширенный от {@link ViewModel} который нужно получить
+     * @return класс расширенный от {@link ViewModel}
+     */
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {

@@ -1,0 +1,59 @@
+package com.aka_npou.sberandroidschool_finalproject.data.repository;
+
+import static org.mockito.Mockito.when;
+
+import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionWithAnswersConverter;
+import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IQuestionDao;
+import com.aka_npou.sberandroidschool_finalproject.data.entity.AnswerEntity;
+import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
+import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionWithAnswers;
+import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
+import com.aka_npou.sberandroidschool_finalproject.domain.repository.IQuestionRepository;
+import com.google.common.truth.Truth;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+@RunWith(MockitoJUnitRunner.class)
+public class QuestionRepositoryTest {
+
+    @Mock
+    QuestionWithAnswersConverter converter;
+
+    @Mock
+    IQuestionDao questionDao;
+
+
+    private IQuestionRepository repository;
+
+    @Before
+    public void setup() {
+        repository = new QuestionRepository(questionDao, converter);
+    }
+
+    @Test
+    public void getQuestionTest() {
+        //Arrange
+        Question expectedResult = new Question(1, "test", new ArrayList<>(), 1);
+        Question question = new Question(1, "test", new ArrayList<>(), 1);
+
+        QuestionWithAnswers questionWithAnswers = new QuestionWithAnswers();
+        questionWithAnswers.answers = Arrays.asList(new AnswerEntity(0, "test answer1", 1), new AnswerEntity(0, "test answer2", 1));
+        questionWithAnswers.questionEntity = new QuestionEntity(1, "test", 1);
+        when(questionDao.getUncommonQuestion()).thenReturn(questionWithAnswers);
+
+        when(converter.reverse(questionWithAnswers)).thenReturn(question);
+        //Act
+        Question actualResult = repository.getQuestion();
+        //Assert
+        Truth.assertThat(actualResult).isEqualTo(expectedResult);
+    }
+
+
+}

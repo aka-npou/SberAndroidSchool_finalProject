@@ -9,6 +9,10 @@ import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedule
 
 import io.reactivex.disposables.Disposable;
 
+/**
+ * ViewModel общего экрана
+ * @author Мулярчук Александр
+ */
 public class MainActivityViewModel extends ViewModel {
     private final IQuestionInteractor questionInteractor;
     private final ISchedulersProvider schedulersProvider;
@@ -19,6 +23,11 @@ public class MainActivityViewModel extends ViewModel {
 
     private Disposable mDisposable;
 
+    /**
+     * Конструктор
+     * @param questionInteractor интерактор для получения данных о вопросах
+     * @param schedulersProvider провайдер потоков выполнения
+     */
     public MainActivityViewModel(IQuestionInteractor questionInteractor,
                             ISchedulersProvider schedulersProvider) {
         this.questionInteractor = questionInteractor;
@@ -35,6 +44,9 @@ public class MainActivityViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Инициализация базы данных
+     */
     public void initDB() {
         mDisposable = questionInteractor.initDB()
                 .doOnSubscribe(disposable -> progressLiveData.postValue(true))

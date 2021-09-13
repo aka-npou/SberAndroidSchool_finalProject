@@ -13,6 +13,11 @@ import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionTypeEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionWithAnswersAndType;
 
+/**
+ * Интерфейс для работы с базой данных с таблицей вопросов и вариантов ответов
+ *
+ * @author Мулярчук Александр
+ */
 @Dao
 public interface IQuestionDao {
     @Transaction
@@ -29,7 +34,6 @@ public interface IQuestionDao {
             "LIMIT 1")
     QuestionWithAnswersAndType getQuestion();
 
-    @Transaction
     @Query("SELECT " +
                 "q.id, " +
                 "q.questionText, " +
@@ -37,7 +41,7 @@ public interface IQuestionDao {
                 "q.question_type " +
             "FROM questions AS q " +
                 "JOIN (SELECT q.id, " +
-                "COUNT(IFNULL(s.id, 0)) AS countQuestionShow " +
+                "SUM(CASE WHEN s.id IS NULL THEN 0 ELSE 1 END) AS countQuestionShow " +
                 "FROM questions AS q " +
                 "LEFT JOIN statistics AS s " +
                 "ON q.id = s.questionId " +
@@ -52,6 +56,10 @@ public interface IQuestionDao {
             "ON q.question_type = qt.id")
     QuestionWithAnswersAndType getUncommonQuestion();
 
+    /**
+     * Добавление вопроса в базу данных. Добавление вариантов ответа в базу данных
+     * @param entity {@link QuestionWithAnswers} модель вопроса с вариантами ответов для базы данных
+     */
     @Transaction
     default void insert(QuestionWithAnswersAndType entity) {
         QuestionTypeEntity questionTypeEntity = getQuestionTypeEntityOfType(entity.type.type);
@@ -67,9 +75,17 @@ public interface IQuestionDao {
         }
     }
 
+    /**
+     * Добавление вопроса в базу данных
+     * @param entity {@link QuestionEntity} модель вопроса для базы данных
+     */
     @Insert
     void addQuestion(QuestionEntity entity);
 
+    /**
+     * Добавление варианта ответа в базу данных
+     * @param entity {@link AnswerEntity} модель варианта ответа для базы данных
+     */
     @Insert
     void addAnswers(AnswerEntity entity);
 

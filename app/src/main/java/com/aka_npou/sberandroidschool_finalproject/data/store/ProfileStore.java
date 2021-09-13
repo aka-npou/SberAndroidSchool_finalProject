@@ -4,13 +4,23 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Profile;
+import com.aka_npou.sberandroidschool_finalproject.domain.repository.IQuestionRepository;
 
+/**
+ *  Имплементация интерфейса {@link IProfileStore}
+ *
+ *  @author Мулярчук Александр
+ */
 public class ProfileStore implements IProfileStore{
     private final static String NAME_KEY = "NAME_KEY";
     private final static String IMAGE_FILE_PATH_KEY = "IMAGE_FILE_PATH_KEY";
 
     private final SharedPreferences sharedPreferences;
 
+    /**
+     * Конструктор
+     * @param sharedPreferences {@link SharedPreferences} настройки, куда сохраняется профиль игрока
+     */
     public ProfileStore(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
     }

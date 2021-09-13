@@ -21,6 +21,11 @@ import com.aka_npou.sberandroidschool_finalproject.presentation.statistic.Statis
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+/**
+ * Главное Activity, являющееся хостом для всех фрагментов
+ *
+ * @author Мулярчук Александр
+ */
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 

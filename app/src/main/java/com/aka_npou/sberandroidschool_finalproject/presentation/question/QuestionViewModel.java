@@ -14,6 +14,11 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.disposables.Disposable;
 
+/**
+ * ViewModel для отображения вопроса
+ *
+ * @author Мулярчук Александр
+ */
 public class QuestionViewModel extends ViewModel {
     private final IQuestionInteractor mQuestionInteractor;
     private final IStatisticInteractor mStatisticInteractor;
@@ -24,6 +29,12 @@ public class QuestionViewModel extends ViewModel {
 
     private Disposable mDisposable;
 
+    /**
+     * Конструктор
+     * @param questionInteractor интерактор для получения вопросов и ответов
+     * @param statisticInteractor интерактор для отправки результата ответа
+     * @param schedulersProvider провайдер потоков выполнения
+     */
     public QuestionViewModel(IQuestionInteractor questionInteractor,
                              IStatisticInteractor statisticInteractor,
                              ISchedulersProvider schedulersProvider) {
@@ -32,6 +43,10 @@ public class QuestionViewModel extends ViewModel {
         mSchedulersProvider = schedulersProvider;
     }
 
+    /**
+     * Получение вопроса с вариантами ответов
+     * @param time задержка перед получением вопроса
+     */
     public void getQuestion(long time) {
         mDisposable = mQuestionInteractor.getQuestion()
                 .subscribeOn(mSchedulersProvider.io())
@@ -40,6 +55,13 @@ public class QuestionViewModel extends ViewModel {
                 .subscribe(mQuestionLiveData::postValue);
     }
 
+    /**
+     * Отправка результата ответа
+     * @param questionId идентификатор вопроса
+     * @param answerIndex индекс выбранного ответа
+     * @param isCorrectAnswer признак правильности ответа
+     * @param dateOfAnswer дата ответа
+     */
     public void addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer) {
         mDisposable = mStatisticInteractor.addAnswerResult(questionId, answerIndex, isCorrectAnswer, dateOfAnswer)
                 .subscribeOn(mSchedulersProvider.io())

@@ -6,9 +6,18 @@ import com.aka_npou.sberandroidschool_finalproject.domain.model.Profile;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 
+/**
+ *  Имплементация интерфейса {@link IProfileInteractor}
+ *
+ *  @author Мулярчук Александр
+ */
 public class ProfileInteractor implements IProfileInteractor {
     private final IProfileStore profileStore;
 
+    /**
+     * Конструктор
+     * @param profileStore {@link IProfileStore} работает с данными профиля пользователя
+     */
     public ProfileInteractor(IProfileStore profileStore) {
         this.profileStore = profileStore;
     }
