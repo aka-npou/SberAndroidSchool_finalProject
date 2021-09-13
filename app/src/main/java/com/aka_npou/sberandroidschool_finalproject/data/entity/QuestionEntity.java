@@ -4,6 +4,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 /**
  * Модель для хранения в базе данных вопроса
  *
@@ -24,5 +26,18 @@ public class QuestionEntity {
         this.id = id;
         this.questionText = questionText;
         this.correctAnswerIndex = correctAnswerIndex;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        QuestionEntity that = (QuestionEntity) o;
+        return id == that.id && correctAnswerIndex == that.correctAnswerIndex && Objects.equals(questionText, that.questionText);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, questionText, correctAnswerIndex);
     }
 }

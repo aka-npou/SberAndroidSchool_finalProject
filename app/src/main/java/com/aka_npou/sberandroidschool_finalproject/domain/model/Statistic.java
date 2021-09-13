@@ -1,6 +1,7 @@
 package com.aka_npou.sberandroidschool_finalproject.domain.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Модель для отображения пользователю статистики ответов
@@ -48,5 +49,29 @@ public class Statistic {
 
     public Date getDateOfAnswer() {
         return dateOfAnswer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Statistic statistic = (Statistic) o;
+        return id == statistic.id && questionId == statistic.questionId && answerIndex == statistic.answerIndex && isCorrectAnswer == statistic.isCorrectAnswer && Objects.equals(dateOfAnswer, statistic.dateOfAnswer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, questionId, answerIndex, isCorrectAnswer, dateOfAnswer);
+    }
+
+    @Override
+    public String toString() {
+        return "Statistic{" +
+                "id=" + id +
+                ", questionId=" + questionId +
+                ", answerIndex=" + answerIndex +
+                ", isCorrectAnswer=" + isCorrectAnswer +
+                ", dateOfAnswer=" + dateOfAnswer +
+                '}';
     }
 }

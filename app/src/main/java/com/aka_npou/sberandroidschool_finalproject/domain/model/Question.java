@@ -1,6 +1,7 @@
 package com.aka_npou.sberandroidschool_finalproject.domain.model;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Модель для отображения пользователю вопроса и вариантов ответов
@@ -41,5 +42,18 @@ public class Question {
 
     public long getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question = (Question) o;
+        return id == question.id && correctAnswerIndex == question.correctAnswerIndex && Objects.equals(questionText, question.questionText) && Objects.equals(answers, question.answers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, questionText, answers, correctAnswerIndex);
     }
 }

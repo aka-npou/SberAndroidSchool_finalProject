@@ -4,6 +4,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 /**
  * Модель для хранения в базе статистики по ответам
  *
@@ -28,5 +30,29 @@ public class StatisticEntity {
         this.answerIndex = answerIndex;
         this.isCorrectAnswer = isCorrectAnswer;
         this.dateOfAnswer = dateOfAnswer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StatisticEntity entity = (StatisticEntity) o;
+        return id == entity.id && questionId == entity.questionId && answerIndex == entity.answerIndex && isCorrectAnswer == entity.isCorrectAnswer && dateOfAnswer == entity.dateOfAnswer;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, questionId, answerIndex, isCorrectAnswer, dateOfAnswer);
+    }
+
+    @Override
+    public String toString() {
+        return "StatisticEntity{" +
+                "id=" + id +
+                ", questionId=" + questionId +
+                ", answerIndex=" + answerIndex +
+                ", isCorrectAnswer=" + isCorrectAnswer +
+                ", dateOfAnswer=" + dateOfAnswer +
+                '}';
     }
 }

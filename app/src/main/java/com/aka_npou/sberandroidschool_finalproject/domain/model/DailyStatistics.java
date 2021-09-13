@@ -1,6 +1,7 @@
 package com.aka_npou.sberandroidschool_finalproject.domain.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Модель для отображения пользователю статистики
@@ -52,5 +53,18 @@ public class DailyStatistics {
 
     public void setCountCorrectQuestions(int countCorrectQuestions) {
         mCountCorrectQuestions = countCorrectQuestions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DailyStatistics that = (DailyStatistics) o;
+        return mCountQuestions == that.mCountQuestions && mCountCorrectQuestions == that.mCountCorrectQuestions && Objects.equals(mDateOfAnswer, that.mDateOfAnswer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mDateOfAnswer, mCountQuestions, mCountCorrectQuestions);
     }
 }
