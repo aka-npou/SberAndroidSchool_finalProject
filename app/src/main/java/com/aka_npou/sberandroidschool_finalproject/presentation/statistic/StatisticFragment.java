@@ -99,6 +99,7 @@ public class StatisticFragment extends Fragment {
                 0,
                 0,
                 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         calendar.add(Calendar.DATE, -14);
         statisticPeriod.add(0, calendar.getTime());
 
