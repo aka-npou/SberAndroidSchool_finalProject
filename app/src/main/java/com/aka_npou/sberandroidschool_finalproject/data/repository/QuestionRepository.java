@@ -26,7 +26,7 @@ public class QuestionRepository implements IQuestionRepository {
      * @param questionDao Dao для работы с базой данных
      * @param converter конвертер модели дата слоя в модель домейн слоя и обратно
      */
-    public QuestionRepository(IQuestionDao questionDao, IConverter<Question, QuestionWithAnswersAndTypeConverter> converter) {
+    public QuestionRepository(IQuestionDao questionDao, IConverter<Question, QuestionWithAnswersAndType> converter) {
         this.mQuestionDao = questionDao;
         mConverter = converter;
     }

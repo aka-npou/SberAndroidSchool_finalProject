@@ -20,6 +20,10 @@ import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionWithAnswe
  */
 @Dao
 public interface IQuestionDao {
+    /**
+     * Получение рандомного вопроса с вариантами ответов
+     * @return {@link QuestionWithAnswersAndType}
+     */
     @Transaction
     @Query("SELECT q.id, " +
             "q.questionText, " +
@@ -34,6 +38,10 @@ public interface IQuestionDao {
             "LIMIT 1")
     QuestionWithAnswersAndType getQuestion();
 
+    /**
+     * Получение самого редкого по показыванию вопроса с вариантами ответов
+     * @return {@link QuestionWithAnswersAndType}
+     */
     @Query("SELECT " +
                 "q.id, " +
                 "q.questionText, " +
@@ -58,7 +66,7 @@ public interface IQuestionDao {
 
     /**
      * Добавление вопроса в базу данных. Добавление вариантов ответа в базу данных
-     * @param entity {@link QuestionWithAnswers} модель вопроса с вариантами ответов для базы данных
+     * @param entity {@link QuestionWithAnswersAndType} модель вопроса с вариантами ответов для базы данных
      */
     @Transaction
     default void insert(QuestionWithAnswersAndType entity) {
@@ -89,12 +97,26 @@ public interface IQuestionDao {
     @Insert
     void addAnswers(AnswerEntity entity);
 
+    /**
+     * Добавление типа вопроса в базу данных
+     * @param entity {@link QuestionTypeEntity} модель типа вопроса для базы данных
+     */
     @Insert
     long addType(QuestionTypeEntity entity);
 
+    /**
+     * Обновление типа вопроса в базе данных
+     * @param entity {@link QuestionTypeEntity} модель типа вопроса для базы данных
+     * @return количество измененных записей
+     */
     @Update(onConflict = IGNORE)
     int updateType(QuestionTypeEntity entity);
 
+    /**
+     * Получение типов вопроса по имени типа
+     * @param type имя типа вопроса
+     * @return {@link QuestionTypeEntity} модель типа вопроса для базы данных
+     */
     @Query("SELECT * FROM question_types AS qt WHERE qt.type = :type")
     QuestionTypeEntity getQuestionTypeEntityOfType(String type);
 

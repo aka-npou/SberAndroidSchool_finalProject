@@ -13,7 +13,6 @@ import java.util.Objects;
  *
  * @author Мулярчук Александр
  */
-@Entity(tableName = "questions")
 @Entity(tableName = "questions", foreignKeys = @ForeignKey(entity = QuestionTypeEntity.class, parentColumns = "id", childColumns = "question_type"))
 public class QuestionEntity {
     @PrimaryKey(autoGenerate = true)

@@ -22,7 +22,7 @@ public class Question {
      * @param answers {@link List} варианты ответов
      * @param correctAnswerIndex индекс правильного ответа в answers
      */
-    public Question(long id, String questionText, List<String> answers, int correctAnswerIndex) {
+    public Question(long id, String questionText, List<String> answers, int correctAnswerIndex, String type) {
         this.id = id;
         this.questionText = questionText;
         this.answers = answers;

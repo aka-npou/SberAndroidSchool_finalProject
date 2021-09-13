@@ -23,7 +23,7 @@ public class QuestionWithAnswersAndType {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        QuestionWithAnswers that = (QuestionWithAnswers) o;
+        QuestionWithAnswersAndType that = (QuestionWithAnswersAndType) o;
         return Objects.equals(questionEntity, that.questionEntity) && Objects.equals(answers, that.answers);
     }
 

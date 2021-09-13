@@ -6,11 +6,18 @@ import com.aka_npou.sberandroidschool_finalproject.data.entity.AnswerEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionTypeEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionWithAnswersAndType;
+import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
+import com.aka_npou.sberandroidschool_finalproject.domain.model.Statistic;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Имплементация интерфейса {@link IConverter} для конвертации {@link Question} в {@link QuestionWithAnswersAndType}
+ *
+ * @author Мулярчук Александр
+ */
 public class QuestionWithAnswersAndTypeConverter implements IConverter<Question, QuestionWithAnswersAndType> {
     @NonNull
     @Override

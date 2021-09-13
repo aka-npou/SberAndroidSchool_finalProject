@@ -2,11 +2,11 @@ package com.aka_npou.sberandroidschool_finalproject.data.repository;
 
 import static org.mockito.Mockito.when;
 
-import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionWithAnswersConverter;
+import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionWithAnswersAndTypeConverter;
 import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IQuestionDao;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.AnswerEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
-import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionWithAnswers;
+import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionWithAnswersAndType;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
 import com.aka_npou.sberandroidschool_finalproject.domain.repository.IQuestionRepository;
 import com.google.common.truth.Truth;
@@ -24,7 +24,7 @@ import java.util.Arrays;
 public class QuestionRepositoryTest {
 
     @Mock
-    QuestionWithAnswersConverter converter;
+    QuestionWithAnswersAndTypeConverter converter;
 
     @Mock
     IQuestionDao questionDao;
@@ -40,10 +40,10 @@ public class QuestionRepositoryTest {
     @Test
     public void getQuestionTest() {
         //Arrange
-        Question expectedResult = new Question(1, "test", new ArrayList<>(), 1);
-        Question question = new Question(1, "test", new ArrayList<>(), 1);
+        Question expectedResult = new Question(1, "test", new ArrayList<>(), 1, "test_type");
+        Question question = new Question(1, "test", new ArrayList<>(), 1, "test_type");
 
-        QuestionWithAnswers questionWithAnswers = new QuestionWithAnswers();
+        QuestionWithAnswersAndType questionWithAnswers = new QuestionWithAnswersAndType();
         questionWithAnswers.answers = Arrays.asList(new AnswerEntity(0, "test answer1", 1), new AnswerEntity(0, "test answer2", 1));
         questionWithAnswers.questionEntity = new QuestionEntity(1, "test", 1);
         when(questionDao.getUncommonQuestion()).thenReturn(questionWithAnswers);
