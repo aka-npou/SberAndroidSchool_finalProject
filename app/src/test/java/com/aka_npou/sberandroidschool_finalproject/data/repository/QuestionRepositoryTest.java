@@ -46,11 +46,11 @@ public class QuestionRepositoryTest {
         QuestionWithAnswersAndType questionWithAnswers = new QuestionWithAnswersAndType();
         questionWithAnswers.answers = Arrays.asList(new AnswerEntity(0, "test answer1", 1), new AnswerEntity(0, "test answer2", 1));
         questionWithAnswers.questionEntity = new QuestionEntity(1, "test", 1);
-        when(questionDao.getUncommonQuestion()).thenReturn(questionWithAnswers);
+        when(questionDao.getUncommonQuestion("test_type")).thenReturn(questionWithAnswers);
 
         when(converter.reverse(questionWithAnswers)).thenReturn(question);
         //Act
-        Question actualResult = repository.getQuestion();
+        Question actualResult = repository.getQuestion("test_type");
         //Assert
         Truth.assertThat(actualResult).isEqualTo(expectedResult);
     }

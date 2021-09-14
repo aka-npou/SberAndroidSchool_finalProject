@@ -63,10 +63,10 @@ public class QuestionViewModelTest {
     @Test
     public void getQuestionTest() {
         // TODO: 13.09.2021 в пачке тестов не проходит
-        Question question = new Question(1, "test", new ArrayList<>(), 1);
-        when(questionInteractor.getQuestion()).thenReturn(Single.just(question));
+        Question question = new Question(1, "test", new ArrayList<>(), 1, "test_type");
+        when(questionInteractor.getQuestion("test_type")).thenReturn(Single.just(question));
 
-        viewModel.getQuestion(0);
+        viewModel.getQuestion("test_type", 0);
 
         InOrder inOrder = Mockito.inOrder(questionLiveDataObserver);
 

@@ -31,10 +31,10 @@ public class QuestionInteractorTest {
     @Test
     public void getQuestionTest() {
         //Arrange
-        Question expectedResult = new Question(1, "test", Arrays.asList(), 1);
-        when(questionRepository.getQuestion()).thenReturn(expectedResult);
+        Question expectedResult = new Question(1, "test", Arrays.asList(), 1, "test_type");
+        when(questionRepository.getQuestion("test_type")).thenReturn(expectedResult);
         //Act
-        Single<Question> actualResult = questionInteractor.getQuestion();
+        Single<Question> actualResult = questionInteractor.getQuestion("test_type");
         //Assert
         actualResult.test().assertResult(expectedResult);
     }
