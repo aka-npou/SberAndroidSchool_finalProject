@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Profile;
-import com.aka_npou.sberandroidschool_finalproject.domain.repository.IQuestionRepository;
+import com.aka_npou.sberandroidschool_finalproject.domain.store.IProfileStore;
 
 /**
  *  Имплементация интерфейса {@link IProfileStore}

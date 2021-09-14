@@ -34,9 +34,9 @@ import java.util.List;
 public class StatisticFragment extends Fragment {
     public final static String TAG = StatisticFragment.class.getSimpleName();
 
-    private RecyclerView mStatisticRecyclerView;
-    private View mRootView;
-    private View mProgressBar;
+    private RecyclerView statisticRecyclerView;
+    private View rootView;
+    private View progressBar;
 
     private StatisticViewModel viewModel;
 
@@ -58,17 +58,20 @@ public class StatisticFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_statistic, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mRootView = view.getRootView();
-        mStatisticRecyclerView = view.findViewById(R.id.statistic_recycler_view);
-        mStatisticRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        rootView = view.getRootView();
+        statisticRecyclerView = view.findViewById(R.id.statistic_recycler_view);
+        statisticRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
+                RecyclerView.HORIZONTAL, false));
 
-        mProgressBar = view.findViewById(R.id.progress_frame_layout);
+        progressBar = view.findViewById(R.id.progress_frame_layout);
 
         createViewModel();
         observeLiveData();
@@ -111,7 +114,8 @@ public class StatisticFragment extends Fragment {
     private void createViewModel() {
         //null может быть если делать до onAttached, а мы делаем в onViewCreated, что после
         ActivityComponent activityComponent = QuizApplication.getAppComponent(getActivity()).getActivityComponent();
-        viewModel = new ViewModelProvider(this, activityComponent.getViewModelFactory()).get(StatisticViewModel.class);
+        viewModel = new ViewModelProvider(this, activityComponent.getViewModelFactory())
+                .get(StatisticViewModel.class);
     }
 
     private void observeLiveData() {
@@ -121,7 +125,7 @@ public class StatisticFragment extends Fragment {
     }
 
     private void showProgress(boolean isVisible) {
-        mProgressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
     private void showData(@NonNull List<DailyStatistics> statisticList) {
@@ -129,11 +133,11 @@ public class StatisticFragment extends Fragment {
         StatisticRecyclerAdapter adapter =
                 new StatisticRecyclerAdapter(statisticList);
 
-        mStatisticRecyclerView.setAdapter(adapter);
+        statisticRecyclerView.setAdapter(adapter);
     }
 
     private void showError(@NonNull Throwable throwable) {
         Log.e(TAG, "showError: ", throwable);
-        Snackbar.make(mRootView, throwable.toString(), BaseTransientBottomBar.LENGTH_LONG).show();
+        Snackbar.make(rootView, throwable.toString(), BaseTransientBottomBar.LENGTH_LONG).show();
     }
 }

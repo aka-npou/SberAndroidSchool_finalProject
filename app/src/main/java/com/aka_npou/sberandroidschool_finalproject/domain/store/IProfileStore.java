@@ -1,4 +1,4 @@
-package com.aka_npou.sberandroidschool_finalproject.data.store;
+package com.aka_npou.sberandroidschool_finalproject.domain.store;
 
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Profile;
 

@@ -29,7 +29,7 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private IFragmentNavigation mFragmentNavigation;
+    private IFragmentNavigation fragmentNavigation;
 
     private MainActivityViewModel viewModel;
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mFragmentNavigation = this::replaceFragment;
+        fragmentNavigation = this::replaceFragment;
 
         progressBar = findViewById(R.id.progress_main_activity);
 
@@ -65,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
     private Fragment getFragment(String tagFragment) {
         switch (tagFragment) {
             case "QuestionFragment": {
-                return QuestionFragment.newInstance(mFragmentNavigation);
+                return QuestionFragment.newInstance(fragmentNavigation);
             }
             case "SelectTypeGameFragment": {
-                return SelectTypeGameFragment.newInstance(mFragmentNavigation);
+                return SelectTypeGameFragment.newInstance(fragmentNavigation);
             }
             case "ProfileFragment": {
                 return ProfileFragment.newInstance();
@@ -88,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void createViewModel() {
         ActivityComponent activityComponent = QuizApplication.getAppComponent(this).getActivityComponent();
-        viewModel = new ViewModelProvider(this, activityComponent.getViewModelFactory()).get(MainActivityViewModel.class);
+        viewModel = new ViewModelProvider(this, activityComponent.getViewModelFactory())
+                .get(MainActivityViewModel.class);
     }
 
     private void observeLiveData() {

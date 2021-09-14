@@ -20,7 +20,8 @@ public interface IQuestionDao {
      * Получение рандомного вопроса с вариантами ответов
      * @return {@link QuestionWithAnswers}
      */
-    @Query("SELECT q.id, q.questionText, q.correctAnswerIndex FROM questions AS q LEFT JOIN answers AS a ON q.id = a.question_id ORDER BY RANDOM() LIMIT 1")
+    @Query("SELECT q.id, q.questionText, q.correctAnswerIndex " +
+            "FROM questions AS q LEFT JOIN answers AS a ON q.id = a.question_id ORDER BY RANDOM() LIMIT 1")
     QuestionWithAnswers getQuestion();
 
     /**

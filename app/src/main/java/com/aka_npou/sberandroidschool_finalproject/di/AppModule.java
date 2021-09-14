@@ -12,7 +12,7 @@ import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IQuestionDao;
 import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IStatisticDao;
 import com.aka_npou.sberandroidschool_finalproject.data.repository.QuestionRepository;
 import com.aka_npou.sberandroidschool_finalproject.data.repository.StatisticRepository;
-import com.aka_npou.sberandroidschool_finalproject.data.store.IProfileStore;
+import com.aka_npou.sberandroidschool_finalproject.domain.store.IProfileStore;
 import com.aka_npou.sberandroidschool_finalproject.data.store.ProfileStore;
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IProfileInteractor;
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IQuestionInteractor;

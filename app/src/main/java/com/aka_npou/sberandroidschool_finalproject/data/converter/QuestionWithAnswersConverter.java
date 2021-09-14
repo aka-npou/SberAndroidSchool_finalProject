@@ -38,7 +38,10 @@ public class QuestionWithAnswersConverter implements IConverter<Question, Questi
             answers.add(answerEntity.text);
         }
 
-        return new Question(item.questionEntity.id, item.questionEntity.questionText, answers, item.questionEntity.correctAnswerIndex);
+        return new Question(item.questionEntity.id,
+                item.questionEntity.questionText,
+                answers,
+                item.questionEntity.correctAnswerIndex);
     }
 }
 

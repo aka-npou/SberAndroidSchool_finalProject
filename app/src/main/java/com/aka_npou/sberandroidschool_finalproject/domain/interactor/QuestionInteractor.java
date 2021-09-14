@@ -12,23 +12,23 @@ import io.reactivex.Single;
  *  @author Мулярчук Александр
  */
 public class QuestionInteractor implements IQuestionInteractor{
-    private final IQuestionRepository mQuestionRepository;
+    private final IQuestionRepository questionRepository;
 
     /**
      * Конструктор
      * @param questionRepository {@link IQuestionRepository} репозиторий для работы с вопросами и ответами
      */
     public QuestionInteractor(IQuestionRepository questionRepository) {
-        this.mQuestionRepository = questionRepository;
+        this.questionRepository = questionRepository;
     }
 
     @Override
     public Single<Question> getQuestion() {
-        return Single.fromCallable(mQuestionRepository::getQuestion);
+        return Single.fromCallable(questionRepository::getQuestion);
     }
 
     @Override
     public Completable initDB() {
-        return Completable.fromAction(mQuestionRepository::initDB);
+        return Completable.fromAction(questionRepository::initDB);
     }
 }

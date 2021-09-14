@@ -23,7 +23,7 @@ import com.aka_npou.sberandroidschool_finalproject.presentation.question.Questio
 public class SelectTypeGameFragment extends Fragment {
     public final static String TAG = SelectTypeGameFragment.class.getSimpleName();
 
-    private final IFragmentNavigation mFragmentNavigation;
+    private final IFragmentNavigation fragmentNavigation;
 
     /**
      * Получение фрагмента выбора игры
@@ -39,12 +39,14 @@ public class SelectTypeGameFragment extends Fragment {
      * @param fragmentNavigation обработчик для перехода между фрагментами
      */
     public SelectTypeGameFragment(IFragmentNavigation fragmentNavigation) {
-        mFragmentNavigation = fragmentNavigation;
+        this.fragmentNavigation = fragmentNavigation;
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_select_type_game, container, false);
     }
 
@@ -52,10 +54,10 @@ public class SelectTypeGameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button buttonStartSimpleGame = view.findViewById(R.id.start_simple_game_button);
         buttonStartSimpleGame.setOnClickListener(viewButton ->
-                mFragmentNavigation.replace(QuestionFragment.TAG, false));
+                fragmentNavigation.replace(QuestionFragment.TAG, false));
 
         Button buttonOpenProfile = view.findViewById(R.id.open_profile_button);
         buttonOpenProfile.setOnClickListener(viewButton ->
-                mFragmentNavigation.replace(ProfileFragment.TAG, true));
+                fragmentNavigation.replace(ProfileFragment.TAG, true));
     }
 }

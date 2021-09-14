@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 import android.content.SharedPreferences;
 
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Profile;
+import com.aka_npou.sberandroidschool_finalproject.domain.store.IProfileStore;
 import com.google.common.truth.Truth;
 
 import org.junit.Before;

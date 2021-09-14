@@ -1,6 +1,6 @@
 package com.aka_npou.sberandroidschool_finalproject.domain.interactor;
 
-import com.aka_npou.sberandroidschool_finalproject.data.store.IProfileStore;
+import com.aka_npou.sberandroidschool_finalproject.domain.store.IProfileStore;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Profile;
 
 import io.reactivex.Completable;

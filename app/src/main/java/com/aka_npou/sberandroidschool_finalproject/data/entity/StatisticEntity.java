@@ -37,7 +37,11 @@ public class StatisticEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StatisticEntity entity = (StatisticEntity) o;
-        return id == entity.id && questionId == entity.questionId && answerIndex == entity.answerIndex && isCorrectAnswer == entity.isCorrectAnswer && dateOfAnswer == entity.dateOfAnswer;
+        return id == entity.id
+                && questionId == entity.questionId
+                && answerIndex == entity.answerIndex
+                && isCorrectAnswer == entity.isCorrectAnswer
+                && dateOfAnswer == entity.dateOfAnswer;
     }
 
     @Override

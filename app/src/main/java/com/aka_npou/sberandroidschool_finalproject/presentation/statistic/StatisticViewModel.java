@@ -19,14 +19,14 @@ import io.reactivex.disposables.Disposable;
  * @author Мулярчук Александр
  */
 public class StatisticViewModel extends ViewModel {
-    private final IStatisticInteractor mStatisticInteractor;
-    private final ISchedulersProvider mSchedulersProvider;
+    private final IStatisticInteractor statisticInteractor;
+    private final ISchedulersProvider schedulersProvider;
 
-    private final MutableLiveData<Boolean> mProgressLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Throwable> mErrorLiveData = new MutableLiveData<>();
-    private final MutableLiveData<List<DailyStatistics>> mStatisticLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> progressLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Throwable> errorLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<DailyStatistics>> statisticLiveData = new MutableLiveData<>();
 
-    private Disposable mDisposable;
+    private Disposable disposable;
 
     /**
      * Конструктор
@@ -35,8 +35,8 @@ public class StatisticViewModel extends ViewModel {
      */
     public StatisticViewModel(IStatisticInteractor statisticInteractor,
                              ISchedulersProvider schedulersProvider) {
-        mStatisticInteractor = statisticInteractor;
-        mSchedulersProvider = schedulersProvider;
+        this.statisticInteractor = statisticInteractor;
+        this.schedulersProvider = schedulersProvider;
     }
 
     /**
@@ -45,12 +45,12 @@ public class StatisticViewModel extends ViewModel {
      * @param to дата по которую получать статистику
      */
     public void getStatisticAsyncRx(Date from, Date to) {
-        mDisposable = mStatisticInteractor.getStatisticForPeriod(from, to)
-                .doOnSubscribe(disposable -> mProgressLiveData.postValue(true))
-                .doAfterTerminate(() -> mProgressLiveData.postValue(false))
-                .subscribeOn(mSchedulersProvider.io())
-                .observeOn(mSchedulersProvider.ui())
-                .subscribe(mStatisticLiveData::setValue, mErrorLiveData::setValue);
+        disposable = statisticInteractor.getStatisticForPeriod(from, to)
+                .doOnSubscribe(disposable -> progressLiveData.postValue(true))
+                .doAfterTerminate(() -> progressLiveData.postValue(false))
+                .subscribeOn(schedulersProvider.io())
+                .observeOn(schedulersProvider.ui())
+                .subscribe(statisticLiveData::setValue, errorLiveData::setValue);
     }
 
 
@@ -58,21 +58,21 @@ public class StatisticViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
 
-        if (mDisposable != null && !mDisposable.isDisposed()) {
-            mDisposable.dispose();
-            mDisposable = null;
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+            disposable = null;
         }
     }
 
     public LiveData<Boolean> getProgressLiveData() {
-        return mProgressLiveData;
+        return progressLiveData;
     }
 
     public LiveData<Throwable> getErrorLiveData() {
-        return mErrorLiveData;
+        return errorLiveData;
     }
 
     public LiveData<List<DailyStatistics>> getStatisticLiveData() {
-        return mStatisticLiveData;
+        return statisticLiveData;
     }
 }
