@@ -134,6 +134,7 @@ public class StatisticFragment extends Fragment {
                 new StatisticRecyclerAdapter(statisticList);
 
         statisticRecyclerView.setAdapter(adapter);
+        statisticRecyclerView.scrollToPosition(statisticList.size()-1);
     }
 
     private void showError(@NonNull Throwable throwable) {
