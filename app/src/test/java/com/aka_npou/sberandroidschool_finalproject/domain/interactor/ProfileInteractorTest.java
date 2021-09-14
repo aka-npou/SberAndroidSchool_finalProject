@@ -2,8 +2,7 @@ package com.aka_npou.sberandroidschool_finalproject.domain.interactor;
 
 import static org.mockito.Mockito.when;
 
-import com.aka_npou.sberandroidschool_finalproject.data.repository.StatisticRepository;
-import com.aka_npou.sberandroidschool_finalproject.data.store.IProfileStore;
+import com.aka_npou.sberandroidschool_finalproject.domain.store.IProfileStore;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Profile;
 
 import org.junit.Before;

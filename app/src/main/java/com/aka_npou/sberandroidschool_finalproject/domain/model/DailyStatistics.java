@@ -9,18 +9,18 @@ import java.util.Objects;
  * @author Мулярчук Александр
  */
 public class DailyStatistics {
-    private final Date mDateOfAnswer;
-    private int mCountQuestions;
-    private int mCountCorrectQuestions;
+    private final Date dateOfAnswer;
+    private int countQuestions;
+    private int countCorrectQuestions;
 
     /**
      * Конструктор
      * @param mDateOfAnswer дата ответа на вопрос
      */
     public DailyStatistics(Date mDateOfAnswer) {
-        this.mDateOfAnswer = mDateOfAnswer;
-        mCountQuestions = 0;
-        mCountCorrectQuestions = 0;
+        this.dateOfAnswer = mDateOfAnswer;
+        countQuestions = 0;
+        countCorrectQuestions = 0;
     }
 
     /**
@@ -30,29 +30,29 @@ public class DailyStatistics {
      * @param countCorrectQuestions количество правильно отвеченных вопросов
      */
     public DailyStatistics(Date dateOfAnswer, int countQuestions, int countCorrectQuestions) {
-        mDateOfAnswer = dateOfAnswer;
-        mCountQuestions = countQuestions;
-        mCountCorrectQuestions = countCorrectQuestions;
+        this.dateOfAnswer = dateOfAnswer;
+        this.countQuestions = countQuestions;
+        this.countCorrectQuestions = countCorrectQuestions;
     }
 
     public Date getDateOfAnswer() {
-        return mDateOfAnswer;
+        return dateOfAnswer;
     }
 
     public int getCountQuestions() {
-        return mCountQuestions;
+        return countQuestions;
     }
 
     public int getCountCorrectQuestions() {
-        return mCountCorrectQuestions;
+        return countCorrectQuestions;
     }
 
     public void setCountQuestions(int countQuestions) {
-        mCountQuestions = countQuestions;
+        this.countQuestions = countQuestions;
     }
 
     public void setCountCorrectQuestions(int countCorrectQuestions) {
-        mCountCorrectQuestions = countCorrectQuestions;
+        this.countCorrectQuestions = countCorrectQuestions;
     }
 
     @Override
@@ -60,11 +60,13 @@ public class DailyStatistics {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DailyStatistics that = (DailyStatistics) o;
-        return mCountQuestions == that.mCountQuestions && mCountCorrectQuestions == that.mCountCorrectQuestions && Objects.equals(mDateOfAnswer, that.mDateOfAnswer);
+        return countQuestions == that.countQuestions
+                && countCorrectQuestions == that.countCorrectQuestions
+                && Objects.equals(dateOfAnswer, that.dateOfAnswer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mDateOfAnswer, mCountQuestions, mCountCorrectQuestions);
+        return Objects.hash(dateOfAnswer, countQuestions, countCorrectQuestions);
     }
 }

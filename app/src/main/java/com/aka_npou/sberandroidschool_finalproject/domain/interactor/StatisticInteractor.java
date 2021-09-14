@@ -15,25 +15,26 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 
 /**
- *  Имплементация интерфейса {@link IStatisticInteractor}
+ * Имплементация интерфейса {@link IStatisticInteractor}
  *
- *  @author Мулярчук Александр
+ * @author Мулярчук Александр
  */
 public class StatisticInteractor implements IStatisticInteractor {
-    private final IStatisticRepository mStatisticRepository;
+    private final IStatisticRepository statisticRepository;
 
     /**
      * Конструктор
+     *
      * @param statisticRepository {@link IStatisticRepository} репозиторий для работы со статистикой ответов
      */
     public StatisticInteractor(IStatisticRepository statisticRepository) {
-        mStatisticRepository = statisticRepository;
+        this.statisticRepository = statisticRepository;
     }
 
     @Override
     public Completable addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer) {
         return Completable.fromCallable(() -> {
-            mStatisticRepository.addAnswerResult(questionId, answerIndex, isCorrectAnswer, dateOfAnswer);
+            statisticRepository.addAnswerResult(questionId, answerIndex, isCorrectAnswer, dateOfAnswer);
             return true;
         });
     }
@@ -44,11 +45,11 @@ public class StatisticInteractor implements IStatisticInteractor {
     }
 
     private List<DailyStatistics> getDailyStatistic(Date from, Date to) {
-        List<Statistic> statisticList = mStatisticRepository.getStatisticForPeriod(from, to);
+        List<Statistic> statisticList = statisticRepository.getStatisticForPeriod(from, to);
 
         Map<Long, DailyStatistics> dailyStatisticsMap = new HashMap<>();
 
-        for (Statistic item:statisticList) {
+        for (Statistic item : statisticList) {
             if (!dailyStatisticsMap.containsKey(item.getDateOfAnswer().getTime())) {
                 dailyStatisticsMap.put(item.getDateOfAnswer().getTime(), new DailyStatistics(item.getDateOfAnswer()));
             }
@@ -69,7 +70,8 @@ public class StatisticInteractor implements IStatisticInteractor {
 
 
         List<DailyStatistics> dailyStatisticsList = new ArrayList<>(dailyStatisticsMap.values());
-        Collections.sort(dailyStatisticsList, (o1, o2) -> (int)(o1.getDateOfAnswer().getTime() - o2.getDateOfAnswer().getTime()));
+        Collections.sort(dailyStatisticsList, (o1, o2) ->
+                (int) (o1.getDateOfAnswer().getTime() - o2.getDateOfAnswer().getTime()));
 
         return dailyStatisticsList;
     }

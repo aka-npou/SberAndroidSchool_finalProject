@@ -55,7 +55,10 @@ public class Question {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question = (Question) o;
-        return id == question.id && correctAnswerIndex == question.correctAnswerIndex && Objects.equals(questionText, question.questionText) && Objects.equals(answers, question.answers);
+        return id == question.id
+                && correctAnswerIndex == question.correctAnswerIndex
+                && Objects.equals(questionText, question.questionText)
+                && Objects.equals(answers, question.answers);
     }
 
     @Override

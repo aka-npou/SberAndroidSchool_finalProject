@@ -56,7 +56,11 @@ public class Statistic {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Statistic statistic = (Statistic) o;
-        return id == statistic.id && questionId == statistic.questionId && answerIndex == statistic.answerIndex && isCorrectAnswer == statistic.isCorrectAnswer && Objects.equals(dateOfAnswer, statistic.dateOfAnswer);
+        return id == statistic.id
+                && questionId == statistic.questionId
+                && answerIndex == statistic.answerIndex
+                && isCorrectAnswer == statistic.isCorrectAnswer
+                && Objects.equals(dateOfAnswer, statistic.dateOfAnswer);
     }
 
     @Override

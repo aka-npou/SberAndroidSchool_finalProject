@@ -25,22 +25,22 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
     private static final String pattern = "dd";
     private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-    private final List<DailyStatistics> mStatisticList;
-    private int mMaxCountQuestionPerDay = 0;
+    private final List<DailyStatistics> statisticList;
+    private int maxCountQuestionPerDay = 0;
 
     /**
      * Конструктор
      * @param statisticList {@link List} список статистики ответов по дням
      */
     public StatisticRecyclerAdapter(List<DailyStatistics> statisticList) {
-        this.mStatisticList = statisticList;
+        this.statisticList = statisticList;
         getMaxCountQuestionPerDay();
     }
 
     private void getMaxCountQuestionPerDay() {
-        mMaxCountQuestionPerDay = 0;
-        for (DailyStatistics dailyStatistics : mStatisticList) {
-            mMaxCountQuestionPerDay = Math.max(mMaxCountQuestionPerDay, dailyStatistics.getCountQuestions());
+        maxCountQuestionPerDay = 0;
+        for (DailyStatistics dailyStatistics : statisticList) {
+            maxCountQuestionPerDay = Math.max(maxCountQuestionPerDay, dailyStatistics.getCountQuestions());
         }
     }
 
@@ -55,12 +55,12 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
 
     @Override
     public void onBindViewHolder(@NonNull StatisticViewHolder holder, int position) {
-        holder.bindView(mStatisticList.get(position), mMaxCountQuestionPerDay);
+        holder.bindView(statisticList.get(position), maxCountQuestionPerDay);
     }
 
     @Override
     public int getItemCount() {
-        return mStatisticList.size();
+        return statisticList.size();
     }
 
     /**
@@ -68,9 +68,9 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
      */
     static class StatisticViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView statisticCountQuestions;
-        ImageView statisticPercentageOfCorrectAnswers;
-        TextView statisticDate;
+        private final ImageView statisticCountQuestions;
+        private final ImageView statisticPercentageOfCorrectAnswers;
+        private final TextView statisticDate;
 
         /**
          * Конструктор
@@ -89,9 +89,14 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
                 statisticCountQuestions.getLayoutParams().height = 0;
                 statisticPercentageOfCorrectAnswers.getLayoutParams().height = 0;
             } else {
-                statisticCountQuestions.getLayoutParams().height = (int) (100 * dailyStatistics.getCountQuestions() / maxCountQuestionPerDay * itemView.getContext().getResources().getDisplayMetrics().density);
-                statisticPercentageOfCorrectAnswers.getLayoutParams().height = (int) (100 * dailyStatistics.getCountCorrectQuestions() / dailyStatistics.getCountQuestions() * itemView.getContext().getResources().getDisplayMetrics().density);
+                float density = itemView.getContext().getResources().getDisplayMetrics().density;
+                statisticCountQuestions.getLayoutParams().height =
+                        (int) (100 * dailyStatistics.getCountQuestions() / maxCountQuestionPerDay * density);
+
+                statisticPercentageOfCorrectAnswers.getLayoutParams().height =
+                        (int) (100 * dailyStatistics.getCountCorrectQuestions() / dailyStatistics.getCountQuestions() * density);
             }
+
             statisticDate.setText(simpleDateFormat.format(dailyStatistics.getDateOfAnswer()));
         }
     }

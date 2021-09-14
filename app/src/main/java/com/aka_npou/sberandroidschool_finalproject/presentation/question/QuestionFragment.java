@@ -1,7 +1,6 @@
 package com.aka_npou.sberandroidschool_finalproject.presentation.question;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragment
 import com.aka_npou.sberandroidschool_finalproject.presentation.selectTypeGame.SelectTypeGameFragment;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Фрагмент отображающий вопрос
@@ -71,7 +69,9 @@ public class QuestionFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_question, container, false);
     }
 
@@ -132,7 +132,8 @@ public class QuestionFragment extends Fragment {
     private void createViewModel() {
         //null может быть если делать до onAttached, а мы делаем в onViewCreated, что после
         ActivityComponent activityComponent = QuizApplication.getAppComponent(getActivity()).getActivityComponent();
-        viewModel = new ViewModelProvider(this, activityComponent.getViewModelFactory()).get(QuestionViewModel.class);
+        viewModel = new ViewModelProvider(this, activityComponent.getViewModelFactory())
+                .get(QuestionViewModel.class);
     }
 
     private void observeLiveData() {

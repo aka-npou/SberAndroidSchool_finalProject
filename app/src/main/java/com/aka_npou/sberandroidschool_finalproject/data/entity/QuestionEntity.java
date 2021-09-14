@@ -37,7 +37,8 @@ public class QuestionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         QuestionEntity that = (QuestionEntity) o;
-        return id == that.id && correctAnswerIndex == that.correctAnswerIndex && Objects.equals(questionText, that.questionText);
+        return id == that.id && correctAnswerIndex == that.correctAnswerIndex
+                && Objects.equals(questionText, that.questionText);
     }
 
     @Override

@@ -11,6 +11,7 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * ViewModel общего экрана
+ *
  * @author Мулярчук Александр
  */
 public class MainActivityViewModel extends ViewModel {
@@ -21,15 +22,16 @@ public class MainActivityViewModel extends ViewModel {
     private final MutableLiveData<Throwable> errorLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> initDBLiveData = new MutableLiveData<>();
 
-    private Disposable mDisposable;
+    private Disposable disposable;
 
     /**
      * Конструктор
+     *
      * @param questionInteractor интерактор для получения данных о вопросах
      * @param schedulersProvider провайдер потоков выполнения
      */
     public MainActivityViewModel(IQuestionInteractor questionInteractor,
-                            ISchedulersProvider schedulersProvider) {
+                                 ISchedulersProvider schedulersProvider) {
         this.questionInteractor = questionInteractor;
         this.schedulersProvider = schedulersProvider;
     }
@@ -38,9 +40,9 @@ public class MainActivityViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
 
-        if (mDisposable != null && !mDisposable.isDisposed()) {
-            mDisposable.dispose();
-            mDisposable = null;
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+            disposable = null;
         }
     }
 
@@ -48,7 +50,7 @@ public class MainActivityViewModel extends ViewModel {
      * Инициализация базы данных
      */
     public void initDB() {
-        mDisposable = questionInteractor.initDB()
+        disposable = questionInteractor.initDB()
                 .doOnSubscribe(disposable -> progressLiveData.postValue(true))
                 .doAfterTerminate(() -> progressLiveData.postValue(false))
                 .subscribeOn(schedulersProvider.io())

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SberAndroidSchool_finalProject</string>
+    <string name="start_simple_game_button_text">старт игры</string>
+    <string name="please_wait">Please wait</string>
 </resources>

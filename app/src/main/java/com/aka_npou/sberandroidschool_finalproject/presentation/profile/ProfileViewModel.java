@@ -19,12 +19,12 @@ public class ProfileViewModel extends ViewModel {
     private final IProfileInteractor profileInteractor;
     private final ISchedulersProvider schedulersProvider;
 
-    private final MutableLiveData<Boolean> mProgressLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Throwable> mErrorLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> progressLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Throwable> errorLiveData = new MutableLiveData<>();
     private final MutableLiveData<Profile> profileLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> profileEditLiveData = new MutableLiveData<>();
 
-    private Disposable mDisposable;
+    private Disposable disposable;
 
     /**
      * Конструктор
@@ -41,9 +41,9 @@ public class ProfileViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
 
-        if (mDisposable != null && !mDisposable.isDisposed()) {
-            mDisposable.dispose();
-            mDisposable = null;
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+            disposable = null;
         }
     }
 
@@ -51,12 +51,12 @@ public class ProfileViewModel extends ViewModel {
      * Получение профиля
      */
     public void getProfileData() {
-        mDisposable = profileInteractor.getProfile()
-                .doOnSubscribe(disposable -> mProgressLiveData.postValue(true))
-                .doAfterTerminate(() -> mProgressLiveData.postValue(false))
+        disposable = profileInteractor.getProfile()
+                .doOnSubscribe(disposable -> progressLiveData.postValue(true))
+                .doAfterTerminate(() -> progressLiveData.postValue(false))
                 .subscribeOn(schedulersProvider.io())
                 .observeOn(schedulersProvider.ui())
-                .subscribe(profileLiveData::setValue, mErrorLiveData::setValue);
+                .subscribe(profileLiveData::setValue, errorLiveData::setValue);
     }
 
     /**
@@ -64,20 +64,20 @@ public class ProfileViewModel extends ViewModel {
      * @param profile {@link Profile} модель профиля
      */
     public void saveProfile(Profile profile) {
-        mDisposable = profileInteractor.editProfile(profile)
-                .doOnSubscribe(disposable -> mProgressLiveData.postValue(true))
-                .doAfterTerminate(() -> mProgressLiveData.postValue(false))
+        disposable = profileInteractor.editProfile(profile)
+                .doOnSubscribe(disposable -> progressLiveData.postValue(true))
+                .doAfterTerminate(() -> progressLiveData.postValue(false))
                 .subscribeOn(schedulersProvider.io())
                 .observeOn(schedulersProvider.ui())
-                .subscribe(() -> profileEditLiveData.postValue(true), mErrorLiveData::setValue);
+                .subscribe(() -> profileEditLiveData.postValue(true), errorLiveData::setValue);
     }
 
     public LiveData<Boolean> getProgressLiveData() {
-        return mProgressLiveData;
+        return progressLiveData;
     }
 
     public LiveData<Throwable> getErrorLiveData() {
-        return mErrorLiveData;
+        return errorLiveData;
     }
 
     public LiveData<Profile> getProfileLiveData() {

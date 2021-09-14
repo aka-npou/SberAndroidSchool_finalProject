@@ -55,7 +55,7 @@ public class ProfileFragment extends Fragment {
     private TextInputEditText inputProfileName;
     private ImageView saveProfileName;
     private ImageView cancelSaveProfileName;
-    private View mRootView;
+    private View rootView;
 
     private Profile profile;
 
@@ -68,13 +68,15 @@ public class ProfileFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mRootView = view.getRootView();
+        rootView = view.getRootView();
         profileImage = view.findViewById(R.id.profile_image);
         profileName = view.findViewById(R.id.profile_name);
         editProfileImage = view.findViewById(R.id.edit_profile_image);
@@ -125,20 +127,24 @@ public class ProfileFragment extends Fragment {
     private void createViewModel() {
         //null может быть если делать до onAttached, а мы делаем в onViewCreated, что после
         ActivityComponent activityComponent = QuizApplication.getAppComponent(getActivity()).getActivityComponent();
-        viewModel = new ViewModelProvider(this, activityComponent.getViewModelFactory()).get(ProfileViewModel.class);
+        viewModel = new ViewModelProvider(this, activityComponent.getViewModelFactory())
+                .get(ProfileViewModel.class);
     }
 
     private void observeLiveData() {
-        viewModel.getProfileLiveData().observe(getViewLifecycleOwner(), this::showData);
+        viewModel.getProfileLiveData().observe(getViewLifecycleOwner(), this::showProfile);
         viewModel.getErrorLiveData().observe(getViewLifecycleOwner(), this::showError);
         viewModel.getProfileEditLiveData().observe(getViewLifecycleOwner(), this::editProfileResult);
     }
 
-    private void showData(@NonNull Profile profile) {
+    private void showProfile(@NonNull Profile profile) {
         this.profile = profile;
 
         setImageBitmap(profile.getImageFilePath());
         profileName.setText(profile.getName());
+        if (profile.getName().isEmpty()) {
+            profileName.setText("empty profile name");
+        }
     }
 
     private void setImageBitmap(String imageFilePath) {
@@ -167,12 +173,12 @@ public class ProfileFragment extends Fragment {
 
     private void showError(@NonNull Throwable throwable) {
         Log.e(TAG, "showError: ", throwable);
-        Snackbar.make(mRootView, throwable.toString(), BaseTransientBottomBar.LENGTH_LONG).show();
+        Snackbar.make(rootView, throwable.toString(), BaseTransientBottomBar.LENGTH_LONG).show();
     }
 
     private void editProfileResult(boolean result) {
         if (result) {
-            Snackbar.make(mRootView, "profile saved", BaseTransientBottomBar.LENGTH_LONG).show();
+            Snackbar.make(rootView, "profile saved", BaseTransientBottomBar.LENGTH_LONG).show();
         }
     }
 

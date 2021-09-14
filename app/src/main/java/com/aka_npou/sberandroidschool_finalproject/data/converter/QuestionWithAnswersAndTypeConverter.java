@@ -50,7 +50,11 @@ public class QuestionWithAnswersAndTypeConverter implements IConverter<Question,
             answers.add(answerEntity.text);
         }
 
-        return new Question(item.questionEntity.id, item.questionEntity.questionText, answers, item.questionEntity.correctAnswerIndex, item.type.type);
+        return new Question(item.questionEntity.id,
+                item.questionEntity.questionText,
+                answers,
+                item.questionEntity.correctAnswerIndex,
+                item.type.type);
     }
 }
 

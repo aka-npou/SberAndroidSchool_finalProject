@@ -30,7 +30,7 @@
             android:layout_below="@+id/progress_bar_main_activity"
             android:layout_centerHorizontal="true"
             android:padding="8dp"
-            android:text="Please wait"
+            android:text="@string/please_wait"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
     </RelativeLayout>
 
