@@ -13,6 +13,8 @@ import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionTypeEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionWithAnswersAndType;
 
+import java.util.List;
+
 /**
  * Интерфейс для работы с базой данных с таблицей вопросов и вариантов ответов
  *
@@ -51,6 +53,9 @@ public interface IQuestionDao {
                 "JOIN (SELECT q.id, " +
                 "SUM(CASE WHEN s.id IS NULL THEN 0 ELSE 1 END) AS countQuestionShow " +
                 "FROM questions AS q " +
+                "INNER JOIN question_types AS qt " +
+                "ON q.question_type = qt.id " +
+                "AND qt.type = :typeQuestions " +
                 "LEFT JOIN statistics AS s " +
                 "ON q.id = s.questionId " +
                 "GROUP BY " +
@@ -62,7 +67,7 @@ public interface IQuestionDao {
             "LEFT JOIN answers AS a ON q.id = a.question_id " +
             "LEFT JOIN question_types AS qt " +
             "ON q.question_type = qt.id")
-    QuestionWithAnswersAndType getUncommonQuestion();
+    QuestionWithAnswersAndType getUncommonQuestion(String typeQuestions);
 
     /**
      * Добавление вопроса в базу данных. Добавление вариантов ответа в базу данных
@@ -121,4 +126,10 @@ public interface IQuestionDao {
     QuestionTypeEntity getQuestionTypeEntityOfType(String type);
 
 
+    /**
+     * Получение типов вопроса
+     * @return Список {@link List} из {@link String} типов вопроса
+     */
+    @Query("SELECT * FROM question_types")
+    List<QuestionTypeEntity> getQuestionTypes();
 }

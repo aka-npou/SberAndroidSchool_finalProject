@@ -32,6 +32,8 @@ import java.util.Date;
 public class QuestionFragment extends Fragment {
     public final static String TAG = QuestionFragment.class.getSimpleName();
 
+    private final String typeQuestions;
+
     private QuestionViewModel viewModel;
 
     private TextView textQuestion;
@@ -49,25 +51,22 @@ public class QuestionFragment extends Fragment {
     private Question currentQuestion;
     private int questionNumber;
 
-    private final IFragmentNavigation mFragmentNavigation;
-
     private boolean checkAnswer;
 
     /**
      * Получение фрагмента вопроса
-     * @param fragmentNavigation обработчик для перехода между фрагментами
+     * @param typeQuestions тип вопросов для игры
      * @return {@link QuestionFragment} фрагмент отображающий вопрос
      */
-    public static Fragment newInstance(IFragmentNavigation fragmentNavigation) {
-        return new QuestionFragment(fragmentNavigation);
+    public static Fragment newInstance(String typeQuestions) {
+        return new QuestionFragment(typeQuestions);
     }
 
     /**
      * Конструктор
-     * @param fragmentNavigation обработчик для перехода между фрагментами
      */
-    public QuestionFragment(IFragmentNavigation fragmentNavigation) {
-        mFragmentNavigation = fragmentNavigation;
+    public QuestionFragment(String typeQuestions) {
+        this.typeQuestions = typeQuestions;
     }
 
     @Nullable
@@ -96,7 +95,7 @@ public class QuestionFragment extends Fragment {
         buttonAnswer4.setOnClickListener(viewButton -> onClickAnswer(3));
 
         buttonEndGame.setOnClickListener(viewButton ->
-                mFragmentNavigation.replace(SelectTypeGameFragment.TAG, false));
+                getActivity().onBackPressed());
 
         createViewModel();
         observeLiveData();
@@ -127,7 +126,7 @@ public class QuestionFragment extends Fragment {
     }
 
     private void nextQuestion(long time) {
-        viewModel.getQuestion(time);
+        viewModel.getQuestion(typeQuestions, time);
     }
 
     private void createViewModel() {

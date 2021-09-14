@@ -14,6 +14,7 @@ import com.aka_npou.sberandroidschool_finalproject.R;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragmentNavigation;
 import com.aka_npou.sberandroidschool_finalproject.presentation.profile.ProfileFragment;
 import com.aka_npou.sberandroidschool_finalproject.presentation.question.QuestionFragment;
+import com.aka_npou.sberandroidschool_finalproject.presentation.selectTypeQuestions.SelectTypeQuestionsFragment;
 
 /**
  * Фрагмент отображающий выбор игры
@@ -52,7 +53,7 @@ public class SelectTypeGameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button buttonStartSimpleGame = view.findViewById(R.id.start_simple_game_button);
         buttonStartSimpleGame.setOnClickListener(viewButton ->
-                mFragmentNavigation.replace(QuestionFragment.TAG, false));
+                mFragmentNavigation.replace(SelectTypeQuestionsFragment.TAG, true));
 
         Button buttonOpenProfile = view.findViewById(R.id.open_profile_button);
         buttonOpenProfile.setOnClickListener(viewButton ->

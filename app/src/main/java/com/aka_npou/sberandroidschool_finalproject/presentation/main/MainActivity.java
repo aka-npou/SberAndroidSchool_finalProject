@@ -14,9 +14,11 @@ import com.aka_npou.sberandroidschool_finalproject.QuizApplication;
 import com.aka_npou.sberandroidschool_finalproject.R;
 import com.aka_npou.sberandroidschool_finalproject.di.activity.ActivityComponent;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.IFragmentNavigation;
+import com.aka_npou.sberandroidschool_finalproject.presentation.common.OnClickTypeQuestionsHandler;
 import com.aka_npou.sberandroidschool_finalproject.presentation.profile.ProfileFragment;
 import com.aka_npou.sberandroidschool_finalproject.presentation.question.QuestionFragment;
 import com.aka_npou.sberandroidschool_finalproject.presentation.selectTypeGame.SelectTypeGameFragment;
+import com.aka_npou.sberandroidschool_finalproject.presentation.selectTypeQuestions.SelectTypeQuestionsFragment;
 import com.aka_npou.sberandroidschool_finalproject.presentation.statistic.StatisticFragment;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -29,6 +31,14 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
+    private String typeQuestions = "";
+
+    private OnClickTypeQuestionsHandler setTypeQuestionsHandler = new OnClickTypeQuestionsHandler() {
+        @Override
+        public void startGame(String typeQuestions) {
+            MainActivity.this.typeQuestions = typeQuestions;
+        }
+    };
     private IFragmentNavigation mFragmentNavigation;
 
     private MainActivityViewModel viewModel;
@@ -65,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment getFragment(String tagFragment) {
         switch (tagFragment) {
             case "QuestionFragment": {
-                return QuestionFragment.newInstance(mFragmentNavigation);
+                return QuestionFragment.newInstance(typeQuestions);
             }
             case "SelectTypeGameFragment": {
                 return SelectTypeGameFragment.newInstance(mFragmentNavigation);
@@ -75,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
             }
             case "StatisticFragment": {
                 return StatisticFragment.newInstance();
+            }
+            case "SelectTypeQuestionsFragment": {
+                return SelectTypeQuestionsFragment.newInstance(mFragmentNavigation, setTypeQuestionsHandler);
             }
             default: {
                 throw new IllegalArgumentException("not support fragment " + tagFragment);

@@ -47,8 +47,8 @@ public class QuestionViewModel extends ViewModel {
      * Получение вопроса с вариантами ответов
      * @param time задержка перед получением вопроса
      */
-    public void getQuestion(long time) {
-        mDisposable = mQuestionInteractor.getQuestion()
+    public void getQuestion(String typeQuestions,long time) {
+        mDisposable = mQuestionInteractor.getQuestion(typeQuestions)
                 .subscribeOn(mSchedulersProvider.io())
                 .observeOn(mSchedulersProvider.ui())
                 .delay(time, TimeUnit.MILLISECONDS)

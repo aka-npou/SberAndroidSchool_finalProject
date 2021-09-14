@@ -3,12 +3,14 @@ package com.aka_npou.sberandroidschool_finalproject.data.repository;
 import com.aka_npou.sberandroidschool_finalproject.data.converter.IConverter;
 import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionWithAnswersAndTypeConverter;
 import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IQuestionDao;
+import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionTypeEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.QuestionWithAnswersAndType;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
 import com.aka_npou.sberandroidschool_finalproject.domain.repository.IQuestionRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  *  Имплементация интерфейса {@link IQuestionRepository} репозитория для получения информации
@@ -32,8 +34,8 @@ public class QuestionRepository implements IQuestionRepository {
     }
 
     @Override
-    public Question getQuestion() {
-        return mConverter.reverse(mQuestionDao.getUncommonQuestion());
+    public Question getQuestion(String typeQuestions) {
+        return mConverter.reverse(mQuestionDao.getUncommonQuestion(typeQuestions));
     }
 
     @Override
@@ -51,6 +53,22 @@ public class QuestionRepository implements IQuestionRepository {
         mQuestionDao.insert(mConverter.convert(new Question(7, "8+8", Arrays.asList("1", "2", "10", "16"), 3, "арифметика")));
         mQuestionDao.insert(mConverter.convert(new Question(8, "9+9", Arrays.asList("1", "18", "10", "4"), 1, "арифметика")));
 
+        mQuestionDao.insert(mConverter.convert(new Question(9, "Столица России", Arrays.asList("Москва", "Питер", "Рязань", "Мурманск"), 0, "география")));
+        mQuestionDao.insert(mConverter.convert(new Question(10, "Столица Польши", Arrays.asList("Гданьск", "Варшава", "Краков", "Лодзь"), 1, "география")));
+        mQuestionDao.insert(mConverter.convert(new Question(11, "Столица Франции", Arrays.asList("Бордо", "Москва", "Лион", "Париж"), 3, "география")));
+
         return true;
+    }
+
+    @Override
+    public List<String> getQuestionTypes() {
+        List<QuestionTypeEntity> questionTypeEntityList = mQuestionDao.getQuestionTypes();
+        List<String> questionTypeList = new ArrayList<>();
+
+        for (QuestionTypeEntity entity:questionTypeEntityList) {
+            questionTypeList.add(entity.type);
+        }
+
+        return questionTypeList;
     }
 }

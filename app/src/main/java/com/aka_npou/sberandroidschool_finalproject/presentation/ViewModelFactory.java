@@ -11,6 +11,7 @@ import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedule
 import com.aka_npou.sberandroidschool_finalproject.presentation.main.MainActivityViewModel;
 import com.aka_npou.sberandroidschool_finalproject.presentation.profile.ProfileViewModel;
 import com.aka_npou.sberandroidschool_finalproject.presentation.question.QuestionViewModel;
+import com.aka_npou.sberandroidschool_finalproject.presentation.selectTypeQuestions.SelectTypeQuestionsFragmentViewModel;
 import com.aka_npou.sberandroidschool_finalproject.presentation.statistic.StatisticViewModel;
 
 /**
@@ -61,6 +62,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }
         if (StatisticViewModel.class.equals(modelClass)) {
             return (T) new StatisticViewModel(statisticInteractor, schedulersProvider);
+        }
+        if (SelectTypeQuestionsFragmentViewModel.class.equals(modelClass)) {
+            return (T) new SelectTypeQuestionsFragmentViewModel(questionInteractor, schedulersProvider);
         }
 
         throw new ClassCastException();
