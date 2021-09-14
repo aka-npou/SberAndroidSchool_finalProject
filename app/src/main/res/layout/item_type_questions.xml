@@ -8,6 +8,7 @@
         android:id="@+id/item_type_questions_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:textSize="24dp"/>
 
 </FrameLayout>

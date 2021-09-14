@@ -55,7 +55,7 @@ public class SelectTypeGameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button buttonStartSimpleGame = view.findViewById(R.id.start_simple_game_button);
         buttonStartSimpleGame.setOnClickListener(viewButton ->
-                fragmentNavigation.replace(QuestionFragment.TAG, true));
+                fragmentNavigation.replace(SelectTypeQuestionsFragment.TAG, true));
 
         Button buttonOpenProfile = view.findViewById(R.id.open_profile_button);
         buttonOpenProfile.setOnClickListener(viewButton ->

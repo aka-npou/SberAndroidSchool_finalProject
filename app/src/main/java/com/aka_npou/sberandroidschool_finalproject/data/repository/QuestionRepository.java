@@ -35,8 +35,8 @@ public class QuestionRepository implements IQuestionRepository {
     }
 
     @Override
-    public Question getQuestion() {
-        return converter.reverse(questionDao.getUncommonQuestion());
+    public Question getQuestion(String typeQuestions) {
+        return converter.reverse(questionDao.getUncommonQuestion(typeQuestions));
     }
 
     @Override
@@ -48,39 +48,59 @@ public class QuestionRepository implements IQuestionRepository {
         questionDao.insert(converter.convert(new Question(1,
                 "2+2",
                 Arrays.asList("1", "2", "3", "4"),
-                3)));
+                3,
+                "арифметика")));
         questionDao.insert(converter.convert(new Question(2,
                 "3+3",
                 Arrays.asList("6", "2", "3", "4"),
-                0)));
+                0,
+                "арифметика")));
         questionDao.insert(converter.convert(new Question(3,
                 "4+4",
                 Arrays.asList("1", "8", "3", "4"),
-                1)));
+                1,
+                "арифметика")));
         questionDao.insert(converter.convert(new Question(4,
                 "5+5",
                 Arrays.asList("1", "2", "10", "4"),
-                2)));
+                2,
+                "арифметика")));
         questionDao.insert(converter.convert(new Question(5,
                 "6+6",
                 Arrays.asList("1", "12", "10", "4"),
-                1)));
+                1,
+                "арифметика")));
         questionDao.insert(converter.convert(new Question(6,
                 "7+7",
                 Arrays.asList("1", "2", "10", "14"),
-                3)));
+                3,
+                "арифметика")));
         questionDao.insert(converter.convert(new Question(7,
                 "8+8",
                 Arrays.asList("1", "2", "10", "16"),
-                3)));
+                3,
+                "арифметика")));
         questionDao.insert(converter.convert(new Question(8,
                 "9+9",
                 Arrays.asList("1", "18", "10", "4"),
-                1)));
+                1,
+                "арифметика")));
 
-        questionDao.insert(converter.convert(new Question(9, "Столица России", Arrays.asList("Москва", "Питер", "Рязань", "Мурманск"), 0, "география")));
-        questionDao.insert(converter.convert(new Question(10, "Столица Польши", Arrays.asList("Гданьск", "Варшава", "Краков", "Лодзь"), 1, "география")));
-        questionDao.insert(converter.convert(new Question(11, "Столица Франции", Arrays.asList("Бордо", "Москва", "Лион", "Париж"), 3, "география")));
+        questionDao.insert(converter.convert(new Question(9,
+                "Столица России",
+                Arrays.asList("Москва", "Питер", "Рязань", "Мурманск"),
+                0,
+                "география")));
+        questionDao.insert(converter.convert(new Question(10,
+                "Столица Польши",
+                Arrays.asList("Гданьск", "Варшава", "Краков", "Лодзь"),
+                1,
+                "география")));
+        questionDao.insert(converter.convert(new Question(11,
+                "Столица Франции",
+                Arrays.asList("Бордо", "Москва", "Лион", "Париж"),
+                3,
+                "география")));
 
 
         return true;
