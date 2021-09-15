@@ -4,7 +4,9 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.aka_npou.sberandroidschool_finalproject.data.entity.DetailedStatisticPerPeriodEntity;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
+import com.aka_npou.sberandroidschool_finalproject.data.entity.TotalStatisticEntity;
 
 import java.util.List;
 
@@ -30,4 +32,29 @@ public interface IStatisticDao {
      */
     @Query("SELECT * FROM statistics WHERE dateOfAnswer >= :from and dateOfAnswer <= :to")
     List<StatisticEntity> getStatisticForPeriod(long from, long to);
+
+    @Query("SELECT " +
+            "COUNT(s.id) AS countQuestions, " +
+            "SUM(IFNULL(CASE WHEN s.isCorrectAnswer THEN 1 ELSE 0 END, 0)) AS countCorrectAnswers," +
+            "MIN(s.dateOfAnswer) AS firstDay " +
+            "FROM statistics AS s " +
+            "JOIN questions AS q " +
+            "ON s.questionId = q.id " +
+            "   JOIN question_types AS qt " +
+            "   ON q.question_type = qt.id")
+    TotalStatisticEntity getTotalStatistic();
+
+    @Query("SELECT " +
+            "qt.type, " +
+            "COUNT(s.id) AS countQuestions, " +
+            "SUM(IFNULL(CASE WHEN s.isCorrectAnswer THEN 1 ELSE 0 END, 0)) AS countCorrectQuestions " +
+            "FROM statistics AS s " +
+            "JOIN questions AS q " +
+            "ON s.questionId = q.id " +
+            "AND s.dateOfAnswer >= :from AND s.dateOfAnswer <= :to " +
+            "   JOIN question_types AS qt " +
+            "   ON q.question_type = qt.id " +
+            "GROUP BY " +
+            "   qt.type")
+    List<DetailedStatisticPerPeriodEntity> getExplicitStatisticForPeriod(long from, long to);
 }

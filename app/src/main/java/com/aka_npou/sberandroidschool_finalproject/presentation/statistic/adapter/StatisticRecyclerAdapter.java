@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aka_npou.sberandroidschool_finalproject.R;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.DailyStatistics;
+import com.aka_npou.sberandroidschool_finalproject.presentation.statistic.OnClickDayStatisticHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -28,12 +29,16 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
     private final List<DailyStatistics> statisticList;
     private int maxCountQuestionPerDay = 0;
 
+    private final OnClickDayStatisticHandler onClickDayStatisticHandler;
+
     /**
      * Конструктор
      * @param statisticList {@link List} список статистики ответов по дням
      */
-    public StatisticRecyclerAdapter(List<DailyStatistics> statisticList) {
+    public StatisticRecyclerAdapter(List<DailyStatistics> statisticList,
+                                    OnClickDayStatisticHandler onClickDayStatisticHandler) {
         this.statisticList = statisticList;
+        this.onClickDayStatisticHandler = onClickDayStatisticHandler;
         getMaxCountQuestionPerDay();
     }
 
@@ -50,6 +55,7 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
         StatisticViewHolder vh = new StatisticViewHolder(
                 LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.item_statistic, parent, false));
+        vh.itemView.setOnClickListener(v -> onClickDayStatisticHandler.viewDayStatistic(statisticList.get(vh.getAdapterPosition()).getDateOfAnswer()));
         return vh;
     }
 

@@ -1,10 +1,13 @@
 package com.aka_npou.sberandroidschool_finalproject.domain.interactor;
 
 import com.aka_npou.sberandroidschool_finalproject.domain.model.DailyStatistics;
+import com.aka_npou.sberandroidschool_finalproject.domain.model.DetailedStatisticPerPeriod;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Statistic;
+import com.aka_npou.sberandroidschool_finalproject.domain.model.TotalStatistic;
 import com.aka_npou.sberandroidschool_finalproject.domain.repository.IStatisticRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -42,6 +45,16 @@ public class StatisticInteractor implements IStatisticInteractor {
     @Override
     public Single<List<DailyStatistics>> getStatisticForPeriod(Date from, Date to) {
         return Single.fromCallable(() -> getDailyStatistic(from, to));
+    }
+
+    @Override
+    public Single<TotalStatistic> getTotalStatistic() {
+        return Single.fromCallable(statisticRepository::getTotalStatistic);
+    }
+
+    @Override
+    public Single<List<DetailedStatisticPerPeriod>> getExplicitStatisticForPeriod(Date from , Date to) {
+        return Single.fromCallable(() -> statisticRepository.getExplicitStatisticForPeriod(from, to));
     }
 
     private List<DailyStatistics> getDailyStatistic(Date from, Date to) {
