@@ -20,6 +20,7 @@ import com.aka_npou.sberandroidschool_finalproject.di.activity.ActivityComponent
 import com.aka_npou.sberandroidschool_finalproject.domain.model.DailyStatistics;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.DetailedStatisticPerPeriod;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.TotalStatistic;
+import com.aka_npou.sberandroidschool_finalproject.presentation.common.Utils;
 import com.aka_npou.sberandroidschool_finalproject.presentation.statistic.adapter.DetailedStatisticPerDayRecyclerAdapter;
 import com.aka_npou.sberandroidschool_finalproject.presentation.statistic.adapter.StatisticRecyclerAdapter;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -159,13 +160,18 @@ public class StatisticFragment extends Fragment {
     }
 
     private void showTotalData(TotalStatistic totalStatistic) {
-        countQuestions.setText(String.format("%d questions", totalStatistic.getCountQuestions()));
+        countQuestions.setText(String.format("%d %s",
+                totalStatistic.getCountQuestions(),
+                Utils.getQuestionAddition(totalStatistic.getCountQuestions())));
         if (totalStatistic.getCountQuestions() == 0) {
             percentCorrectAnswers.setText("n/a %");
         } else {
-            percentCorrectAnswers.setText(String.format("%4.2f %%", (100f * totalStatistic.getCountCorrectAnswers()) / totalStatistic.getCountQuestions()));
+            percentCorrectAnswers.setText(String.format("%4.2f %%",
+                    (100f * totalStatistic.getCountCorrectAnswers()) / totalStatistic.getCountQuestions()));
         }
-        daysCount.setText(String.format("%d days", totalStatistic.getDaysCount()));
+        daysCount.setText(String.format("%d %s",
+                totalStatistic.getDaysCount(),
+                Utils.getDayAddition(totalStatistic.getDaysCount())));
 
         List<Date> statisticPeriod = getStatisticPeriod();
         viewModel.getStatisticForPeriod(statisticPeriod.get(0), statisticPeriod.get(1));

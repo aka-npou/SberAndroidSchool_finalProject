@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aka_npou.sberandroidschool_finalproject.R;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.DetailedStatisticPerPeriod;
+import com.aka_npou.sberandroidschool_finalproject.presentation.common.Utils;
 
 import java.util.List;
 
@@ -79,8 +80,9 @@ public class DetailedStatisticPerDayRecyclerAdapter extends RecyclerView.Adapter
         void bindView(@NonNull DetailedStatisticPerPeriod detailedStatisticPerPeriod) {
             itemDetailedStatisticPerDayType.setText(detailedStatisticPerPeriod.getType());
             itemDetailedStatisticPerDayCountQuestions.setText(
-                    String.format("%d questions",
-                            detailedStatisticPerPeriod.getCountQuestions()));
+                    String.format("%d %s",
+                            detailedStatisticPerPeriod.getCountQuestions(),
+                            Utils.getQuestionAddition(detailedStatisticPerPeriod.getCountQuestions())));
             if (detailedStatisticPerPeriod.getCountQuestions() == 0) {
                 itemDetailedStatisticPerDayPercentCorrectQuestions.setText("n/a %");
             } else {
