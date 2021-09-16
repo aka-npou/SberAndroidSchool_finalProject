@@ -47,7 +47,7 @@ public class StatisticViewModel extends CommonViewModel {
      * @param from дата с которой получать статистику
      * @param to   дата по которую получать статистику
      */
-    public void getStatisticAsyncRx(Date from, Date to) {
+    public void getStatisticForPeriod(Date from, Date to) {
         addDisposable(statisticInteractor.getStatisticForPeriod(from, to)
                 .doOnSubscribe(disposable -> progressLiveData.postValue(true))
                 .doAfterTerminate(() -> progressLiveData.postValue(false))
@@ -94,12 +94,12 @@ public class StatisticViewModel extends CommonViewModel {
         calendar.set(Calendar.MILLISECOND, 999);
         Date to = calendar.getTime();
 
-        disposable = statisticInteractor.getExplicitStatisticForPeriod(from, to)
+        addDisposable(statisticInteractor.getExplicitStatisticForPeriod(from, to)
                 .doOnSubscribe(disposable -> progressLiveData.postValue(true))
                 .doAfterTerminate(() -> progressLiveData.postValue(false))
                 .subscribeOn(schedulersProvider.io())
                 .observeOn(schedulersProvider.ui())
-                .subscribe(explicitDayStatisticLiveData::setValue, errorLiveData::setValue);
+                .subscribe(explicitDayStatisticLiveData::setValue, errorLiveData::setValue));
     }
 
     public LiveData<Boolean> getProgressLiveData() {
