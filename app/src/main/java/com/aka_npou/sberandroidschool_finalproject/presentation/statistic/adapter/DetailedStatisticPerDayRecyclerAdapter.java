@@ -25,7 +25,8 @@ public class DetailedStatisticPerDayRecyclerAdapter extends RecyclerView.Adapter
     /**
      * Конструктор
      *
-     * @param detailedStatisticPerPeriodList {@link List} из {@link DetailedStatisticPerPeriod} список статистики ответов по дням
+     * @param detailedStatisticPerPeriodList Список {@link List} из {@link DetailedStatisticPerPeriod}
+     *                                       статистики ответов за день
      */
     public DetailedStatisticPerDayRecyclerAdapter(List<DetailedStatisticPerPeriod> detailedStatisticPerPeriodList) {
         this.detailedStatisticPerPeriodList = detailedStatisticPerPeriodList;
@@ -51,7 +52,7 @@ public class DetailedStatisticPerDayRecyclerAdapter extends RecyclerView.Adapter
     }
 
     /**
-     * Holder для отображения статистики по дню
+     * Holder для отображения детальной статистики по дню
      */
     static class ViewHolder extends RecyclerView.ViewHolder {
 

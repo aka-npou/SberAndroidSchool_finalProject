@@ -7,6 +7,12 @@ import com.aka_npou.sberandroidschool_finalproject.domain.model.TotalStatistic;
 
 import java.util.Date;
 
+/**
+ * Имплементация интерфейса {@link IConverter} для конвертации {@link TotalStatistic}
+ * в {@link TotalStatisticEntity}
+ *
+ * @author Мулярчук Александр
+ */
 public class TotalStatisticConverter implements IConverter<TotalStatistic, TotalStatisticEntity> {
     @NonNull
     @Override

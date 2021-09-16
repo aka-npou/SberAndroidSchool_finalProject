@@ -27,10 +27,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
     /**
      * Конструктор
-     * @param questionInteractor интерактор для работы с данными по вопросам и ответам
+     *
+     * @param questionInteractor  интерактор для работы с данными по вопросам и ответам
      * @param statisticInteractor интерактор для работы с данными по статистике
-     * @param profileInteractor интерактор для работы с данными профиля
-     * @param schedulersProvider провайдер потоков выполнения
+     * @param profileInteractor   интерактор для работы с данными профиля
+     * @param schedulersProvider  провайдер потоков выполнения
      */
     public ViewModelFactory(IQuestionInteractor questionInteractor,
                             IStatisticInteractor statisticInteractor,
@@ -44,8 +45,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
     /**
      * Получает {@link ViewModel} по переданному классу
+     *
      * @param modelClass класс который нужно получить
-     * @param <T> тип расширенный от {@link ViewModel} который нужно получить
+     * @param <T>        тип расширенный от {@link ViewModel} который нужно получить
      * @return класс расширенный от {@link ViewModel}
      */
     @NonNull

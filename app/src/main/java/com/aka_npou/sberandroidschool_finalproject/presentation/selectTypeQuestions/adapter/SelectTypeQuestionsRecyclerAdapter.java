@@ -26,7 +26,7 @@ public class SelectTypeQuestionsRecyclerAdapter extends RecyclerView.Adapter<Sel
     /**
      * Конструктор
      *
-     * @param questionTypes Список {@link List} из {@link String} типов вопросов
+     * @param questionTypes               Список {@link List} из {@link String} типов вопросов
      * @param onClickTypeQuestionsHandler {@link OnClickTypeQuestionsHandler} хэндлер нажатия на тип вопросов для старта игры
      */
     public SelectTypeQuestionsRecyclerAdapter(List<String> questionTypes, OnClickTypeQuestionsHandler onClickTypeQuestionsHandler) {

@@ -15,6 +15,7 @@ import com.aka_npou.sberandroidschool_finalproject.data.entity.StatisticEntity;
 
 /**
  * Реализация RoomDatabase для приложения
+ *
  * @author Мулярчук Александр
  */
 @Database(entities = {QuestionEntity.class, StatisticEntity.class, AnswerEntity.class, QuestionTypeEntity.class},
@@ -42,12 +43,14 @@ public abstract class AppDataBase extends RoomDatabase {
 
     /**
      * Получение Dao для работы с базой данных
+     *
      * @return {@link IQuestionDao} или его имплементацию
      */
     public abstract IQuestionDao getQuestionDao();
 
     /**
      * Получение Dao для работы с базой данных
+     *
      * @return {@link IStatisticDao} или его имплементацию
      */
     public abstract IStatisticDao getStatisticDao();

@@ -53,6 +53,7 @@ public class QuestionFragment extends Fragment {
 
     /**
      * Получение фрагмента вопроса
+     *
      * @param typeQuestions тип вопросов для игры
      * @return {@link QuestionFragment} фрагмент отображающий вопрос
      */
@@ -120,7 +121,7 @@ public class QuestionFragment extends Fragment {
         }
 
         viewModel.addAnswerResult(currentQuestion.getId(),
-                 indexAnswer,
+                indexAnswer,
                 currentQuestion.getCorrectAnswerIndex() == indexAnswer,
                 Calendar.getInstance().getTime());
     }

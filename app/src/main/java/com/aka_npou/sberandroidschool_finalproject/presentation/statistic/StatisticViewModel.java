@@ -35,19 +35,21 @@ public class StatisticViewModel extends ViewModel {
 
     /**
      * Конструктор
+     *
      * @param statisticInteractor интерактор для получения данных по статистике
-     * @param schedulersProvider провайдер потоков выполнения
+     * @param schedulersProvider  провайдер потоков выполнения
      */
     public StatisticViewModel(IStatisticInteractor statisticInteractor,
-                             ISchedulersProvider schedulersProvider) {
+                              ISchedulersProvider schedulersProvider) {
         this.statisticInteractor = statisticInteractor;
         this.schedulersProvider = schedulersProvider;
     }
 
     /**
      * Получение статистики по результатам ответов за период
+     *
      * @param from дата с которой получать статистику
-     * @param to дата по которую получать статистику
+     * @param to   дата по которую получать статистику
      */
     public void getStatisticForPeriod(Date from, Date to) {
         disposable = statisticInteractor.getStatisticForPeriod(from, to)
@@ -71,8 +73,9 @@ public class StatisticViewModel extends ViewModel {
     }
 
     /**
+     * Получение детальной статистики за день
      *
-     * @param date
+     * @param date {@link Date} дата за которую нужна детальная статистика
      */
     public void getExplicitStatisticForPeriod(Date date) {
         Calendar calendar = Calendar.getInstance();

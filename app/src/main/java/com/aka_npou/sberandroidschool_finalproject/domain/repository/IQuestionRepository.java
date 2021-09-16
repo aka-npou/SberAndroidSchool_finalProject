@@ -12,6 +12,7 @@ import java.util.List;
 public interface IQuestionRepository {
     /**
      * Получает вопрос с вариантами ответов
+     *
      * @param typeQuestions тип вопроса
      * @return {@link Question}
      */
@@ -19,12 +20,14 @@ public interface IQuestionRepository {
 
     /**
      * Предзаполняет данные вопросов и ответов
+     *
      * @return успешность предзаполнения
      */
     boolean initDB();
 
     /**
      * Получает типы вопроса
+     *
      * @return список {@link List} из {@link String} вариантов вопроса
      */
     List<String> getQuestionTypes();

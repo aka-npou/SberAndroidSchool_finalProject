@@ -5,6 +5,12 @@ import androidx.annotation.NonNull;
 import com.aka_npou.sberandroidschool_finalproject.data.entity.DetailedStatisticPerPeriodEntity;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.DetailedStatisticPerPeriod;
 
+/**
+ * Имплементация интерфейса {@link IConverter} для конвертации {@link DetailedStatisticPerPeriod}
+ * в {@link DetailedStatisticPerPeriodEntity}
+ *
+ * @author Мулярчук Александр
+ */
 public class DetailedStatisticPerPeriodConverter implements IConverter<DetailedStatisticPerPeriod, DetailedStatisticPerPeriodEntity> {
     @NonNull
     @Override

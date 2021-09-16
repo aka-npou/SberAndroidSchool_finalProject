@@ -33,6 +33,7 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
 
     /**
      * Конструктор
+     *
      * @param statisticList {@link List} список статистики ответов по дням
      */
     public StatisticRecyclerAdapter(List<DailyStatistics> statisticList,
@@ -80,6 +81,7 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
 
         /**
          * Конструктор
+         *
          * @param itemView view отображаемого дня
          */
         public StatisticViewHolder(@NonNull View itemView) {

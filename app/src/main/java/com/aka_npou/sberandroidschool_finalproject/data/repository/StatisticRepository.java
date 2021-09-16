@@ -1,7 +1,5 @@
 package com.aka_npou.sberandroidschool_finalproject.data.repository;
 
-import android.util.Log;
-
 import androidx.room.Transaction;
 
 import com.aka_npou.sberandroidschool_finalproject.data.converter.IConverter;
@@ -15,7 +13,6 @@ import com.aka_npou.sberandroidschool_finalproject.domain.model.TotalStatistic;
 import com.aka_npou.sberandroidschool_finalproject.domain.repository.IStatisticRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 

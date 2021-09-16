@@ -17,9 +17,10 @@ public class Question {
 
     /**
      * Конструктор
-     * @param id идентификатор вопроса в базе данных
-     * @param questionText текст вопроса
-     * @param answers {@link List} варианты ответов
+     *
+     * @param id                 идентификатор вопроса в базе данных
+     * @param questionText       текст вопроса
+     * @param answers            {@link List} варианты ответов
      * @param correctAnswerIndex индекс правильного ответа в answers
      */
     public Question(long id, String questionText, List<String> answers, int correctAnswerIndex, String type) {

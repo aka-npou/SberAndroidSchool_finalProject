@@ -12,6 +12,13 @@ public class TotalStatistic {
     private int countCorrectAnswers;
     private int daysCount;
 
+    /**
+     * Конструктор
+     *
+     * @param countQuestions        количество отвеченных вопросов
+     * @param countCorrectAnswers   количество правильно отвеченных вопросов
+     * @param daysCount             количество дней ответов на вопросы
+     */
     public TotalStatistic(int countQuestions, int countCorrectAnswers, int daysCount) {
         this.countQuestions = countQuestions;
         this.countCorrectAnswers = countCorrectAnswers;

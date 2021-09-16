@@ -12,6 +12,13 @@ public class DetailedStatisticPerPeriod {
     private int countQuestions;
     private int countCorrectQuestions;
 
+    /**
+     * Конструктор
+     *
+     * @param type                  тип вопроса
+     * @param countQuestions        количество отвеченных вопросов
+     * @param countCorrectQuestions количество правильно отвеченных вопросов
+     */
     public DetailedStatisticPerPeriod(String type, int countQuestions, int countCorrectQuestions) {
         this.type = type;
         this.countQuestions = countQuestions;

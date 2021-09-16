@@ -44,10 +44,11 @@ public interface IStatisticInteractor {
     Single<TotalStatistic> getTotalStatistic();
 
     /**
-     * Создает задачу получение детальной статистики за день
+     * Создает задачу получение детальной статистики за период
+     *
      * @param from дата с которой получается детальной статистики
-     * @param to дата до которой получается дательная статистика
-     * @return {@link Single} RxJava объект выполения задачи по получению детальной статистики за день
+     * @param to   дата до которой получается дательная статистика
+     * @return {@link Single} RxJava объект выполения задачи по получению детальной статистики за период
      */
     Single<List<DetailedStatisticPerPeriod>> getExplicitStatisticForPeriod(Date from, Date to);
 }

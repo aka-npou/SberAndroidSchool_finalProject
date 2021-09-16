@@ -53,7 +53,7 @@ public class StatisticInteractor implements IStatisticInteractor {
     }
 
     @Override
-    public Single<List<DetailedStatisticPerPeriod>> getExplicitStatisticForPeriod(Date from , Date to) {
+    public Single<List<DetailedStatisticPerPeriod>> getExplicitStatisticForPeriod(Date from, Date to) {
         return Single.fromCallable(() -> statisticRepository.getExplicitStatisticForPeriod(from, to));
     }
 

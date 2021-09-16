@@ -15,22 +15,36 @@ import java.util.List;
 public interface IStatisticRepository {
     /**
      * Добавляет результат ответа на вопрос
-     * @param questionId идентификатор вопроса
-     * @param answerIndex индекс выбранного ответа
+     *
+     * @param questionId      идентификатор вопроса
+     * @param answerIndex     индекс выбранного ответа
      * @param isCorrectAnswer признак правильности ответа
-     * @param dateOfAnswer дата ответа
+     * @param dateOfAnswer    дата ответа
      */
     void addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer);
 
     /**
      * Получает статистику ответов за период
+     *
      * @param from дата с которой получать статистику
-     * @param to дата по которую получать статистику
+     * @param to   дата по которую получать статистику
      * @return список {@link List} из {@link Statistic}
      */
     List<Statistic> getStatisticForPeriod(Date from, Date to);
 
+    /**
+     * Получение общей статистики по ответам на вопросы
+     *
+     * @return {@link TotalStatistic} общая статистика по ответам на вопросы
+     */
     TotalStatistic getTotalStatistic();
 
+    /**
+     * Получение детальной статистики по ответам на вопросы за период
+     *
+     * @param from дата с которой получать статистику
+     * @param to   дата по которую получать статистику
+     * @return список {@link List} из {@link DetailedStatisticPerPeriod} детальной статистики за период по типам вопросов
+     */
     List<DetailedStatisticPerPeriod> getExplicitStatisticForPeriod(Date from, Date to);
 }
