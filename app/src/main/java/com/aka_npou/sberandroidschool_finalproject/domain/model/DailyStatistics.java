@@ -15,6 +15,7 @@ public class DailyStatistics {
 
     /**
      * Конструктор
+     *
      * @param mDateOfAnswer дата ответа на вопрос
      */
     public DailyStatistics(Date mDateOfAnswer) {
@@ -25,8 +26,9 @@ public class DailyStatistics {
 
     /**
      * Конструктор
-     * @param dateOfAnswer дата ответа на вопрос
-     * @param countQuestions количество отвеченных вопросов
+     *
+     * @param dateOfAnswer          дата ответа на вопрос
+     * @param countQuestions        количество отвеченных вопросов
      * @param countCorrectQuestions количество правильно отвеченных вопросов
      */
     public DailyStatistics(Date dateOfAnswer, int countQuestions, int countCorrectQuestions) {

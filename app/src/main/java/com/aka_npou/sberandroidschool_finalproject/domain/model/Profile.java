@@ -13,7 +13,8 @@ public class Profile {
 
     /**
      * Конструктор
-     * @param name имя пользователя
+     *
+     * @param name          имя пользователя
      * @param imageFilePath путь до аватарки пользователя вида {@link android.net.Uri}
      */
     public Profile(String name, String imageFilePath) {

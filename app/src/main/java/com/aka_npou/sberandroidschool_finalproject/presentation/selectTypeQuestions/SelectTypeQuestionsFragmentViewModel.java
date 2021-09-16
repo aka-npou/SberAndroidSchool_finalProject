@@ -24,15 +24,19 @@ public class SelectTypeQuestionsFragmentViewModel extends CommonViewModel {
 
     /**
      * Конструктор
+     *
      * @param questionInteractor интерактор для получения типов вопросов
      * @param schedulersProvider провайдер потоков выполнения
      */
     public SelectTypeQuestionsFragmentViewModel(IQuestionInteractor questionInteractor,
-                             ISchedulersProvider schedulersProvider) {
+                                                ISchedulersProvider schedulersProvider) {
         this.questionInteractor = questionInteractor;
         this.schedulersProvider = schedulersProvider;
     }
 
+    /**
+     * Получение типов вопроса
+     */
     public void getQuestionTypes() {
         addDisposable(questionInteractor.getQuestionTypes()
                 .doOnSubscribe(disposable -> progressLiveData.postValue(true))

@@ -27,9 +27,10 @@ public class QuestionViewModel extends CommonViewModel {
 
     /**
      * Конструктор
-     * @param questionInteractor интерактор для получения вопросов и ответов
+     *
+     * @param questionInteractor  интерактор для получения вопросов и ответов
      * @param statisticInteractor интерактор для отправки результата ответа
-     * @param schedulersProvider провайдер потоков выполнения
+     * @param schedulersProvider  провайдер потоков выполнения
      */
     public QuestionViewModel(IQuestionInteractor questionInteractor,
                              IStatisticInteractor statisticInteractor,
@@ -41,8 +42,9 @@ public class QuestionViewModel extends CommonViewModel {
 
     /**
      * Получение вопроса с вариантами ответов
+     *
      * @param typeQuestions тип вопроса
-     * @param time задержка перед получением вопроса
+     * @param time          задержка перед получением вопроса
      */
     public void getQuestion(String typeQuestions,long time) {
         addDisposable(questionInteractor.getQuestion(typeQuestions)
@@ -54,10 +56,11 @@ public class QuestionViewModel extends CommonViewModel {
 
     /**
      * Отправка результата ответа
-     * @param questionId идентификатор вопроса
-     * @param answerIndex индекс выбранного ответа
+     *
+     * @param questionId      идентификатор вопроса
+     * @param answerIndex     индекс выбранного ответа
      * @param isCorrectAnswer признак правильности ответа
-     * @param dateOfAnswer дата ответа
+     * @param dateOfAnswer    дата ответа
      */
     public void addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer) {
         addDisposable(statisticInteractor.addAnswerResult(questionId, answerIndex, isCorrectAnswer, dateOfAnswer)

@@ -5,8 +5,10 @@ import android.content.SharedPreferences;
 
 import androidx.room.Room;
 
+import com.aka_npou.sberandroidschool_finalproject.data.converter.DetailedStatisticPerPeriodConverter;
 import com.aka_npou.sberandroidschool_finalproject.data.converter.QuestionWithAnswersAndTypeConverter;
 import com.aka_npou.sberandroidschool_finalproject.data.converter.StatisticConverter;
+import com.aka_npou.sberandroidschool_finalproject.data.converter.TotalStatisticConverter;
 import com.aka_npou.sberandroidschool_finalproject.data.dataBase.AppDataBase;
 import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IQuestionDao;
 import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IStatisticDao;
@@ -47,7 +49,15 @@ public interface AppModule {
     static IStatisticInteractor provideIStatisticInteractor(AppDataBase appDataBase) {
         IStatisticDao statisticDao = appDataBase.getStatisticDao();
         StatisticConverter statisticConverter = new StatisticConverter();
-        IStatisticRepository statisticRepository = new StatisticRepository(statisticDao, statisticConverter);
+        TotalStatisticConverter totalStatisticConverter = new TotalStatisticConverter();
+        DetailedStatisticPerPeriodConverter detailedStatisticPerPeriodConverter =
+                new DetailedStatisticPerPeriodConverter();
+
+        IStatisticRepository statisticRepository = new StatisticRepository(statisticDao,
+                statisticConverter,
+                totalStatisticConverter,
+                detailedStatisticPerPeriodConverter);
+
         return new StatisticInteractor(statisticRepository);
     }
 

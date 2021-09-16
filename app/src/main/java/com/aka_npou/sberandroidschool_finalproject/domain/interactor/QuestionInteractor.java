@@ -9,15 +9,16 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 
 /**
- *  Имплементация интерфейса {@link IQuestionInteractor}
+ * Имплементация интерфейса {@link IQuestionInteractor}
  *
- *  @author Мулярчук Александр
+ * @author Мулярчук Александр
  */
-public class QuestionInteractor implements IQuestionInteractor{
+public class QuestionInteractor implements IQuestionInteractor {
     private final IQuestionRepository questionRepository;
 
     /**
      * Конструктор
+     *
      * @param questionRepository {@link IQuestionRepository} репозиторий для работы с вопросами и ответами
      */
     public QuestionInteractor(IQuestionRepository questionRepository) {

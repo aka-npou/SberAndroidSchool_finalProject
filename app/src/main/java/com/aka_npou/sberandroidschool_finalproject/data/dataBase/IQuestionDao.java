@@ -24,6 +24,7 @@ import java.util.List;
 public interface IQuestionDao {
     /**
      * Получение рандомного вопроса с вариантами ответов
+     *
      * @return {@link QuestionWithAnswersAndType}
      */
     @Transaction
@@ -42,27 +43,28 @@ public interface IQuestionDao {
 
     /**
      * Получение самого редкого по показыванию вопроса с вариантами ответов
+     *
      * @return {@link QuestionWithAnswersAndType}
      */
     @Query("SELECT " +
-                "q.id, " +
-                "q.questionText, " +
-                "q.correctAnswerIndex," +
-                "q.question_type " +
+            "q.id, " +
+            "q.questionText, " +
+            "q.correctAnswerIndex," +
+            "q.question_type " +
             "FROM questions AS q " +
-                "JOIN (SELECT q.id, " +
-                "SUM(CASE WHEN s.id IS NULL THEN 0 ELSE 1 END) AS countQuestionShow " +
-                "FROM questions AS q " +
-                "INNER JOIN question_types AS qt " +
-                "ON q.question_type = qt.id " +
-                "AND qt.type = :typeQuestions " +
-                "LEFT JOIN statistics AS s " +
-                "ON q.id = s.questionId " +
-                "GROUP BY " +
-                "q.id " +
-                "ORDER BY " +
-                "countQuestionShow " +
-                "LIMIT 1) AS uncommonQuestion " +
+            "JOIN (SELECT q.id, " +
+            "SUM(CASE WHEN s.id IS NULL THEN 0 ELSE 1 END) AS countQuestionShow " +
+            "FROM questions AS q " +
+            "INNER JOIN question_types AS qt " +
+            "ON q.question_type = qt.id " +
+            "AND qt.type = :typeQuestions " +
+            "LEFT JOIN statistics AS s " +
+            "ON q.id = s.questionId " +
+            "GROUP BY " +
+            "q.id " +
+            "ORDER BY " +
+            "countQuestionShow " +
+            "LIMIT 1) AS uncommonQuestion " +
             "ON q.id = uncommonQuestion.id " +
             "LEFT JOIN answers AS a ON q.id = a.question_id " +
             "LEFT JOIN question_types AS qt " +
@@ -71,6 +73,7 @@ public interface IQuestionDao {
 
     /**
      * Добавление вопроса в базу данных. Добавление вариантов ответа в базу данных
+     *
      * @param entity {@link QuestionWithAnswersAndType} модель вопроса с вариантами ответов для базы данных
      */
     @Transaction
@@ -90,6 +93,7 @@ public interface IQuestionDao {
 
     /**
      * Добавление вопроса в базу данных
+     *
      * @param entity {@link QuestionEntity} модель вопроса для базы данных
      */
     @Insert
@@ -97,6 +101,7 @@ public interface IQuestionDao {
 
     /**
      * Добавление варианта ответа в базу данных
+     *
      * @param entity {@link AnswerEntity} модель варианта ответа для базы данных
      */
     @Insert
@@ -104,6 +109,7 @@ public interface IQuestionDao {
 
     /**
      * Добавление типа вопроса в базу данных
+     *
      * @param entity {@link QuestionTypeEntity} модель типа вопроса для базы данных
      */
     @Insert
@@ -111,6 +117,7 @@ public interface IQuestionDao {
 
     /**
      * Обновление типа вопроса в базе данных
+     *
      * @param entity {@link QuestionTypeEntity} модель типа вопроса для базы данных
      * @return количество измененных записей
      */
@@ -119,6 +126,7 @@ public interface IQuestionDao {
 
     /**
      * Получение типов вопроса по имени типа
+     *
      * @param type имя типа вопроса
      * @return {@link QuestionTypeEntity} модель типа вопроса для базы данных
      */
@@ -128,6 +136,7 @@ public interface IQuestionDao {
 
     /**
      * Получение типов вопроса
+     *
      * @return Список {@link List} из {@link String} типов вопроса
      */
     @Query("SELECT * FROM question_types")

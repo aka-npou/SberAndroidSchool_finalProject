@@ -10,12 +10,14 @@ import com.aka_npou.sberandroidschool_finalproject.domain.model.Profile;
 public interface IProfileStore {
     /**
      * Сохранение данных профиля игрока
+     *
      * @param profile @link Profile} модель профиля игрока из домейн слоя
      */
     void editProfile(Profile profile);
 
     /**
      * Получение данных профиля игрока
+     *
      * @return {@link Profile} модель профиля игрока для домейн слоя
      */
     Profile getProfile();

@@ -30,6 +30,7 @@ public interface IQuestionInteractor {
 
     /**
      * Создает задачу по получению типов вопроса
+     *
      * @return {@link Single} RxJava объект выполнения задачи по получению типов вопроса
      */
     Single<List<String>> getQuestionTypes();

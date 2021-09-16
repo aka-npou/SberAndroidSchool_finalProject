@@ -17,11 +17,12 @@ public class Statistic {
 
     /**
      * Конструктор
-     * @param id идентификатор в базе данных
-     * @param questionId идентификатор вопроса
-     * @param answerIndex индекс выбранного ответа
+     *
+     * @param id              идентификатор в базе данных
+     * @param questionId      идентификатор вопроса
+     * @param answerIndex     индекс выбранного ответа
      * @param isCorrectAnswer признак правильности ответа
-     * @param dateOfAnswer дата ответа
+     * @param dateOfAnswer    дата ответа
      */
     public Statistic(long id, long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer) {
         this.id = id;
@@ -68,14 +69,4 @@ public class Statistic {
         return Objects.hash(id, questionId, answerIndex, isCorrectAnswer, dateOfAnswer);
     }
 
-    @Override
-    public String toString() {
-        return "Statistic{" +
-                "id=" + id +
-                ", questionId=" + questionId +
-                ", answerIndex=" + answerIndex +
-                ", isCorrectAnswer=" + isCorrectAnswer +
-                ", dateOfAnswer=" + dateOfAnswer +
-                '}';
-    }
 }
