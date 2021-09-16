@@ -2,32 +2,28 @@ package com.aka_npou.sberandroidschool_finalproject.presentation.question;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IQuestionInteractor;
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticInteractor;
+import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
+import com.aka_npou.sberandroidschool_finalproject.presentation.common.CommonViewModel;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-
-import io.reactivex.disposables.Disposable;
 
 /**
  * ViewModel для отображения вопроса
  *
  * @author Мулярчук Александр
  */
-public class QuestionViewModel extends ViewModel {
+public class QuestionViewModel extends CommonViewModel {
     private final IQuestionInteractor questionInteractor;
     private final IStatisticInteractor statisticInteractor;
     private final ISchedulersProvider schedulersProvider;
 
     private final MutableLiveData<Question> questionLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> statisticLiveData = new MutableLiveData<>();
-
-    private Disposable disposable;
 
     /**
      * Конструктор
@@ -49,11 +45,11 @@ public class QuestionViewModel extends ViewModel {
      * @param time задержка перед получением вопроса
      */
     public void getQuestion(String typeQuestions,long time) {
-        disposable = questionInteractor.getQuestion(typeQuestions)
+        addDisposable(questionInteractor.getQuestion(typeQuestions)
                 .subscribeOn(schedulersProvider.io())
                 .observeOn(schedulersProvider.ui())
                 .delay(time, TimeUnit.MILLISECONDS)
-                .subscribe(questionLiveData::postValue);
+                .subscribe(questionLiveData::postValue));
     }
 
     /**
@@ -64,20 +60,10 @@ public class QuestionViewModel extends ViewModel {
      * @param dateOfAnswer дата ответа
      */
     public void addAnswerResult(long questionId, int answerIndex, boolean isCorrectAnswer, Date dateOfAnswer) {
-        disposable = statisticInteractor.addAnswerResult(questionId, answerIndex, isCorrectAnswer, dateOfAnswer)
+        addDisposable(statisticInteractor.addAnswerResult(questionId, answerIndex, isCorrectAnswer, dateOfAnswer)
                 .subscribeOn(schedulersProvider.io())
                 .observeOn(schedulersProvider.ui())
-                .subscribe(() -> statisticLiveData.setValue(true), t -> statisticLiveData.setValue(false));
-    }
-
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
-            disposable = null;
-        }
+                .subscribe(() -> statisticLiveData.setValue(true), t -> statisticLiveData.setValue(false)));
     }
 
     public LiveData<Question> getQuestionLiveData() {

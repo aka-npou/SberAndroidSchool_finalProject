@@ -2,31 +2,27 @@ package com.aka_npou.sberandroidschool_finalproject.presentation.statistic;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticInteractor;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.DailyStatistics;
+import com.aka_npou.sberandroidschool_finalproject.presentation.common.CommonViewModel;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
 
 import java.util.Date;
 import java.util.List;
-
-import io.reactivex.disposables.Disposable;
 
 /**
  * ViewModel для отображения статистики
  *
  * @author Мулярчук Александр
  */
-public class StatisticViewModel extends ViewModel {
+public class StatisticViewModel extends CommonViewModel {
     private final IStatisticInteractor statisticInteractor;
     private final ISchedulersProvider schedulersProvider;
 
     private final MutableLiveData<Boolean> progressLiveData = new MutableLiveData<>();
     private final MutableLiveData<Throwable> errorLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<DailyStatistics>> statisticLiveData = new MutableLiveData<>();
-
-    private Disposable disposable;
 
     /**
      * Конструктор
@@ -45,23 +41,12 @@ public class StatisticViewModel extends ViewModel {
      * @param to дата по которую получать статистику
      */
     public void getStatisticAsyncRx(Date from, Date to) {
-        disposable = statisticInteractor.getStatisticForPeriod(from, to)
+        addDisposable(statisticInteractor.getStatisticForPeriod(from, to)
                 .doOnSubscribe(disposable -> progressLiveData.postValue(true))
                 .doAfterTerminate(() -> progressLiveData.postValue(false))
                 .subscribeOn(schedulersProvider.io())
                 .observeOn(schedulersProvider.ui())
-                .subscribe(statisticLiveData::setValue, errorLiveData::setValue);
-    }
-
-
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
-            disposable = null;
-        }
+                .subscribe(statisticLiveData::setValue, errorLiveData::setValue));
     }
 
     public LiveData<Boolean> getProgressLiveData() {

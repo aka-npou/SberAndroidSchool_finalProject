@@ -2,27 +2,23 @@ package com.aka_npou.sberandroidschool_finalproject.presentation.main;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IQuestionInteractor;
+import com.aka_npou.sberandroidschool_finalproject.presentation.common.CommonViewModel;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
-
-import io.reactivex.disposables.Disposable;
 
 /**
  * ViewModel общего экрана
  *
  * @author Мулярчук Александр
  */
-public class MainActivityViewModel extends ViewModel {
+public class MainActivityViewModel extends CommonViewModel {
     private final IQuestionInteractor questionInteractor;
     private final ISchedulersProvider schedulersProvider;
 
     private final MutableLiveData<Boolean> progressLiveData = new MutableLiveData<>();
     private final MutableLiveData<Throwable> errorLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> initDBLiveData = new MutableLiveData<>();
-
-    private Disposable disposable;
 
     /**
      * Конструктор
@@ -36,26 +32,16 @@ public class MainActivityViewModel extends ViewModel {
         this.schedulersProvider = schedulersProvider;
     }
 
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
-            disposable = null;
-        }
-    }
-
     /**
      * Инициализация базы данных
      */
     public void initDB() {
-        disposable = questionInteractor.initDB()
+        addDisposable(questionInteractor.initDB()
                 .doOnSubscribe(disposable -> progressLiveData.postValue(true))
                 .doAfterTerminate(() -> progressLiveData.postValue(false))
                 .subscribeOn(schedulersProvider.io())
                 .observeOn(schedulersProvider.ui())
-                .subscribe(() -> initDBLiveData.postValue(true), errorLiveData::setValue);
+                .subscribe(() -> initDBLiveData.postValue(true), errorLiveData::setValue));
     }
 
     public LiveData<Boolean> getProgressLiveData() {
