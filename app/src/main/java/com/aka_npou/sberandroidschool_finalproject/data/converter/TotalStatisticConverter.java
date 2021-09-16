@@ -29,7 +29,7 @@ public class TotalStatisticConverter implements IConverter<TotalStatistic, Total
 
         int ms_in_day = 24 * 60 * 60 * 1000;
         //тк int обрезает, то всегда будет округление в меньшую сторону, потому плюс один день
-        int days = (int)((currentDate.getTime() - entityDate.getTime()) / ms_in_day) + 1;
+        int days = (int)((currentDate.getTime() - entityDate.getTime()) / (1f * ms_in_day) + 0.5f) + 1;
 
         return new TotalStatistic(item.countQuestions, item.countCorrectAnswers, days);
     }
