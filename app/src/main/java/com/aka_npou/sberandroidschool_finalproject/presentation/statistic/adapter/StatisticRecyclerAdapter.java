@@ -99,10 +99,10 @@ public class StatisticRecyclerAdapter extends RecyclerView.Adapter<StatisticRecy
             } else {
                 float density = itemView.getContext().getResources().getDisplayMetrics().density;
                 statisticCountQuestions.getLayoutParams().height =
-                        (int) (100 * dailyStatistics.getCountQuestions() / maxCountQuestionPerDay * density);
+                        (int) (200 * dailyStatistics.getCountQuestions() / maxCountQuestionPerDay * density);
 
                 statisticPercentageOfCorrectAnswers.getLayoutParams().height =
-                        (int) (100 * dailyStatistics.getCountCorrectQuestions() / dailyStatistics.getCountQuestions() * density);
+                        (int) (200 * dailyStatistics.getCountCorrectQuestions() / dailyStatistics.getCountQuestions() * density);
             }
 
             statisticDate.setText(simpleDateFormat.format(dailyStatistics.getDateOfAnswer()));
