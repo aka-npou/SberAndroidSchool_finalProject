@@ -12,7 +12,8 @@
         android:name=".QuizApplication">
         <activity
             android:name=".presentation.main.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
