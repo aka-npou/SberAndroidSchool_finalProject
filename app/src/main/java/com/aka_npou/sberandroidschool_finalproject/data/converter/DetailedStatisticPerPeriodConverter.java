@@ -15,8 +15,9 @@ public class DetailedStatisticPerPeriodConverter implements IConverter<DetailedS
     @NonNull
     @Override
     public DetailedStatisticPerPeriodEntity convert(@NonNull DetailedStatisticPerPeriod item) {
-        //пока не нужен
-        return null;
+        return new DetailedStatisticPerPeriodEntity(item.getType(),
+                item.getCountQuestions(),
+                item.getCountCorrectQuestions());
     }
 
     @NonNull

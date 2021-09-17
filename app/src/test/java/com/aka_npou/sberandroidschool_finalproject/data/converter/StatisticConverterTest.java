@@ -19,7 +19,7 @@ public class StatisticConverterTest {
     }
 
     @Test
-    public void convertQuestionTest() {
+    public void convertTest() {
         //Arrange
         StatisticEntity expectedResult = new StatisticEntity(1, 1, 1, true, new Date(1_000_000).getTime());
         Statistic statistic = new Statistic(1, 1, 1, true, new Date(1_000_000));
@@ -30,7 +30,7 @@ public class StatisticConverterTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void convertQuestionThrowExceptionTest() {
+    public void convertThrowExceptionTest() {
         //Arrange
         StatisticEntity expectedResult = new StatisticEntity(1, 1, 1, true, new Date(1_000_000).getTime());
         Statistic statistic = null;
@@ -41,7 +41,7 @@ public class StatisticConverterTest {
     }
 
     @Test
-    public void reverseQuestionTest() {
+    public void reverseTestNotEqual() {
         //Arrange
         Statistic expectedResult = new Statistic(1, 1, 1, true, new Date(1_000_000));;
         StatisticEntity statisticEntity = new StatisticEntity(1, 1, 1, true, new Date(1_000_000).getTime());
@@ -52,7 +52,7 @@ public class StatisticConverterTest {
     }
 
     @Test
-    public void reverseQuestionStartDayv() {
+    public void reverseStartDay() {
         //Arrange
         Statistic expectedResult = new Statistic(1, 1, 1, true, new Date(-10800000));;
         StatisticEntity statisticEntity = new StatisticEntity(1, 1, 1, true, new Date(-10800000).getTime());
@@ -63,7 +63,7 @@ public class StatisticConverterTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void reverseQuestionThrowExceptionTest() {
+    public void reverseThrowExceptionTest() {
         //Arrange
         Statistic expectedResult = new Statistic(1, 1, 1, true, new Date(1_000_000));;
         StatisticEntity statisticEntity = null;

@@ -3,10 +3,13 @@ package com.aka_npou.sberandroidschool_finalproject.presentation.statistic;
 import static org.mockito.Mockito.when;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.aka_npou.sberandroidschool_finalproject.domain.interactor.IStatisticInteractor;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.DailyStatistics;
+import com.aka_npou.sberandroidschool_finalproject.domain.model.DetailedStatisticPerPeriod;
+import com.aka_npou.sberandroidschool_finalproject.domain.model.TotalStatistic;
 import com.aka_npou.sberandroidschool_finalproject.presentation.common.ISchedulersProvider;
 
 import org.junit.Before;
@@ -42,6 +45,10 @@ public class StatisticViewModelTest {
     private Observer<Throwable> errorLiveDataObserver;
     @Mock
     private Observer<List<DailyStatistics>> statisticLiveDataObserver;
+    @Mock
+    private Observer<TotalStatistic> totalStatisticLiveDataObserver;
+    @Mock
+    private Observer<List<DetailedStatisticPerPeriod>> explicitDayStatisticLiveDataObserver;
 
     private StatisticViewModel viewModel;
 
@@ -55,6 +62,8 @@ public class StatisticViewModelTest {
         viewModel.getProgressLiveData().observeForever(progressLiveDataObserver);
         viewModel.getErrorLiveData().observeForever(errorLiveDataObserver);
         viewModel.getStatisticLiveData().observeForever(statisticLiveDataObserver);
+        viewModel.getTotalStatisticLiveData().observeForever(totalStatisticLiveDataObserver);
+        viewModel.getExpListLiveData().observeForever(explicitDayStatisticLiveDataObserver);
     }
 
     @Test
@@ -89,6 +98,91 @@ public class StatisticViewModelTest {
         when(statisticInteractor.getStatisticForPeriod(date1, date2)).thenReturn(Single.error(exception));
 
         viewModel.getStatisticForPeriod(date1, date2);
+
+        InOrder inOrder = Mockito.inOrder(progressLiveDataObserver, errorLiveDataObserver);
+
+        //Проверка, что презентер действительно вызывает методы представления, причем в порядке вызова этих методов.
+        inOrder.verify(progressLiveDataObserver).onChanged(true);
+        inOrder.verify(errorLiveDataObserver).onChanged(exception);
+        inOrder.verify(progressLiveDataObserver).onChanged(false);
+
+        //Проверка, что никакой метод не будет вызван.
+        inOrder.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void getTotalStatisticTest() {
+        TotalStatistic totalStatistic = new TotalStatistic(100, 50, 1);
+
+        when(statisticInteractor.getTotalStatistic()).thenReturn(Single.just(totalStatistic));
+
+        viewModel.getTotalStatistic();
+
+        InOrder inOrder = Mockito.inOrder(progressLiveDataObserver, totalStatisticLiveDataObserver);
+
+        //Проверка, что презентер действительно вызывает методы представления, причем в порядке вызова этих методов.
+        inOrder.verify(progressLiveDataObserver).onChanged(true);
+        inOrder.verify(totalStatisticLiveDataObserver).onChanged(totalStatistic);
+        inOrder.verify(progressLiveDataObserver).onChanged(false);
+
+        //Проверка, что никакой метод не будет вызван.
+        inOrder.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void getTotalStatisticTestError() {
+        Exception exception = new Exception("Test");
+
+        when(statisticInteractor.getTotalStatistic()).thenReturn(Single.error(exception));
+
+        viewModel.getTotalStatistic();
+
+        InOrder inOrder = Mockito.inOrder(progressLiveDataObserver, errorLiveDataObserver);
+
+        //Проверка, что презентер действительно вызывает методы представления, причем в порядке вызова этих методов.
+        inOrder.verify(progressLiveDataObserver).onChanged(true);
+        inOrder.verify(errorLiveDataObserver).onChanged(exception);
+        inOrder.verify(progressLiveDataObserver).onChanged(false);
+
+        //Проверка, что никакой метод не будет вызван.
+        inOrder.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void getExplicitStatisticForPeriod() {
+        Date date = new Date(1_000_001);
+        Date date1 = new Date(-10800000);
+        Date date2 = new Date(75599999);
+
+        List<DetailedStatisticPerPeriod> list = Arrays.asList(
+                new DetailedStatisticPerPeriod("test_type1", 100, 50),
+                new DetailedStatisticPerPeriod("test_type2", 200, 10));
+
+        when(statisticInteractor.getExplicitStatisticForPeriod(date1, date2)).thenReturn(Single.just(list));
+
+        viewModel.getExplicitStatisticForPeriod(date);
+
+        InOrder inOrder = Mockito.inOrder(progressLiveDataObserver, explicitDayStatisticLiveDataObserver);
+
+        //Проверка, что презентер действительно вызывает методы представления, причем в порядке вызова этих методов.
+        inOrder.verify(progressLiveDataObserver).onChanged(true);
+        inOrder.verify(explicitDayStatisticLiveDataObserver).onChanged(list);
+        inOrder.verify(progressLiveDataObserver).onChanged(false);
+
+        //Проверка, что никакой метод не будет вызван.
+        inOrder.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void getExplicitStatisticForPeriodError() {
+        Date date = new Date(1_000_001);
+        Date date1 = new Date(-10800000);
+        Date date2 = new Date(75599999);
+
+        Exception exception = new Exception("Test");
+        when(statisticInteractor.getExplicitStatisticForPeriod(date1, date2)).thenReturn(Single.error(exception));
+
+        viewModel.getExplicitStatisticForPeriod(date);
 
         InOrder inOrder = Mockito.inOrder(progressLiveDataObserver, errorLiveDataObserver);
 

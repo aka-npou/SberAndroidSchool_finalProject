@@ -73,7 +73,7 @@ public class StatisticViewModel extends CommonViewModel {
      *
      * @param date {@link Date} дата за которую нужна детальная статистика
      */
-    public void getExplicitStatisticForPeriod(Date date) {
+        public void getExplicitStatisticForPeriod(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(calendar.get(Calendar.YEAR),

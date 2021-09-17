@@ -4,7 +4,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.aka_npou.sberandroidschool_finalproject.domain.model.DailyStatistics;
+import com.aka_npou.sberandroidschool_finalproject.domain.model.DetailedStatisticPerPeriod;
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Statistic;
+import com.aka_npou.sberandroidschool_finalproject.domain.model.TotalStatistic;
 import com.aka_npou.sberandroidschool_finalproject.domain.repository.IStatisticRepository;
 
 import org.junit.Before;
@@ -60,6 +62,34 @@ public class StatisticInteractorTest {
         when(statisticRepository.getStatisticForPeriod(date1, date2)).thenReturn(statisticList);
         //Act
         Single<List<DailyStatistics>> actualResult = statisticInteractor.getStatisticForPeriod(date1, date2);
+        //Assert
+        actualResult.test().assertResult(expectedResult);
+    }
+
+    @Test
+    public void getTotalStatisticTest() {
+        //Arrange
+        TotalStatistic expectedResult = new TotalStatistic(100, 50, 1);
+
+        when(statisticRepository.getTotalStatistic()).thenReturn(expectedResult);
+        //Act
+        Single<TotalStatistic> actualResult = statisticInteractor.getTotalStatistic();
+        //Assert
+        actualResult.test().assertResult(expectedResult);
+    }
+
+    @Test
+    public void getExplicitStatisticForPeriodTest() {
+        //Arrange
+        Date date1 = new Date(1_000_001);
+        Date date2 = new Date(1_000_002);
+        List<DetailedStatisticPerPeriod> expectedResult = Arrays.asList(
+                new DetailedStatisticPerPeriod("test_type1", 100, 50),
+                new DetailedStatisticPerPeriod("test_type2", 200, 10));
+
+        when(statisticRepository.getExplicitStatisticForPeriod(date1, date2)).thenReturn(expectedResult);
+        //Act
+        Single<List<DetailedStatisticPerPeriod>> actualResult = statisticInteractor.getExplicitStatisticForPeriod(date1, date2);
         //Assert
         actualResult.test().assertResult(expectedResult);
     }

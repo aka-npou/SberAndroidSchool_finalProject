@@ -18,7 +18,7 @@ public class TotalStatisticEntity {
     }
 
     @Ignore
-    public TotalStatisticEntity(int countQuestions, int countCorrectAnswers, int firstDay) {
+    public TotalStatisticEntity(int countQuestions, int countCorrectAnswers, long firstDay) {
         this.countQuestions = countQuestions;
         this.countCorrectAnswers = countCorrectAnswers;
         this.firstDay = firstDay;
