@@ -58,7 +58,7 @@ public class StatisticViewModelTest {
     }
 
     @Test
-    public void getStatisticAsyncRxTest() {
+    public void getStatisticForPeriodTest() {
         Date date1 = new Date(1_000_001);
         Date date2 = new Date(1_000_002);
 
@@ -67,7 +67,7 @@ public class StatisticViewModelTest {
 
         when(statisticInteractor.getStatisticForPeriod(date1, date2)).thenReturn(Single.just(dailyStatisticsList));
 
-        viewModel.getStatisticAsyncRx(date1, date2);
+        viewModel.getStatisticForPeriod(date1, date2);
 
         InOrder inOrder = Mockito.inOrder(progressLiveDataObserver, statisticLiveDataObserver);
 
@@ -81,14 +81,14 @@ public class StatisticViewModelTest {
     }
 
     @Test
-    public void getStatisticAsyncRxTestError() {
+    public void getStatisticForPeriodTestError() {
         Date date1 = new Date(1_000_001);
         Date date2 = new Date(1_000_002);
 
         Exception exception = new Exception("Test");
         when(statisticInteractor.getStatisticForPeriod(date1, date2)).thenReturn(Single.error(exception));
 
-        viewModel.getStatisticAsyncRx(date1, date2);
+        viewModel.getStatisticForPeriod(date1, date2);
 
         InOrder inOrder = Mockito.inOrder(progressLiveDataObserver, errorLiveDataObserver);
 

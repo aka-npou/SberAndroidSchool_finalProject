@@ -14,9 +14,12 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import io.reactivex.Completable;
 import io.reactivex.schedulers.Schedulers;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,19 +44,30 @@ public class MainActivityViewModelTest {
 
     @Before
     public void setUp() {
-//        when(schedulersProvider.io()).thenReturn(Schedulers.trampoline());
-//        when(schedulersProvider.ui()).thenReturn(Schedulers.trampoline());
-//
-//        viewModel = new MainActivityViewModel(questionInteractor, schedulersProvider);
-//
-//        viewModel.getProgressLiveData().observeForever(progressLiveDataObserver);
-//        viewModel.getErrorLiveData().observeForever(errorLiveDataObserver);
-//        viewModel.getInitDBLiveData().observeForever(initDBLiveDataObserver);
+        when(schedulersProvider.io()).thenReturn(Schedulers.trampoline());
+        when(schedulersProvider.ui()).thenReturn(Schedulers.trampoline());
+
+        viewModel = new MainActivityViewModel(questionInteractor, schedulersProvider);
+
+        viewModel.getProgressLiveData().observeForever(progressLiveDataObserver);
+        viewModel.getErrorLiveData().observeForever(errorLiveDataObserver);
+        viewModel.getInitDBLiveData().observeForever(initDBLiveDataObserver);
     }
 
     @Test
     public void initDBTest() {
-        // TODO: 13.09.2021
-        Truth.assertThat(1).isEqualTo(1);
+        when(questionInteractor.initDB()).thenReturn(Completable.complete());
+
+        viewModel.initDB();
+
+        InOrder inOrder = Mockito.inOrder(progressLiveDataObserver, initDBLiveDataObserver);
+
+        //Проверка, что презентер действительно вызывает методы представления, причем в порядке вызова этих методов.
+        inOrder.verify(progressLiveDataObserver).onChanged(true);
+        inOrder.verify(initDBLiveDataObserver).onChanged(true);
+        inOrder.verify(progressLiveDataObserver).onChanged(false);
+
+        //Проверка, что никакой метод не будет вызван.
+        inOrder.verifyNoMoreInteractions();
     }
 }

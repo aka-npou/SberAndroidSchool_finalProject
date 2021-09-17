@@ -1,5 +1,6 @@
 package com.aka_npou.sberandroidschool_finalproject.domain.interactor;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.aka_npou.sberandroidschool_finalproject.domain.store.IProfileStore;
@@ -28,11 +29,14 @@ public class ProfileInteractorTest {
 
     @Test
     public void editProfileTest() {
-        // TODO: 13.09.2021
         //Arrange
+        Profile profile = new Profile("test_name", "test_path");
         //Act
+        profileInteractor.editProfile(profile)
+                .test()
+                .assertComplete();
         //Assert
-        //Truth.assertThat(actualResult).isEqualTo(expectedResult);
+        verify(profileStore).editProfile(profile);
     }
 
     @Test

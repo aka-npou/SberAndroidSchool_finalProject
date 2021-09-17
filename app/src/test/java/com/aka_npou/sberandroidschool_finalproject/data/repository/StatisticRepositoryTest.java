@@ -2,6 +2,7 @@ package com.aka_npou.sberandroidschool_finalproject.data.repository;
 
 import static org.mockito.Mockito.when;
 
+import com.aka_npou.sberandroidschool_finalproject.data.converter.DetailedStatisticPerPeriodConverter;
 import com.aka_npou.sberandroidschool_finalproject.data.converter.StatisticConverter;
 import com.aka_npou.sberandroidschool_finalproject.data.converter.TotalStatisticConverter;
 import com.aka_npou.sberandroidschool_finalproject.data.dataBase.IStatisticDao;
@@ -30,6 +31,9 @@ public class StatisticRepositoryTest {
     TotalStatisticConverter totalStatisticConverter;
 
     @Mock
+    DetailedStatisticPerPeriodConverter detailedStatisticPerPeriodConverter;
+
+    @Mock
     IStatisticDao statisticDao;
 
 
@@ -37,7 +41,10 @@ public class StatisticRepositoryTest {
 
     @Before
     public void setup() {
-        repository = new StatisticRepository(statisticDao, converter, totalStatisticConverter);
+        repository = new StatisticRepository(statisticDao,
+                converter,
+                totalStatisticConverter,
+                detailedStatisticPerPeriodConverter);
     }
 
     @Test

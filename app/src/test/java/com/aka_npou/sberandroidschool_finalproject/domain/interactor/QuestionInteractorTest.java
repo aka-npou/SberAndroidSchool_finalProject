@@ -1,5 +1,6 @@
 package com.aka_npou.sberandroidschool_finalproject.domain.interactor;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.aka_npou.sberandroidschool_finalproject.domain.model.Question;
@@ -41,10 +42,12 @@ public class QuestionInteractorTest {
 
     @Test
     public void initDBTest() {
-        // TODO: 13.09.2021
         //Arrange
         //Act
+        questionInteractor.initDB()
+                .test()
+                .assertComplete();
         //Assert
-        //Truth.assertThat(actualResult).isEqualTo(expectedResult);
+        verify(questionRepository).initDB();
     }
 }

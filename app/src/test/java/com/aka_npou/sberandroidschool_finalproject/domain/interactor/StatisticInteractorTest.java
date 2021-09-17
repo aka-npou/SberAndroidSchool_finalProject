@@ -1,5 +1,6 @@
 package com.aka_npou.sberandroidschool_finalproject.domain.interactor;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.aka_npou.sberandroidschool_finalproject.domain.model.DailyStatistics;
@@ -33,11 +34,17 @@ public class StatisticInteractorTest {
 
     @Test
     public void addAnswerResultTest() {
-        // TODO: 13.09.2021
         //Arrange
+        final long questionId = 1;
+        final int answerIndex = 1;
+        final boolean isCorrectAnswer = true;
+        Date dateOfAnswer = new Date(1_000_001);
         //Act
+        statisticInteractor.addAnswerResult(questionId, answerIndex, isCorrectAnswer, dateOfAnswer)
+                .test()
+                .assertComplete();
         //Assert
-        //Truth.assertThat(actualResult).isEqualTo(expectedResult);
+        verify(statisticRepository).addAnswerResult(questionId, answerIndex, isCorrectAnswer, dateOfAnswer);
     }
 
     @Test
